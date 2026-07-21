@@ -3,143 +3,180 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUmkmRequest;
-use App\Http\Requests\UpdateUmkmRequest;
+use App\Http\Requests\Umkm\StoreUmkmRequest;
+use App\Http\Requests\Umkm\UpdateUmkmRequest;
 use App\Models\Category;
 use App\Models\Umkm;
 use App\Models\User;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class UmkmController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Default pagination size.
      */
-    public function index(Request $request)
+    private const PER_PAGE = 10;
+
+    /**
+     * Display a listing of the UMKM.
+     */
+    public function index(Request $request): View
     {
-        $query = Umkm::query()->with(['category', 'user']);
+        $search = trim($request->string('search'));
 
-        if ($request->filled('search')) {
-            $query->where('business_name', 'like', '%' . $request->search . '%');
-        }
-
-        $umkms = $query
+        $umkms = Umkm::query()
+            ->with([
+                'category:id,name',
+                'user:id,name',
+            ])
+            ->search($search)
             ->latest()
-            ->paginate(10)
+            ->paginate(self::PER_PAGE)
             ->withQueryString();
 
-        return view('admin.umkms.index', compact('umkms'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $categories = Category::where('is_active', true)
-            ->orderBy('name')
-            ->get();
-
-        $owners = User::where('role', 'owner')
-            ->orderBy('name')
-            ->get();
-
-        return view('admin.umkms.create', compact(
-            'categories',
-            'owners'
+        return view('admin.umkms.index', compact(
+            'umkms',
+            'search'
         ));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show the form for creating a new UMKM.
      */
-    public function store(StoreUmkmRequest $request)
+    public function create(): View
     {
-        Umkm::create([
-            'user_id'       => $request->user_id,
-            'category_id'   => $request->category_id,
-            'business_name' => $request->business_name,
-            'slug'          => Str::slug($request->business_name),
-            'description'   => $request->description,
-            'phone'         => $request->phone,
-            'address'       => $request->address,
-            'village'       => $request->village,
-            'district'      => $request->district,
-            'regency'       => $request->regency,
-            'maps_url'      => $request->maps_url,
-            'status'        => $request->status,
-            'is_active'     => $request->boolean('is_active'),
-        ]);
+        $categories = $this->activeCategories();
+        $owners = $this->owners();
 
-        return redirect()
-            ->route('admin.umkms.index')
-            ->with('success', 'UMKM berhasil ditambahkan.');
+        return view(
+            'admin.umkms.create',
+            compact(
+                'categories',
+                'owners'
+            )
+        );
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created UMKM.
      */
-    public function show(Umkm $umkm)
+    public function store(StoreUmkmRequest $request): RedirectResponse
     {
-        return redirect()->route('admin.umkms.index');
+        Umkm::create(
+            $this->payload($request)
+        );
+
+        return to_route('admin.umkms.index')
+            ->with(
+                'success',
+                'UMKM berhasil ditambahkan.'
+            );
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Redirect show request.
      */
-    public function edit(Umkm $umkm)
+    public function show(Umkm $umkm): RedirectResponse
     {
-        $categories = Category::where('is_active', true)
-            ->orderBy('name')
-            ->get();
-
-        $owners = User::where('role', 'owner')
-            ->orderBy('name')
-            ->get();
-
-        return view('admin.umkms.edit', compact(
-            'umkm',
-            'categories',
-            'owners'
-        ));
+        return to_route('admin.umkms.index');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Show the form for editing the specified UMKM.
      */
-    public function update(UpdateUmkmRequest $request, Umkm $umkm)
+    public function edit(Umkm $umkm): View
     {
-        $umkm->update([
-            'user_id'       => $request->user_id,
-            'category_id'   => $request->category_id,
-            'business_name' => $request->business_name,
-            'slug'          => Str::slug($request->business_name),
-            'description'   => $request->description,
-            'phone'         => $request->phone,
-            'address'       => $request->address,
-            'village'       => $request->village,
-            'district'      => $request->district,
-            'regency'       => $request->regency,
-            'maps_url'      => $request->maps_url,
-            'status'        => $request->status,
-            'is_active'     => $request->boolean('is_active'),
-        ]);
+        $categories = $this->activeCategories();
+        $owners = $this->owners();
 
-        return redirect()
-            ->route('admin.umkms.index')
-            ->with('success', 'UMKM berhasil diperbarui.');
+        return view(
+            'admin.umkms.edit',
+            compact(
+                'umkm',
+                'categories',
+                'owners'
+            )
+        );
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Update the specified UMKM.
      */
-    public function destroy(Umkm $umkm)
+    public function update(
+        UpdateUmkmRequest $request,
+        Umkm $umkm
+    ): RedirectResponse {
+        $umkm->update(
+            $this->payload($request)
+        );
+
+        return to_route('admin.umkms.index')
+            ->with(
+                'success',
+                'UMKM berhasil diperbarui.'
+            );
+    }
+
+    /**
+     * Remove the specified UMKM.
+     */
+    public function destroy(Umkm $umkm): RedirectResponse
     {
         $umkm->delete();
 
-        return redirect()
-            ->route('admin.umkms.index')
-            ->with('success', 'UMKM berhasil dihapus.');
+        return to_route('admin.umkms.index')
+            ->with(
+                'success',
+                'UMKM berhasil dihapus.'
+            );
+    }
+
+    /**
+     * Get active categories.
+     */
+    private function activeCategories(): Collection
+    {
+        return Category::query()
+            ->active()
+            ->select([
+                'id',
+                'name',
+            ])
+            ->orderBy('name')
+            ->get();
+    }
+
+    /**
+     * Get owner accounts.
+     */
+    private function owners(): Collection
+    {
+        return User::query()
+            ->select([
+                'id',
+                'name',
+            ])
+            ->where('role', 'owner')
+            ->orderBy('name')
+            ->get();
+    }
+
+    /**
+     * Build UMKM payload.
+     */
+    private function payload(FormRequest $request): array
+    {
+        $data = $request->validated();
+
+        $data['slug'] = Str::slug($data['business_name']);
+
+        $data['is_active'] = $request->boolean('is_active');
+
+        return $data;
     }
 }

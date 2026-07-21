@@ -1,86 +1,177 @@
-<aside class="w-64 bg-white border-r border-slate-200 flex flex-col">
+<aside class="flex h-screen w-72 flex-col border-r border-slate-200 bg-white">
 
-    <!-- Logo -->
-    <div class="px-6 py-5 border-b">
+    {{-- Branding --}}
+    <div class="border-b border-slate-200 px-6 py-6">
 
-        <h1 class="text-2xl font-bold text-emerald-600">
-            SI UMKM
-        </h1>
+        <a
+            href="{{ route('admin.dashboard') }}"
+            class="flex items-center gap-4">
 
-        <p class="text-sm text-slate-500">
-            Sistem Informasi UMKM Desa
-        </p>
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-xl font-bold text-white shadow-sm">
+
+                SI
+
+            </div>
+
+            <div>
+
+                <h1 class="text-lg font-bold tracking-tight text-slate-900">
+
+                    SI UMKM Desa
+
+                </h1>
+
+                <p class="text-sm text-slate-500">
+
+                    Digital Village Platform
+
+                </p>
+
+            </div>
+
+        </a>
 
     </div>
 
-    <!-- Menu -->
-    <nav class="flex-1 px-4 py-5 space-y-1">
+    {{-- Navigation --}}
+    <nav class="flex-1 space-y-8 overflow-y-auto px-4 py-6">
 
-        <a href="{{ route('admin.dashboard') }}"
-            class="flex items-center px-4 py-3 rounded-lg transition
-            {{ request()->routeIs('admin.dashboard') ? 'bg-emerald-100 text-emerald-700 font-semibold' : 'text-slate-600 hover:bg-slate-100' }}">
+        {{-- Dashboard --}}
+        <div class="space-y-2">
 
-            <span class="mr-3">🏠</span>
-            Dashboard
+            <a
+                href="{{ route('admin.dashboard') }}"
+                class="flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200
+                {{ request()->routeIs('admin.dashboard')
+                    ? 'border border-emerald-200 bg-emerald-50 font-semibold text-emerald-700 shadow-sm'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
 
-        </a>
+                <span class="text-lg">🏠</span>
 
-        <p class="px-4 pt-5 pb-2 text-xs font-semibold tracking-widest text-slate-400 uppercase">
-            Master Data
-        </p>
+                Dashboard
 
-        <a href="{{ route('admin.categories.index') }}"
-            class="flex items-center px-4 py-3 rounded-lg transition
-            {{ request()->routeIs('admin.categories.*') ? 'bg-emerald-100 text-emerald-700 font-semibold' : 'text-slate-600 hover:bg-slate-100' }}">
+            </a>
 
-            <span class="mr-3">📂</span>
-            Kategori
+        </div>
 
-        </a>
+        {{-- Master Data --}}
+        <div>
 
-        <a href="#"
-            class="flex items-center px-4 py-3 rounded-lg text-slate-400 cursor-not-allowed">
+            <p class="mb-3 px-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
 
-            <span class="mr-3">🏪</span>
-            UMKM
+                Master Data
 
-        </a>
+            </p>
 
-        <a href="#"
-            class="flex items-center px-4 py-3 rounded-lg text-slate-400 cursor-not-allowed">
+            <div class="space-y-2">
 
-            <span class="mr-3">📦</span>
-            Produk
+                <a
+                    href="{{ route('admin.categories.index') }}"
+                    class="flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200
+                    {{ request()->routeIs('admin.categories.*')
+                        ? 'border border-emerald-200 bg-emerald-50 font-semibold text-emerald-700 shadow-sm'
+                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
 
-        </a>
+                    <span class="text-lg">
+
+                        📂
+
+                    </span>
+
+                    Kategori
+
+                </a>
+
+                <a
+                    href="{{ route('admin.umkms.index') }}"
+                    class="flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200
+                    {{ request()->routeIs('admin.umkms.*')
+                        ? 'border border-emerald-200 bg-emerald-50 font-semibold text-emerald-700 shadow-sm'
+                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
+
+                    <span class="text-lg">
+
+                        🏪
+
+                    </span>
+
+                    UMKM
+
+                </a>
+
+                <a
+                    href="{{ route('admin.products.index') }}"
+                    class="flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200
+                    {{ request()->routeIs('admin.products.*')
+                        ? 'border border-emerald-200 bg-emerald-50 font-semibold text-emerald-700 shadow-sm'
+                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
+
+                    <span class="text-lg">
+
+                        📦
+
+                    </span>
+
+                    Produk
+
+                </a>
+
+            </div>
+
+        </div>
 
     </nav>
 
-    <!-- User -->
-    <div class="border-t px-5 py-5">
+    {{-- User --}}
+    <div class="border-t border-slate-200 p-5">
 
-        <p class="font-semibold text-slate-700">
-            {{ auth()->user()->name }}
-        </p>
+        <div class="flex items-center gap-3">
 
-        <p class="text-sm text-slate-500 capitalize">
-            {{ auth()->user()->role }}
-        </p>
+            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 font-bold text-emerald-700">
 
-        <form method="POST"
+                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+
+            </div>
+
+            <div>
+
+                <p class="font-semibold text-slate-800">
+
+                    {{ auth()->user()->name }}
+
+                </p>
+
+                <p class="text-sm capitalize text-slate-500">
+
+                    {{ auth()->user()->role }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <form
+            method="POST"
             action="{{ route('logout') }}"
-            class="mt-4">
+            class="mt-5">
 
             @csrf
 
             <button
-                class="w-full rounded-lg bg-red-50 py-2 text-red-600 hover:bg-red-100 transition">
+                class="btn-danger w-full">
 
                 Logout
 
             </button>
 
         </form>
+
+        <div class="mt-5 border-t border-slate-100 pt-4 text-center text-xs text-slate-400">
+
+            SI UMKM Desa v1.0
+
+        </div>
 
     </div>
 

@@ -5,19 +5,22 @@
 @section('content')
 
 <div class="mb-8">
+
     <h1 class="text-3xl font-bold text-slate-800">
         Dashboard
     </h1>
 
     <p class="mt-2 text-slate-500">
-        Selamat datang kembali, <span class="font-semibold">{{ auth()->user()->name }}</span>.
+        Selamat datang kembali,
+        <span class="font-semibold">{{ auth()->user()->name }}</span>.
     </p>
+
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
 
-    <!-- Users -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    {{-- Users --}}
+    <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
         <div class="flex items-center justify-between">
 
@@ -28,12 +31,12 @@
                 </p>
 
                 <h2 class="mt-2 text-3xl font-bold text-slate-800">
-                    {{ $totalUsers }}
+                    {{ $statistics['users'] }}
                 </h2>
 
             </div>
 
-            <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-xl">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-xl">
                 👤
             </div>
 
@@ -41,8 +44,8 @@
 
     </div>
 
-    <!-- Categories -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    {{-- Categories --}}
+    <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
         <div class="flex items-center justify-between">
 
@@ -53,12 +56,12 @@
                 </p>
 
                 <h2 class="mt-2 text-3xl font-bold text-slate-800">
-                    {{ $totalCategories }}
+                    {{ $statistics['categories'] }}
                 </h2>
 
             </div>
 
-            <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-xl">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-xl">
                 📂
             </div>
 
@@ -66,8 +69,8 @@
 
     </div>
 
-    <!-- UMKM -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    {{-- UMKM --}}
+    <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
         <div class="flex items-center justify-between">
 
@@ -78,12 +81,12 @@
                 </p>
 
                 <h2 class="mt-2 text-3xl font-bold text-slate-800">
-                    {{ $totalUmkms }}
+                    {{ $statistics['umkms'] }}
                 </h2>
 
             </div>
 
-            <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-xl">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-xl">
                 🏪
             </div>
 
@@ -91,8 +94,8 @@
 
     </div>
 
-    <!-- Products -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    {{-- Products --}}
+    <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
         <div class="flex items-center justify-between">
 
@@ -103,12 +106,12 @@
                 </p>
 
                 <h2 class="mt-2 text-3xl font-bold text-slate-800">
-                    {{ $totalProducts }}
+                    {{ $statistics['products'] }}
                 </h2>
 
             </div>
 
-            <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-xl">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100 text-xl">
                 📦
             </div>
 
@@ -118,14 +121,16 @@
 
 </div>
 
-<div class="mt-8 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+<div class="mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
     <h2 class="text-lg font-semibold text-slate-800">
         Ringkasan Sistem
     </h2>
 
-    <p class="mt-2 text-slate-600 leading-relaxed">
-        Sistem Informasi UMKM Desa digunakan untuk mengelola data kategori, UMKM, dan produk secara terpusat. Dashboard ini akan menjadi pusat monitoring seluruh aktivitas administrator.
+    <p class="mt-2 leading-relaxed text-slate-600">
+        Sistem Informasi UMKM Desa digunakan untuk mengelola data kategori,
+        UMKM, dan produk secara terpusat. Dashboard ini menjadi pusat
+        monitoring aktivitas administrator.
     </p>
 
 </div>

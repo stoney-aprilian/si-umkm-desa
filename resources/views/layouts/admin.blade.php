@@ -1,42 +1,83 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
 
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
 
-    <meta name="viewport"
+    <meta
+        name="viewport"
         content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name') }}</title>
+    <meta
+        name="csrf-token"
+        content="{{ csrf_token() }}">
 
-    @vite(['resources/css/app.css','resources/js/app.js'])
+    <title>
+
+        @hasSection('title')
+
+            @yield('title') • Admin Panel • {{ config('app.name') }}
+
+        @else
+
+            Admin Panel • {{ config('app.name') }}
+
+        @endif
+
+    </title>
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+
+    <link
+        href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800"
+        rel="stylesheet">
+
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js',
+    ])
+
+    @stack('styles')
 
 </head>
 
-<body class="bg-slate-100">
+<body class="bg-slate-100 text-slate-800 antialiased">
 
 <div class="flex min-h-screen">
 
+    {{-- Sidebar --}}
     @include('components.admin.sidebar')
 
-    <div class="flex-1 flex flex-col">
+    <div class="flex min-h-screen flex-1 flex-col">
 
+        {{-- Topbar --}}
         @include('components.admin.topbar')
 
-        <main class="flex-1 p-8">
+        {{-- Main --}}
+        <main class="flex-1">
 
-            @include('components.admin.flash-message')
+            <div class="app-container py-8">
 
-            @yield('content')
+                @includeWhen(
+                    View::exists('components.admin.flash-message'),
+                    'components.admin.flash-message'
+                )
+
+                @yield('content')
+
+            </div>
 
         </main>
 
+        {{-- Footer --}}
         @include('components.admin.footer')
 
     </div>
 
 </div>
+
+@stack('scripts')
 
 </body>
 

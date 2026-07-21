@@ -1,155 +1,207 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="text-xl font-semibold text-gray-800">
-                Manajemen Kategori
-            </h2>
+@extends('layouts.admin')
 
-            <a href="{{ route('admin.categories.create') }}"
-                class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
-                + Tambah Kategori
-            </a>
+@section('title', 'Manajemen Kategori')
+
+@section('content')
+
+<div class="space-y-6">
+
+    <x-ui.page-header
+        title="Manajemen Kategori"
+        subtitle="Kelola seluruh kategori UMKM.">
+
+        <x-ui.button
+            href="{{ route('admin.categories.create') }}">
+
+            + Tambah Kategori
+
+        </x-ui.button>
+
+    </x-ui.page-header>
+
+    <x-ui.filter-bar
+        :action="route('admin.categories.index')">
+
+        <x-ui.search-bar
+            name="search"
+            :value="$search"
+            placeholder="Cari kategori..." />
+
+        <x-ui.button
+            type="submit">
+
+            Cari
+
+        </x-ui.button>
+
+        @if(request()->filled('search'))
+
+            <x-ui.button
+                variant="secondary"
+                :href="route('admin.categories.index')">
+
+                Reset
+
+            </x-ui.button>
+
+        @endif
+
+    </x-ui.filter-bar>
+
+    @if(session('success'))
+
+        <div class="alert-success">
+
+            {{ session('success') }}
+
         </div>
-    </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto px-6">
+    @endif
 
-            @if(session('success'))
-                <div class="mb-5 rounded-lg bg-green-100 border border-green-300 text-green-700 px-4 py-3">
-                    {{ session('success') }}
-                </div>
-            @endif
+    <div class="table-wrapper">
 
-            <div class="bg-white shadow-sm rounded-xl">
+        <table class="table-app">
 
-                <div class="p-6 border-b">
+            <thead>
 
-                    <form method="GET" class="flex gap-3">
+                <tr>
 
-                        <input
-                            type="text"
-                            name="search"
-                            value="{{ $search }}"
-                            placeholder="Cari kategori..."
-                            class="w-full rounded-lg border-gray-300">
+                    <th class="w-16">
 
-                        <button
-                            class="px-5 bg-slate-800 text-white rounded-lg">
-                            Cari
-                        </button>
+                        No
 
-                    </form>
+                    </th>
 
-                </div>
+                    <th>
 
-                <table class="min-w-full">
+                        Kategori
 
-                    <thead class="bg-gray-50">
+                    </th>
+
+                    <th class="w-36">
+
+                        Status
+
+                    </th>
+
+                    <th class="w-44 text-center">
+
+                        Aksi
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @forelse($categories as $category)
 
                     <tr>
 
-                        <th class="px-6 py-3 text-left">No</th>
-                        <th class="px-6 py-3 text-left">Kategori</th>
-                        <th class="px-6 py-3 text-left">Status</th>
-                        <th class="px-6 py-3 text-center">Aksi</th>
+                        <td>
+
+                            {{
+                                ($categories->currentPage() - 1) * $categories->perPage()
+                                + $loop->iteration
+                            }}
+
+                        </td>
+
+                        <td>
+
+                            <div class="font-semibold">
+
+                                {{ $category->name }}
+
+                            </div>
+
+                            <div class="text-sm text-slate-500">
+
+                                {{ $category->slug }}
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <x-ui.badge
+                                :variant="$category->is_active ? 'success' : 'danger'">
+
+                                {{ $category->is_active ? 'Aktif' : 'Nonaktif' }}
+
+                            </x-ui.badge>
+
+                        </td>
+
+                        <td>
+
+                            <x-ui.action-group>
+
+                                <x-ui.button
+                                    variant="secondary"
+                                    :href="route('admin.categories.edit', $category)">
+
+                                    Edit
+
+                                </x-ui.button>
+
+                                <form
+                                    action="{{ route('admin.categories.destroy', $category) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <x-ui.button
+                                        type="submit"
+                                        variant="danger">
+
+                                        Hapus
+
+                                    </x-ui.button>
+
+                                </form>
+
+                            </x-ui.action-group>
+
+                        </td>
 
                     </tr>
 
-                    </thead>
+                @empty
 
-                    <tbody>
+                    <tr>
 
-                    @forelse($categories as $category)
+                        <td
+                            colspan="4"
+                            class="py-12">
 
-                        <tr class="border-t">
+                            <x-ui.empty-state
+                                title="Belum ada kategori"
+                                description="Tambahkan kategori pertama untuk mulai mengelola UMKM." />
 
-                            <td class="px-6 py-4">
-                                {{ $loop->iteration + ($categories->currentPage()-1) * $categories->perPage() }}
-                            </td>
+                        </td>
 
-                            <td class="px-6 py-4">
-                                <div class="font-semibold">
-                                    {{ $category->name }}
-                                </div>
+                    </tr>
 
-                                <div class="text-sm text-gray-500">
-                                    {{ $category->slug }}
-                                </div>
-                            </td>
+                @endforelse
 
-                            <td class="px-6 py-4">
+            </tbody>
 
-                                @if($category->is_active)
+        </table>
 
-                                    <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs">
-                                        Aktif
-                                    </span>
-
-                                @else
-
-                                    <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs">
-                                        Nonaktif
-                                    </span>
-
-                                @endif
-
-                            </td>
-
-                            <td class="px-6 py-4 text-center">
-
-                                <div class="flex items-center justify-center gap-4">
-
-                                    <a href="{{ route('admin.categories.edit', $category) }}"
-                                    class="text-blue-600 hover:underline">
-                                        Edit
-                                    </a>
-
-                                    <form action="{{ route('admin.categories.destroy', $category) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
-
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button
-                                            type="submit"
-                                            class="text-red-600 hover:underline">
-                                            Hapus
-                                        </button>
-
-                                    </form>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    @empty
-
-                        <tr>
-
-                            <td colspan="4" class="text-center py-8 text-gray-500">
-                                Belum ada data kategori.
-                            </td>
-
-                        </tr>
-
-                    @endforelse
-
-                    </tbody>
-
-                </table>
-
-                <div class="p-6 border-t">
-
-                    {{ $categories->links() }}
-
-                </div>
-
-            </div>
-
-        </div>
     </div>
-</x-app-layout>
+
+    <div>
+
+        {{ $categories->links() }}
+
+    </div>
+
+</div>
+
+@endsection
