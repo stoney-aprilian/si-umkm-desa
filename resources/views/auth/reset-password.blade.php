@@ -1,39 +1,114 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+    <div class="space-y-8">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        {{-- Header --}}
+        <div class="text-center">
+
+            <h1 class="text-2xl font-bold text-gray-900">
+                Reset Password
+            </h1>
+
+            <p class="mt-2 text-sm leading-6 text-gray-500">
+                Silakan buat password baru untuk akun Anda. Pastikan password
+                yang digunakan kuat dan mudah Anda ingat.
+            </p>
+
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        {{-- Form --}}
+        <form
+            method="POST"
+            action="{{ route('password.store') }}"
+            class="space-y-6">
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            @csrf
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
+            {{-- Token --}}
+            <input
+                type="hidden"
+                name="token"
+                value="{{ $request->route('token') }}">
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+            {{-- Email --}}
+            <x-ui.field
+                name="email">
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
+                <x-ui.label
+                    for="email"
+                    required>
+
+                    Alamat Email
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="email"
+                    type="email"
+                    name="email"
+                    :value="old('email', $request->email)"
+                    autocomplete="username"
+                    autofocus
+                    placeholder="contoh@email.com"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Password Baru --}}
+            <x-ui.field
+                name="password">
+
+                <x-ui.label
+                    for="password"
+                    required>
+
+                    Password Baru
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="password"
+                    type="password"
+                    name="password"
+                    autocomplete="new-password"
+                    placeholder="Masukkan password baru"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Konfirmasi Password --}}
+            <x-ui.field
+                name="password_confirmation">
+
+                <x-ui.label
+                    for="password_confirmation"
+                    required>
+
+                    Konfirmasi Password
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="password_confirmation"
+                    type="password"
+                    name="password_confirmation"
+                    autocomplete="new-password"
+                    placeholder="Ulangi password baru"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Submit --}}
+            <x-ui.button
+                type="submit"
+                class="w-full justify-center">
+
+                Simpan Password Baru
+
+            </x-ui.button>
+
+        </form>
+
+    </div>
+
 </x-guest-layout>

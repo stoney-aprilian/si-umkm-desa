@@ -1,47 +1,140 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+    <div class="space-y-8">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        {{-- Header --}}
+        <div class="text-center">
+
+            <h1 class="text-3xl font-bold text-gray-900">
+                Selamat Datang
+            </h1>
+
+            <p class="mt-2 text-sm leading-6 text-gray-500">
+                Masuk ke Sistem Informasi UMKM Desa untuk mengelola data UMKM,
+                kategori, dan produk.
+            </p>
+
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        {{-- Session Status --}}
+        @if (session('status'))
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <div class="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                {{ session('status') }}
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+            </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
+        {{-- Login Form --}}
+        <form
+            method="POST"
+            action="{{ route('login') }}"
+            class="space-y-6">
+
+            @csrf
+
+            {{-- Email --}}
+            <x-ui.field
+                name="email">
+
+                <x-ui.label
+                    for="email"
+                    required>
+
+                    Alamat Email
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="email"
+                    type="email"
+                    name="email"
+                    :value="old('email')"
+                    autocomplete="username"
+                    autofocus
+                    placeholder="contoh@email.com"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Password --}}
+            <x-ui.field
+                name="password">
+
+                <x-ui.label
+                    for="password"
+                    required>
+
+                    Password
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="password"
+                    type="password"
+                    name="password"
+                    autocomplete="current-password"
+                    placeholder="Masukkan password"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Remember --}}
+            <div class="flex items-center justify-between">
+
+                <x-ui.checkbox
+                    name="remember"
+                    label="Ingat saya" />
+
+                @if (Route::has('password.request'))
+
+                    <a
+                        href="{{ route('password.request') }}"
+                        class="text-sm font-medium text-green-600 transition hover:text-green-700">
+
+                        Lupa Password?
+
+                    </a>
+
+                @endif
+
+            </div>
+
+            {{-- Submit --}}
+            <x-ui.button
+                type="submit"
+                class="w-full justify-center">
+
+                Masuk
+
+            </x-ui.button>
+
+        </form>
+
+        @if (Route::has('register'))
+
+            <div class="border-t border-gray-200 pt-6 text-center">
+
+                <p class="text-sm text-gray-500">
+
+                    Belum memiliki akun?
+
+                    <a
+                        href="{{ route('register') }}"
+                        class="font-semibold text-green-600 hover:text-green-700">
+
+                        Daftar sekarang
+
+                    </a>
+
+                </p>
+
+            </div>
+
+        @endif
+
+    </div>
+
 </x-guest-layout>

@@ -1,5 +1,10 @@
-<div {{ $attributes->merge([
-    'class' => 'form-actions',
-]) }}>
+<div
+    {{
+        $attributes->class([
+            'form-actions',
+        ])
+    }}>
+
     {{ $slot }}
+
 </div>

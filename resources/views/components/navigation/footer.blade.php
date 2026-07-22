@@ -1,86 +1,185 @@
 <footer class="mt-24 border-t border-slate-200 bg-white">
 
-    <div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="app-container py-16">
 
-        <div class="grid md:grid-cols-3 gap-10">
+        <div class="grid gap-12 lg:grid-cols-12">
 
-            <div>
+            {{-- Brand --}}
+            <div class="lg:col-span-5">
 
-                <h3 class="font-bold text-lg">
-                    Sistem Informasi UMKM Desa
-                </h3>
+                <div class="flex items-center gap-4">
 
-                <p class="mt-3 text-slate-600 leading-relaxed">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-600 text-lg font-bold text-white shadow-sm">
 
-                    Platform digital untuk mendukung promosi dan pendataan UMKM desa secara modern, mudah diakses, dan berkelanjutan.
+                        SI
+
+                    </div>
+
+                    <div>
+
+                        <h2 class="text-xl font-bold text-slate-900">
+
+                            SI UMKM Desa
+
+                        </h2>
+
+                        <p class="text-sm text-slate-500">
+
+                            Sistem Informasi UMKM
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <p class="mt-6 max-w-md leading-7 text-slate-600">
+
+                    Platform digital yang membantu memperkenalkan pelaku UMKM,
+                    produk unggulan, dan potensi ekonomi desa kepada masyarakat
+                    secara lebih luas melalui media informasi yang mudah diakses.
 
                 </p>
 
             </div>
 
-            <div>
+            {{-- Navigation --}}
+            <div class="lg:col-span-3">
 
-                <h4 class="font-semibold">
+                <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-900">
 
-                    Menu
+                    Navigasi
 
-                </h4>
+                </h3>
 
-                <ul class="mt-4 space-y-2">
+                <ul class="mt-5 space-y-3">
 
                     <li>
-                        <a href="{{ route('home') }}" class="hover:text-emerald-600">
+
+                        <a
+                            href="{{ route('home') }}"
+                            class="text-slate-600 transition hover:text-emerald-600">
+
                             Beranda
+
                         </a>
+
                     </li>
 
                     <li>
-                        <a href="{{ route('public.umkms.index') }}" class="hover:text-emerald-600">
+
+                        <a
+                            href="{{ route('public.umkms.index') }}"
+                            class="text-slate-600 transition hover:text-emerald-600">
+
                             UMKM
+
                         </a>
+
                     </li>
 
                     <li>
-                        <a href="{{ route('public.products.index') }}" class="hover:text-emerald-600">
+
+                        <a
+                            href="{{ route('public.products.index') }}"
+                            class="text-slate-600 transition hover:text-emerald-600">
+
                             Produk
+
                         </a>
+
                     </li>
 
                 </ul>
 
             </div>
 
-            <div>
+            {{-- Contact --}}
+            <div class="lg:col-span-4">
 
-                <h4 class="font-semibold">
+                <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-900">
 
-                    Kontak
+                    Informasi
 
-                </h4>
+                </h3>
 
-                <p class="mt-4 text-slate-600">
+                <div class="mt-5 space-y-4 text-slate-600">
 
-                    Pemerintah Desa
+                    <div>
 
-                    <br>
+                        <p class="font-medium text-slate-900">
 
-                    Email
+                            Pemerintah Desa
 
-                    <br>
+                        </p>
 
-                    Nomor Telepon
+                        <p class="text-sm">
 
-                </p>
+                            Informasi kontak dapat disesuaikan oleh administrator.
+
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm">
+
+                            Email
+
+                        </p>
+
+                        <p class="font-medium">
+
+                            info@desa.go.id
+
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm">
+
+                            Telepon
+
+                        </p>
+
+                        <p class="font-medium">
+
+                            (0000) 000-000
+
+                        </p>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
-        <div class="mt-12 pt-6 border-t border-slate-200 text-center text-sm text-slate-500">
+        <div class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 text-sm text-slate-500 md:flex-row">
 
-            © {{ date('Y') }}
+            <p>
 
-            Sistem Informasi UMKM Desa
+                © {{ date('Y') }}
+
+                <span class="font-medium text-slate-700">
+
+                    SI UMKM Desa
+
+                </span>
+
+                · Seluruh hak cipta dilindungi.
+
+            </p>
+
+            <p>
+
+                Dibangun sebagai bagian dari program Digitalisasi UMKM Desa.
+
+            </p>
 
         </div>
 

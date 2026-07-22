@@ -1,7 +1,9 @@
 <select
-    {{ $attributes->merge([
-        'class' => 'app-input',
-    ]) }}>
+    {{
+        $attributes->class([
+            'app-input',
+        ])
+    }}>
 
     {{ $slot }}
 

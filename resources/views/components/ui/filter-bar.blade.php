@@ -6,15 +6,19 @@
 <form
     action="{{ $action }}"
     method="{{ strtoupper($method) === 'GET' ? 'GET' : 'POST' }}"
-    {{ $attributes }}>
+    {{
+        $attributes->class([
+            'space-y-0',
+        ])
+    }}>
 
-    @if(strtoupper($method) !== 'GET')
+    @if (strtoupper($method) !== 'GET')
         @csrf
     @endif
 
     <x-ui.card>
 
-        <div class="flex flex-col gap-4 lg:flex-row lg:items-center">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
 
             {{ $slot }}
 

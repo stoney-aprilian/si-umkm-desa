@@ -1,134 +1,165 @@
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-8">
 
-    {{-- UMKM --}}
-    <div>
-        <label class="block mb-2 font-medium">
-            UMKM
-        </label>
+    {{-- Product Information --}}
+    <section>
 
-        <select
-            name="umkm_id"
-            class="w-full rounded-lg border-slate-300"
-            required>
+        <div class="mb-6">
 
-            <option value="">Pilih UMKM</option>
+            <h2 class="text-lg font-semibold text-gray-900">
+                Informasi Produk
+            </h2>
 
-            @foreach($umkms as $umkm)
-
-                <option
-                    value="{{ $umkm->id }}"
-                    @selected(old('umkm_id', $product->umkm_id ?? '') == $umkm->id)>
-
-                    {{ $umkm->business_name }}
-
-                </option>
-
-            @endforeach
-
-        </select>
-
-        @error('umkm_id')
-            <p class="mt-1 text-sm text-red-600">
-                {{ $message }}
+            <p class="mt-1 text-sm text-gray-500">
+                Lengkapi informasi produk yang akan ditampilkan pada katalog UMKM.
             </p>
-        @enderror
-
-    </div>
-
-    {{-- Nama Produk --}}
-    <div>
-
-        <label class="block mb-2 font-medium">
-            Nama Produk
-        </label>
-
-        <input
-            type="text"
-            name="name"
-            value="{{ old('name', $product->name ?? '') }}"
-            class="w-full rounded-lg border-slate-300"
-            required>
-
-        @error('name')
-            <p class="mt-1 text-sm text-red-600">
-                {{ $message }}
-            </p>
-        @enderror
-
-    </div>
-
-    {{-- Harga --}}
-    <div>
-
-        <label class="block mb-2 font-medium">
-            Harga
-        </label>
-
-        <input
-            type="number"
-            step="0.01"
-            min="0"
-            name="price"
-            value="{{ old('price', $product->price ?? '') }}"
-            class="w-full rounded-lg border-slate-300">
-
-        @error('price')
-            <p class="mt-1 text-sm text-red-600">
-                {{ $message }}
-            </p>
-        @enderror
-
-    </div>
-
-    {{-- Status --}}
-    <div>
-
-        <label class="block mb-2 font-medium">
-            Status
-        </label>
-
-        <div class="flex gap-6">
-
-            <label class="inline-flex items-center gap-2">
-
-                <input
-                    type="checkbox"
-                    name="is_featured"
-                    value="1"
-                    {{ old('is_featured', $product->is_featured ?? false) ? 'checked' : '' }}>
-
-                Produk Unggulan
-
-            </label>
-
-            <label class="inline-flex items-center gap-2">
-
-                <input
-                    type="checkbox"
-                    name="is_active"
-                    value="1"
-                    {{ old('is_active', $product->is_active ?? true) ? 'checked' : '' }}>
-
-                Aktif
-
-            </label>
 
         </div>
 
-    </div>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 
-    {{-- Deskripsi --}}
-    <div class="md:col-span-2">
+            {{-- UMKM --}}
+            <x-ui.field
+                name="umkm_id">
 
-        <label class="block mb-2 font-medium">
-            Deskripsi
-        </label>
+                <x-ui.label
+                    for="umkm_id"
+                    required>
 
-        <textarea
-            name="description"
-            rows="5"
-            class="w-full rounded-lg border-slate-300">{{ old('description', $product->description ?? '') }}</textarea>
+                    UMKM
 
-    </div>
+                </x-ui.label>
+
+                <select
+                    id="umkm_id"
+                    name="umkm_id"
+                    class="w-full rounded-xl border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    required>
+
+                    <option value="">
+                        Pilih UMKM
+                    </option>
+
+                    @foreach($umkms as $umkm)
+
+                        <option
+                            value="{{ $umkm->id }}"
+                            @selected(old('umkm_id', $product->umkm_id ?? '') == $umkm->id)>
+
+                            {{ $umkm->business_name }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </x-ui.field>
+
+            {{-- Nama Produk --}}
+            <x-ui.field
+                name="name"
+                helper="Gunakan nama produk yang jelas dan mudah dikenali.">
+
+                <x-ui.label
+                    for="name"
+                    required>
+
+                    Nama Produk
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="name"
+                    name="name"
+                    :value="old('name', $product->name ?? '')"
+                    placeholder="Contoh: Keripik Singkong Original"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Harga --}}
+            <x-ui.field
+                name="price"
+                helper="Kosongkan apabila harga belum ditentukan.">
+
+                <x-ui.label
+                    for="price">
+
+                    Harga
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="price"
+                    type="number"
+                    name="price"
+                    min="0"
+                    step="0.01"
+                    :value="old('price', $product->price ?? '')"
+                    placeholder="Contoh: 25000" />
+
+            </x-ui.field>
+
+        </div>
+
+    </section>
+
+    {{-- Product Description --}}
+    <section class="border-t border-gray-200 pt-8">
+
+        <h3 class="text-base font-semibold text-gray-900">
+            Deskripsi Produk
+        </h3>
+
+        <p class="mt-1 mb-5 text-sm text-gray-500">
+            Jelaskan produk secara singkat agar calon pembeli lebih mudah memahami keunggulannya.
+        </p>
+
+        <x-ui.field
+            name="description">
+
+            <x-ui.label
+                for="description">
+
+                Deskripsi
+
+            </x-ui.label>
+
+            <x-ui.textarea
+                id="description"
+                name="description"
+                rows="5"
+                placeholder="Masukkan deskripsi produk (opsional)...">{{ old('description', $product->description ?? '') }}</x-ui.textarea>
+
+        </x-ui.field>
+
+    </section>
+
+    {{-- Product Status --}}
+    <section class="border-t border-gray-200 pt-8">
+
+        <h3 class="text-base font-semibold text-gray-900">
+            Status Produk
+        </h3>
+
+        <p class="mt-1 mb-5 text-sm text-gray-500">
+            Atur status produk sebelum ditampilkan kepada pengunjung website.
+        </p>
+
+        <div class="space-y-4">
+
+            <x-ui.checkbox
+                name="is_featured"
+                :checked="old('is_featured', $product->is_featured ?? false)"
+                label="Jadikan sebagai Produk Unggulan" />
+
+            <x-ui.checkbox
+                name="is_active"
+                :checked="old('is_active', $product->is_active ?? true)"
+                label="Produk Aktif" />
+
+        </div>
+
+    </section>
 
 </div>

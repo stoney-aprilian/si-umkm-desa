@@ -3,22 +3,34 @@
     'helper' => null,
 ])
 
-<div {{ $attributes->merge(['class' => 'space-y-2']) }}>
+<div
+    {{ $attributes->merge([
+        'class' => 'space-y-2.5',
+    ]) }}>
 
     {{ $slot }}
 
-    @if ($helper)
-        <p class="text-sm text-slate-500">
-            {{ $helper }}
-        </p>
-    @endif
+    @error($name)
 
-    @if ($name)
-        @error($name)
-            <p class="text-sm font-medium text-red-600">
-                {{ $message }}
+        <p
+            class="flex items-center gap-1 text-sm font-medium text-red-600">
+
+            {{ $message }}
+
+        </p>
+
+    @else
+
+        @if ($helper)
+
+            <p class="text-sm leading-6 text-slate-500">
+
+                {{ $helper }}
+
             </p>
-        @enderror
-    @endif
+
+        @endif
+
+    @enderror
 
 </div>

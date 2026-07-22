@@ -4,11 +4,12 @@
 
 @section('content')
 
-<div class="space-y-6">
+<div class="space-y-8">
 
+    {{-- Header --}}
     <x-ui.page-header
         title="Manajemen Kategori"
-        subtitle="Kelola seluruh kategori UMKM.">
+        subtitle="Kelola seluruh kategori UMKM yang digunakan untuk mengelompokkan produk dan pelaku usaha.">
 
         <x-ui.button
             href="{{ route('admin.categories.create') }}">
@@ -19,35 +20,76 @@
 
     </x-ui.page-header>
 
-    <x-ui.filter-bar
-        :action="route('admin.categories.index')">
+    {{-- Statistic --}}
+    <div class="grid gap-4 md:grid-cols-3">
 
-        <x-ui.search-bar
-            name="search"
-            :value="$search"
-            placeholder="Cari kategori..." />
+        <x-ui.card>
+            <p class="text-sm text-gray-500">
+                Total Kategori
+            </p>
 
-        <x-ui.button
-            type="submit">
+            <h2 class="mt-2 text-3xl font-bold text-gray-900">
+                {{ $categories->total() }}
+            </h2>
+        </x-ui.card>
 
-            Cari
+        <x-ui.card>
+            <p class="text-sm text-gray-500">
+                Kategori Aktif
+            </p>
 
-        </x-ui.button>
+            <h2 class="mt-2 text-3xl font-bold text-green-600">
+                {{ $categories->where('is_active', true)->count() }}
+            </h2>
+        </x-ui.card>
 
-        @if(request()->filled('search'))
+        <x-ui.card>
+            <p class="text-sm text-gray-500">
+                Kategori Nonaktif
+            </p>
+
+            <h2 class="mt-2 text-3xl font-bold text-red-500">
+                {{ $categories->where('is_active', false)->count() }}
+            </h2>
+        </x-ui.card>
+
+    </div>
+
+    {{-- Search --}}
+    <x-ui.card>
+
+        <x-ui.filter-bar
+            :action="route('admin.categories.index')">
+
+            <x-ui.search-bar
+                name="search"
+                :value="$search"
+                placeholder="Cari nama kategori..." />
 
             <x-ui.button
-                variant="secondary"
-                :href="route('admin.categories.index')">
+                type="submit">
 
-                Reset
+                Cari
 
             </x-ui.button>
 
-        @endif
+            @if(request()->filled('search'))
 
-    </x-ui.filter-bar>
+                <x-ui.button
+                    variant="secondary"
+                    :href="route('admin.categories.index')">
 
+                    Reset
+
+                </x-ui.button>
+
+            @endif
+
+        </x-ui.filter-bar>
+
+    </x-ui.card>
+
+    {{-- Success --}}
     @if(session('success'))
 
         <div class="alert-success">
@@ -58,145 +100,174 @@
 
     @endif
 
-    <div class="table-wrapper">
+    {{-- Table --}}
+    <x-ui.card class="overflow-hidden">
 
-        <table class="table-app">
+        <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
 
-            <thead>
+            <div>
 
-                <tr>
+                <h2 class="text-lg font-semibold text-gray-900">
 
-                    <th class="w-16">
+                    Daftar Kategori
 
-                        No
+                </h2>
 
-                    </th>
+                <p class="mt-1 text-sm text-gray-500">
 
-                    <th>
+                    Menampilkan
+                    <span class="font-medium">{{ $categories->count() }}</span>
+                    dari
+                    <span class="font-medium">{{ $categories->total() }}</span>
+                    kategori.
 
-                        Kategori
+                </p>
 
-                    </th>
+            </div>
 
-                    <th class="w-36">
+        </div>
 
-                        Status
+        <div class="table-wrapper">
 
-                    </th>
+            <table class="table-app">
 
-                    <th class="w-44 text-center">
-
-                        Aksi
-
-                    </th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                @forelse($categories as $category)
+                <thead>
 
                     <tr>
 
-                        <td>
+                        <th class="w-16">
+                            No
+                        </th>
 
-                            {{
-                                ($categories->currentPage() - 1) * $categories->perPage()
-                                + $loop->iteration
-                            }}
+                        <th>
+                            Kategori
+                        </th>
 
-                        </td>
+                        <th class="w-36">
+                            Status
+                        </th>
 
-                        <td>
+                        <th class="w-44 text-center">
+                            Aksi
+                        </th>
 
-                            <div class="font-semibold">
+                    </tr>
 
-                                {{ $category->name }}
+                </thead>
 
-                            </div>
+                <tbody>
 
-                            <div class="text-sm text-slate-500">
+                    @forelse($categories as $category)
 
-                                {{ $category->slug }}
+                        <tr>
 
-                            </div>
+                            <td>
 
-                        </td>
+                                {{
+                                    ($categories->currentPage() - 1) * $categories->perPage()
+                                    + $loop->iteration
+                                }}
 
-                        <td>
+                            </td>
 
-                            <x-ui.badge
-                                :variant="$category->is_active ? 'success' : 'danger'">
+                            <td>
 
-                                {{ $category->is_active ? 'Aktif' : 'Nonaktif' }}
+                                <div class="font-semibold text-gray-900">
 
-                            </x-ui.badge>
+                                    {{ $category->name }}
 
-                        </td>
+                                </div>
 
-                        <td>
+                                <div class="mt-1 text-xs text-gray-500">
 
-                            <x-ui.action-group>
+                                    {{ $category->slug }}
 
-                                <x-ui.button
-                                    variant="secondary"
-                                    :href="route('admin.categories.edit', $category)">
+                                </div>
 
-                                    Edit
+                            </td>
 
-                                </x-ui.button>
+                            <td>
 
-                                <form
-                                    action="{{ route('admin.categories.destroy', $category) }}"
-                                    method="POST"
-                                    onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                                <x-ui.badge
+                                    :variant="$category->is_active ? 'success' : 'danger'">
 
-                                    @csrf
-                                    @method('DELETE')
+                                    {{ $category->is_active ? 'Aktif' : 'Nonaktif' }}
+
+                                </x-ui.badge>
+
+                            </td>
+
+                            <td>
+
+                                <x-ui.action-group>
 
                                     <x-ui.button
-                                        type="submit"
-                                        variant="danger">
+                                        variant="secondary"
+                                        :href="route('admin.categories.edit', $category)">
 
-                                        Hapus
+                                        Edit
 
                                     </x-ui.button>
 
-                                </form>
+                                    <form
+                                        action="{{ route('admin.categories.destroy', $category) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
 
-                            </x-ui.action-group>
+                                        @csrf
+                                        @method('DELETE')
 
-                        </td>
+                                        <x-ui.button
+                                            type="submit"
+                                            variant="danger">
 
-                    </tr>
+                                            Hapus
 
-                @empty
+                                        </x-ui.button>
 
-                    <tr>
+                                    </form>
 
-                        <td
-                            colspan="4"
-                            class="py-12">
+                                </x-ui.action-group>
 
-                            <x-ui.empty-state
-                                title="Belum ada kategori"
-                                description="Tambahkan kategori pertama untuk mulai mengelola UMKM." />
+                            </td>
 
-                        </td>
+                        </tr>
 
-                    </tr>
+                    @empty
 
-                @endforelse
+                        <tr>
 
-            </tbody>
+                            <td
+                                colspan="4"
+                                class="py-14">
 
-        </table>
+                                <x-ui.empty-state
+                                    title="Belum Ada Kategori"
+                                    description="Mulai dengan menambahkan kategori pertama agar UMKM dapat dikelompokkan dengan lebih baik." />
 
-    </div>
+                            </td>
 
-    <div>
+                        </tr>
+
+                    @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </x-ui.card>
+
+    {{-- Pagination --}}
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+
+        <p class="text-sm text-gray-500">
+
+            Halaman {{ $categories->currentPage() }}
+            dari {{ $categories->lastPage() }}
+
+        </p>
 
         {{ $categories->links() }}
 

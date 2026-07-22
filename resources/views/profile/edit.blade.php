@@ -1,29 +1,57 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.admin')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+@section('title', __('Profile'))
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+@section('content')
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+    <section class="space-y-6">
+
+        {{-- Page Header --}}
+        <div>
+
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900">
+                {{ __('Profile') }}
+            </h1>
+
+            <p class="mt-2 text-sm text-slate-500">
+                {{ __('Manage your account information, update your password, and configure your account settings.') }}
+            </p>
+
         </div>
-    </div>
-</x-app-layout>
+
+        {{-- Profile Information --}}
+        <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+
+            <div class="max-w-2xl">
+
+                @include('profile.partials.update-profile-information-form')
+
+            </div>
+
+        </div>
+
+        {{-- Update Password --}}
+        <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+
+            <div class="max-w-2xl">
+
+                @include('profile.partials.update-password-form')
+
+            </div>
+
+        </div>
+
+        {{-- Delete Account --}}
+        <div class="rounded-2xl border border-red-200 bg-white p-8 shadow-sm">
+
+            <div class="max-w-2xl">
+
+                @include('profile.partials.delete-user-form')
+
+            </div>
+
+        </div>
+
+    </section>
+
+@endsection

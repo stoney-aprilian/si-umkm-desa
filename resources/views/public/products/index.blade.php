@@ -4,65 +4,70 @@
 
 @section('content')
 
-<section class="bg-slate-50 py-16">
+    <section class="bg-slate-50 py-16">
 
-    <div class="mx-auto max-w-7xl px-6">
+        <div class="app-container">
 
-        <x-ui.section-title
-            title="Produk UMKM"
-            subtitle="Temukan berbagai produk unggulan dari UMKM Desa." />
+            {{-- Page Header --}}
+            <x-ui.section-title
+                title="Produk UMKM"
+                subtitle="Temukan berbagai produk unggulan dari UMKM Desa." />
 
-        <div class="mt-8">
+            {{-- Filter --}}
+            <div class="mt-8">
 
-            <x-ui.filter-bar
-                :action="route('public.products.index')"
-                :categories="$categories"
-                searchPlaceholder="Cari nama produk..." />
-
-        </div>
-
-        @if(request('search') || request('category'))
-
-            <div class="mt-6 text-sm text-slate-600">
-
-                Menampilkan hasil pencarian.
+                <x-ui.filter-bar
+                    :action="route('public.products.index')"
+                    :categories="$categories"
+                    searchPlaceholder="Cari nama produk..." />
 
             </div>
 
-        @endif
+            {{-- Active Filter --}}
+            @if (request()->filled('search') || request()->filled('category'))
 
-        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
 
-            @forelse($products as $product)
-
-                <x-product.card :product="$product" />
-
-            @empty
-
-                <div class="sm:col-span-2 lg:col-span-3">
-
-                    <x-ui.empty-state
-                        title="Produk Tidak Ditemukan"
-                        description="Tidak ada produk yang sesuai dengan pencarian atau kategori yang dipilih." />
+                    Menampilkan hasil berdasarkan filter yang dipilih.
 
                 </div>
 
-            @endforelse
+            @endif
 
-        </div>
+            {{-- Product Grid --}}
+            <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-        @if($products->hasPages())
+                @forelse ($products as $product)
 
-            <div class="mt-10">
+                    <x-product.card :product="$product" />
 
-                {{ $products->links() }}
+                @empty
+
+                    <div class="sm:col-span-2 lg:col-span-3">
+
+                        <x-ui.empty-state
+                            title="Produk Tidak Ditemukan"
+                            description="Tidak ada produk yang sesuai dengan pencarian atau kategori yang dipilih." />
+
+                    </div>
+
+                @endforelse
 
             </div>
 
-        @endif
+            {{-- Pagination --}}
+            @if ($products->hasPages())
 
-    </div>
+                <div class="mt-10">
 
-</section>
+                    {{ $products->links() }}
+
+                </div>
+
+            @endif
+
+        </div>
+
+    </section>
 
 @endsection

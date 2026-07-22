@@ -1,53 +1,60 @@
 @extends('layouts.admin')
 
-@section('title','Tambah Produk')
+@section('title', 'Tambah Produk')
 
 @section('content')
 
-<div class="max-w-5xl">
+<div class="mx-auto max-w-5xl">
 
-    <div class="mb-6">
+    {{-- Page Header --}}
+    <div class="mb-8">
 
-        <h1 class="text-2xl font-bold">
-            Tambah Produk
-        </h1>
-
-        <p class="text-slate-500">
-            Tambahkan produk baru.
-        </p>
+        <x-ui.section-title
+            title="Tambah Produk"
+            subtitle="Tambahkan produk baru untuk dipublikasikan pada katalog UMKM Desa." />
 
     </div>
 
-    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+    {{-- Form Card --}}
+    <x-ui.card class="overflow-hidden">
 
-        <form action="{{ route('admin.products.store') }}" method="POST">
+        <form
+            action="{{ route('admin.products.store') }}"
+            method="POST"
+            class="space-y-8">
 
             @csrf
 
-            @include('admin.products._form')
+            {{-- Form Content --}}
+            <div class="p-6 md:p-8">
 
-            <div class="mt-8 flex gap-3">
+                @include('admin.products._form')
 
-                <button
-                    class="px-5 py-2 rounded-lg bg-emerald-600 text-white">
+            </div>
 
-                    Simpan
+            {{-- Footer --}}
+            <div class="flex flex-col-reverse gap-3 border-t border-gray-200 bg-gray-50 px-6 py-5 md:flex-row md:items-center md:justify-end md:px-8">
 
-                </button>
+                <x-ui.button
+                    variant="secondary"
+                    href="{{ route('admin.products.index') }}">
 
-                <a
-                    href="{{ route('admin.products.index') }}"
-                    class="px-5 py-2 rounded-lg border">
+                    Kembali
 
-                    Batal
+                </x-ui.button>
 
-                </a>
+                <x-ui.button
+                    type="submit">
+
+                    Simpan Produk
+
+                </x-ui.button>
 
             </div>
 
         </form>
 
-    </div>
+    </x-ui.card>
 
 </div>
 

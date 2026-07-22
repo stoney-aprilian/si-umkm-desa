@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    class="h-full">
 
 <head>
 
@@ -14,25 +16,23 @@
         content="{{ csrf_token() }}">
 
     <title>
-
         @hasSection('title')
-
             @yield('title') • Owner Panel • {{ config('app.name') }}
-
         @else
-
             Owner Panel • {{ config('app.name') }}
-
         @endif
-
     </title>
 
-    <link rel="preconnect" href="https://fonts.bunny.net">
+    {{-- Fonts --}}
+    <link
+        rel="preconnect"
+        href="https://fonts.bunny.net">
 
     <link
         href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800"
         rel="stylesheet">
 
+    {{-- Assets --}}
     @vite([
         'resources/css/app.css',
         'resources/js/app.js',
@@ -42,41 +42,44 @@
 
 </head>
 
-<body class="bg-slate-100 text-slate-800 antialiased">
+<body class="min-h-screen bg-slate-100 font-sans text-slate-800 antialiased">
 
-<div class="flex min-h-screen">
+    <div class="flex min-h-screen">
 
-    {{-- Sidebar Owner --}}
-    @include('components.owner.sidebar')
+        {{-- Sidebar --}}
+        @include('layouts.partials.admin.sidebar')
 
-    <div class="flex min-h-screen flex-1 flex-col">
+        <div class="flex min-h-screen flex-1 flex-col">
 
-        {{-- Topbar Owner --}}
-        @include('components.owner.topbar')
+            {{-- Topbar --}}
+            @include('layouts.partials.admin.topbar')
 
-        <main class="flex-1">
+            {{-- Main Content --}}
+            <main class="flex-1 overflow-x-hidden">
 
-            <div class="app-container py-8">
+                <div class="app-container space-y-6 py-8">
 
-                @includeWhen(
-                    View::exists('components.owner.flash-message'),
-                    'components.owner.flash-message'
-                )
+                    {{-- Flash Message --}}
+                    @includeWhen(
+                        View::exists('layouts.partials.admin.flash-message'),
+                        'layouts.partials.admin.flash-message'
+                    )
 
-                @yield('content')
+                    {{-- Page Content --}}
+                    @yield('content')
 
-            </div>
+                </div>
 
-        </main>
+            </main>
 
-        {{-- Footer --}}
-        @include('components.owner.footer')
+            {{-- Footer --}}
+            @include('layouts.partials.admin.footer')
+
+        </div>
 
     </div>
 
-</div>
-
-@stack('scripts')
+    @stack('scripts')
 
 </body>
 

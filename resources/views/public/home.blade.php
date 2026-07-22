@@ -4,25 +4,31 @@
 
 @section('content')
 
-<div class="space-y-24">
+    <div class="space-y-24">
 
-    <x-home.hero />
+        {{-- Hero --}}
+        <x-home.hero />
 
-    <x-home.statistics
-        :statistics="$statistics"
-        :categories="$categories" />
+        {{-- Statistics --}}
+        <x-home.statistics
+            :statistics="$statistics"
+            :categories="$categories" />
 
-    <x-ui.search-bar />
+        {{-- Search --}}
+        <x-ui.search-bar />
 
-    <x-home.categories
-        :categories="$categories" />
+        {{-- Categories --}}
+        <x-home.categories
+            :categories="$categories" />
 
-    <x-home.featured-umkms
-        :umkms="$featuredUmkms" />
+        {{-- Featured UMKM --}}
+        <x-home.featured-umkms
+            :umkms="$featuredUmkms" />
 
-    <x-home.featured-products
-        :products="$featuredProducts" />
+        {{-- Featured Products --}}
+        <x-home.featured-products
+            :products="$featuredProducts" />
 
-</div>
+    </div>
 
 @endsection

@@ -1,54 +1,61 @@
 @extends('layouts.admin')
 
-@section('title','Edit Produk')
+@section('title', 'Edit Produk')
 
 @section('content')
 
-<div class="max-w-5xl">
+<div class="mx-auto max-w-5xl">
 
-    <div class="mb-6">
+    {{-- Page Header --}}
+    <div class="mb-8">
 
-        <h1 class="text-2xl font-bold">
-            Edit Produk
-        </h1>
-
-        <p class="text-slate-500">
-            Perbarui data produk.
-        </p>
+        <x-ui.section-title
+            title="Edit Produk"
+            subtitle="Perbarui informasi produk agar katalog UMKM tetap akurat dan menarik." />
 
     </div>
 
-    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+    {{-- Form Card --}}
+    <x-ui.card class="overflow-hidden">
 
-        <form action="{{ route('admin.products.update',$product) }}" method="POST">
+        <form
+            action="{{ route('admin.products.update', $product) }}"
+            method="POST"
+            class="space-y-8">
 
             @csrf
             @method('PUT')
 
-            @include('admin.products._form')
+            {{-- Form Content --}}
+            <div class="p-6 md:p-8">
 
-            <div class="mt-8 flex gap-3">
+                @include('admin.products._form')
 
-                <button
-                    class="px-5 py-2 rounded-lg bg-emerald-600 text-white">
+            </div>
 
-                    Update
+            {{-- Footer Actions --}}
+            <div class="flex flex-col-reverse gap-3 border-t border-gray-200 bg-gray-50 px-6 py-5 md:flex-row md:items-center md:justify-end md:px-8">
 
-                </button>
+                <x-ui.button
+                    variant="secondary"
+                    href="{{ route('admin.products.index') }}">
 
-                <a
-                    href="{{ route('admin.products.index') }}"
-                    class="px-5 py-2 rounded-lg border">
+                    Kembali
 
-                    Batal
+                </x-ui.button>
 
-                </a>
+                <x-ui.button
+                    type="submit">
+
+                    Perbarui Produk
+
+                </x-ui.button>
 
             </div>
 
         </form>
 
-    </div>
+    </x-ui.card>
 
 </div>
 

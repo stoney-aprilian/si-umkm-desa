@@ -26,6 +26,9 @@ use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
+Route::view('/about', 'public.about')
+    ->name('about');
+
 Route::prefix('umkm')
     ->name('public.umkms.')
     ->group(function () {
@@ -35,7 +38,6 @@ Route::prefix('umkm')
 
         Route::get('/{umkm:slug}', [PublicUmkmController::class, 'show'])
             ->name('show');
-
     });
 
 Route::prefix('produk')
@@ -47,18 +49,33 @@ Route::prefix('produk')
 
         Route::get('/{product:slug}', [PublicProductController::class, 'show'])
             ->name('show');
-
     });
 
 /*
 |--------------------------------------------------------------------------
-| Dashboard (Default Breeze)
+| Dashboard Redirect
 |--------------------------------------------------------------------------
+|
+| Single entry point after login.
+| Redirect users to the correct dashboard based on their role.
+|
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])
+    ->get('/dashboard', function () {
+
+        return match (auth()->user()->role) {
+
+            'admin' => redirect()->route('admin.dashboard'),
+
+            'owner' => redirect()->route('owner.dashboard'),
+
+            default => redirect()->route('home'),
+
+        };
+
+    })
+    ->name('dashboard');
 
 /*
 |--------------------------------------------------------------------------
@@ -76,7 +93,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
-
 });
 
 /*
@@ -111,12 +127,11 @@ Route::middleware(['auth', 'role:admin'])
 
         /*
         |--------------------------------------------------------------------------
-        | Product
+        | Products
         |--------------------------------------------------------------------------
         */
 
         Route::resource('products', ProductController::class);
-
     });
 
 /*
@@ -135,7 +150,6 @@ Route::middleware(['auth', 'role:owner'])
 
         // Route::resource('umkms', OwnerUmkmController::class);
         // Route::resource('products', OwnerProductController::class);
-
     });
 
 require __DIR__.'/auth.php';

@@ -1,64 +1,173 @@
 @extends('layouts.admin')
 
-@section('title', 'Data Produk')
+@section('title', 'Manajemen Produk')
 
 @section('content')
 
-<div class="space-y-6">
+<div class="space-y-8">
 
-    <div class="flex items-center justify-between">
+    {{-- Page Header --}}
+    <x-ui.page-header
+        title="Manajemen Produk"
+        subtitle="Kelola seluruh produk UMKM yang ditampilkan pada website.">
 
-        <div>
-            <h1 class="text-2xl font-bold text-slate-800">
-                Data Produk
-            </h1>
-
-            <p class="text-slate-500 mt-1">
-                Kelola seluruh produk UMKM.
-            </p>
-        </div>
-
-        <a href="{{ route('admin.products.create') }}"
-            class="px-5 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700">
+        <x-ui.button
+            href="{{ route('admin.products.create') }}">
 
             + Tambah Produk
 
-        </a>
+        </x-ui.button>
+
+    </x-ui.page-header>
+
+    {{-- Summary --}}
+    <div class="grid gap-4 md:grid-cols-3">
+
+        <x-ui.card>
+
+            <p class="text-sm text-gray-500">
+                Total Produk
+            </p>
+
+            <h2 class="mt-2 text-3xl font-bold text-gray-900">
+                {{ $products->total() }}
+            </h2>
+
+        </x-ui.card>
+
+        <x-ui.card>
+
+            <p class="text-sm text-gray-500">
+                Produk Ditampilkan
+            </p>
+
+            <h2 class="mt-2 text-3xl font-bold text-green-600">
+                {{ $products->where('is_active', true)->count() }}
+            </h2>
+
+        </x-ui.card>
+
+        <x-ui.card>
+
+            <p class="text-sm text-gray-500">
+                Produk Unggulan
+            </p>
+
+            <h2 class="mt-2 text-3xl font-bold text-amber-500">
+                {{ $products->where('is_featured', true)->count() }}
+            </h2>
+
+        </x-ui.card>
 
     </div>
 
-    <div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+    {{-- Search --}}
+    <x-ui.card>
 
-        <div class="p-5 border-b">
+        <x-ui.filter-bar
+            :action="route('admin.products.index')">
 
-            <form method="GET">
+            <x-ui.search-bar
+                name="search"
+                :value="request('search')"
+                placeholder="Cari nama produk..." />
 
-                <input
-                    type="text"
-                    name="search"
-                    value="{{ request('search') }}"
-                    placeholder="Cari produk..."
-                    class="w-full rounded-lg border-slate-300">
+            <x-ui.button
+                type="submit">
 
-            </form>
+                Cari
+
+            </x-ui.button>
+
+            @if(request()->filled('search'))
+
+                <x-ui.button
+                    variant="secondary"
+                    :href="route('admin.products.index')">
+
+                    Reset
+
+                </x-ui.button>
+
+            @endif
+
+        </x-ui.filter-bar>
+
+    </x-ui.card>
+
+    {{-- Success Message --}}
+    @if(session('success'))
+
+        <div class="alert-success">
+
+            {{ session('success') }}
 
         </div>
 
-        <div class="overflow-x-auto">
+    @endif
 
-            <table class="w-full">
+    {{-- Table --}}
+    <x-ui.card class="overflow-hidden">
 
-                <thead class="bg-slate-50">
+        <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
+
+            <div>
+
+                <h2 class="text-lg font-semibold text-gray-900">
+
+                    Daftar Produk
+
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-500">
+
+                    Menampilkan
+                    <span class="font-medium">{{ $products->count() }}</span>
+                    dari
+                    <span class="font-medium">{{ $products->total() }}</span>
+                    produk.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="table-wrapper">
+
+            <table class="table-app">
+
+                <thead>
 
                     <tr>
 
-                        <th class="px-5 py-3 text-left">No</th>
-                        <th class="px-5 py-3 text-left">Produk</th>
-                        <th class="px-5 py-3 text-left">UMKM</th>
-                        <th class="px-5 py-3 text-right">Harga</th>
-                        <th class="px-5 py-3 text-center">Unggulan</th>
-                        <th class="px-5 py-3 text-center">Status</th>
-                        <th class="px-5 py-3 text-center">Aksi</th>
+                        <th class="w-16">
+                            No
+                        </th>
+
+                        <th>
+                            Produk
+                        </th>
+
+                        <th>
+                            UMKM
+                        </th>
+
+                        <th class="text-right w-40">
+                            Harga
+                        </th>
+
+                        <th class="text-center w-36">
+                            Unggulan
+                        </th>
+
+                        <th class="text-center w-36">
+                            Status
+                        </th>
+
+                        <th class="text-center w-44">
+                            Aksi
+                        </th>
 
                     </tr>
 
@@ -66,108 +175,129 @@
 
                 <tbody>
 
-                @forelse($products as $product)
+                    @forelse($products as $product)
 
-                    <tr class="border-t">
+                        <tr>
 
-                        <td class="px-5 py-4">
-                            {{ $loop->iteration + ($products->currentPage()-1) * $products->perPage() }}
-                        </td>
+                            <td>
 
-                        <td class="px-5 py-4">
-                            <div class="font-semibold">
-                                {{ $product->name }}
-                            </div>
+                                {{
+                                    ($products->currentPage() - 1) * $products->perPage()
+                                    + $loop->iteration
+                                }}
 
-                            <div class="text-sm text-slate-500">
-                                {{ Str::limit($product->description,50) }}
-                            </div>
-                        </td>
+                            </td>
 
-                        <td class="px-5 py-4">
-                            {{ $product->umkm->business_name ?? '-' }}
-                        </td>
+                            <td>
 
-                        <td class="px-5 py-4 text-right">
-                            Rp {{ number_format($product->price ?? 0,0,',','.') }}
-                        </td>
+                                <div class="font-semibold text-gray-900">
 
-                        <td class="px-5 py-4 text-center">
+                                    {{ $product->name }}
 
-                            @if($product->is_featured)
-                                ⭐
-                            @else
-                                -
-                            @endif
+                                </div>
 
-                        </td>
+                                <div class="mt-1 text-xs text-gray-500">
 
-                        <td class="px-5 py-4 text-center">
+                                    {{ Str::limit($product->description, 60) }}
 
-                            @if($product->is_active)
+                                </div>
 
-                                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
-                                    Aktif
-                                </span>
+                            </td>
 
-                            @else
+                            <td>
 
-                                <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm">
-                                    Nonaktif
-                                </span>
+                                {{ $product->umkm->business_name ?? '-' }}
 
-                            @endif
+                            </td>
 
-                        </td>
+                            <td class="text-right font-medium">
 
-                        <td class="px-5 py-4">
+                                Rp {{ number_format($product->price ?? 0, 0, ',', '.') }}
 
-                            <div class="flex justify-center gap-4">
+                            </td>
 
-                                <a href="{{ route('admin.products.edit',$product) }}"
-                                    class="text-blue-600 hover:underline">
+                            <td class="text-center">
 
-                                    Edit
+                                @if($product->is_featured)
 
-                                </a>
+                                    <x-ui.badge variant="warning">
 
-                                <form
-                                    action="{{ route('admin.products.destroy',$product) }}"
-                                    method="POST"
-                                    onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
+                                        Unggulan
 
-                                    @csrf
-                                    @method('DELETE')
+                                    </x-ui.badge>
 
-                                    <button
-                                        class="text-red-600 hover:underline">
+                                @else
 
-                                        Hapus
+                                    <span class="text-gray-400">-</span>
 
-                                    </button>
+                                @endif
 
-                                </form>
+                            </td>
 
-                            </div>
+                            <td class="text-center">
 
-                        </td>
+                                <x-ui.badge
+                                    :variant="$product->is_active ? 'success' : 'danger'">
 
-                    </tr>
+                                    {{ $product->is_active ? 'Aktif' : 'Nonaktif' }}
 
-                @empty
+                                </x-ui.badge>
 
-                    <tr>
+                            </td>
 
-                        <td colspan="7"
-                            class="text-center py-10 text-slate-500">
+                            <td>
 
-                            Belum ada produk.
+                                <x-ui.action-group>
 
-                        </td>
+                                    <x-ui.button
+                                        variant="secondary"
+                                        :href="route('admin.products.edit', $product)">
 
-                    </tr>
+                                        Edit
 
-                @endforelse
+                                    </x-ui.button>
+
+                                    <form
+                                        action="{{ route('admin.products.destroy', $product) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <x-ui.button
+                                            type="submit"
+                                            variant="danger">
+
+                                            Hapus
+
+                                        </x-ui.button>
+
+                                    </form>
+
+                                </x-ui.action-group>
+
+                            </td>
+
+                        </tr>
+
+                    @empty
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="py-14">
+
+                                <x-ui.empty-state
+                                    title="Belum Ada Produk"
+                                    description="Tambahkan produk pertama agar katalog UMKM mulai terisi." />
+
+                            </td>
+
+                        </tr>
+
+                    @endforelse
 
                 </tbody>
 
@@ -175,15 +305,19 @@
 
         </div>
 
-        @if($products->hasPages())
+    </x-ui.card>
 
-            <div class="p-5 border-t">
+    {{-- Pagination --}}
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 
-                {{ $products->links() }}
+        <p class="text-sm text-gray-500">
 
-            </div>
+            Halaman {{ $products->currentPage() }}
+            dari {{ $products->lastPage() }}
 
-        @endif
+        </p>
+
+        {{ $products->links() }}
 
     </div>
 

@@ -3,31 +3,40 @@
     'subtitle' => null,
 ])
 
-<div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+<div
+    {{
+        $attributes->class([
+            'flex flex-col gap-4 md:flex-row md:items-center md:justify-between',
+        ])
+    }}>
 
     <div>
 
-        <h1 class="text-3xl font-bold text-slate-800">
+        <h1 class="text-3xl font-bold tracking-tight text-slate-900">
+
             {{ $title }}
+
         </h1>
 
-        @if($subtitle)
+        @if ($subtitle)
 
-            <p class="mt-2 text-slate-500">
+            <p class="mt-2 text-sm leading-6 text-slate-500">
+
                 {{ $subtitle }}
+
             </p>
 
         @endif
 
     </div>
 
-    @if(trim($slot))
+    @if (trim($slot))
 
-        <div class="flex items-center gap-2">
+        <x-ui.action-group align="end">
 
             {{ $slot }}
 
-        </div>
+        </x-ui.action-group>
 
     @endif
 

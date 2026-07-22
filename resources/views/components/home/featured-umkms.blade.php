@@ -2,19 +2,19 @@
     'umkms',
 ])
 
-<section class="pb-24">
+<section class="bg-slate-50 py-24">
 
     <div class="app-container">
 
         <x-ui.section-title
-            title="UMKM Terbaru"
-            subtitle="Temukan berbagai UMKM yang telah bergabung dan memperkenalkan produk unggulannya melalui platform ini." />
+            title="UMKM Unggulan"
+            subtitle="Jelajahi berbagai pelaku UMKM desa yang telah bergabung dan memperkenalkan produk unggulannya melalui platform ini." />
 
-        @if($umkms->isNotEmpty())
+        @if ($umkms->isNotEmpty())
 
             <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
 
-                @foreach($umkms as $umkm)
+                @foreach ($umkms as $umkm)
 
                     <x-umkm.card
                         :umkm="$umkm" />
@@ -23,7 +23,13 @@
 
             </div>
 
-            <div class="mt-12 text-center">
+            <div class="mt-14 text-center">
+
+                <p class="mb-5 text-sm text-slate-500">
+
+                    Temukan lebih banyak pelaku UMKM dan potensi usaha lainnya.
+
+                </p>
 
                 <a
                     href="{{ route('public.umkms.index') }}"
@@ -37,11 +43,15 @@
 
         @else
 
-            <x-ui.empty-state>
+            <div class="mt-10">
 
-                Belum ada UMKM yang tersedia.
+                <x-ui.empty-state>
 
-            </x-ui.empty-state>
+                    Data UMKM akan ditampilkan setelah tersedia.
+
+                </x-ui.empty-state>
+
+            </div>
 
         @endif
 

@@ -1,52 +1,149 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+    <div class="space-y-8">
+
+        {{-- Header --}}
+        <div class="text-center">
+
+            <h1 class="text-3xl font-bold text-gray-900">
+                Buat Akun
+            </h1>
+
+            <p class="mt-2 text-sm leading-6 text-gray-500">
+                Lengkapi data berikut untuk membuat akun baru pada
+                Sistem Informasi UMKM Desa.
+            </p>
+
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        {{-- Register Form --}}
+        <form
+            method="POST"
+            action="{{ route('register') }}"
+            class="space-y-6">
+
+            @csrf
+
+            {{-- Nama --}}
+            <x-ui.field
+                name="name">
+
+                <x-ui.label
+                    for="name"
+                    required>
+
+                    Nama Lengkap
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="name"
+                    name="name"
+                    type="text"
+                    :value="old('name')"
+                    autocomplete="name"
+                    autofocus
+                    placeholder="Masukkan nama lengkap"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Email --}}
+            <x-ui.field
+                name="email">
+
+                <x-ui.label
+                    for="email"
+                    required>
+
+                    Alamat Email
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="email"
+                    name="email"
+                    type="email"
+                    :value="old('email')"
+                    autocomplete="username"
+                    placeholder="contoh@email.com"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Password --}}
+            <x-ui.field
+                name="password">
+
+                <x-ui.label
+                    for="password"
+                    required>
+
+                    Password
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Masukkan password"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Konfirmasi Password --}}
+            <x-ui.field
+                name="password_confirmation">
+
+                <x-ui.label
+                    for="password_confirmation"
+                    required>
+
+                    Konfirmasi Password
+
+                </x-ui.label>
+
+                <x-ui.input
+                    id="password_confirmation"
+                    name="password_confirmation"
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Ulangi password"
+                    required />
+
+            </x-ui.field>
+
+            {{-- Submit --}}
+            <x-ui.button
+                type="submit"
+                class="w-full justify-center">
+
+                Daftar
+
+            </x-ui.button>
+
+        </form>
+
+        <div class="border-t border-gray-200 pt-6 text-center">
+
+            <p class="text-sm text-gray-500">
+
+                Sudah memiliki akun?
+
+                <a
+                    href="{{ route('login') }}"
+                    class="font-semibold text-green-600 transition hover:text-green-700">
+
+                    Masuk sekarang
+
+                </a>
+
+            </p>
+
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
 </x-guest-layout>

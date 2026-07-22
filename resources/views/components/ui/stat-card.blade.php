@@ -4,7 +4,11 @@
 ])
 
 <div
-    class="group app-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    {{
+        $attributes->class([
+            'group app-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg',
+        ])
+    }}>
 
     <div class="flex items-start justify-between gap-4">
 
@@ -16,11 +20,11 @@
 
             </p>
 
-            <h3 class="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+            <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900">
 
                 {{ $value }}
 
-            </h3>
+            </p>
 
         </div>
 

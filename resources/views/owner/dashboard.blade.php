@@ -1,15 +1,39 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Owner Dashboard
-        </h2>
-    </x-slot>
+@extends('layouts.owner')
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="bg-white rounded-xl shadow-sm p-6">
-                Selamat datang di Dashboard Owner.
-            </div>
+@section('title', 'Dashboard')
+
+@section('content')
+
+    <section class="space-y-6">
+
+        {{-- Page Header --}}
+        <div>
+
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900">
+                Dashboard Owner
+            </h1>
+
+            <p class="mt-2 text-sm text-slate-500">
+                Selamat datang kembali. Kelola UMKM Anda melalui dashboard ini.
+            </p>
+
         </div>
-    </div>
-</x-app-layout>
+
+        {{-- Welcome Card --}}
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+            <h2 class="text-lg font-semibold text-slate-900">
+                Selamat Datang 👋
+            </h2>
+
+            <p class="mt-2 text-sm leading-6 text-slate-600">
+                Anda berhasil masuk sebagai <strong>Owner UMKM</strong>.
+                Gunakan menu di samping untuk mengelola produk, informasi usaha,
+                serta melihat perkembangan UMKM Anda.
+            </p>
+
+        </div>
+
+    </section>
+
+@endsection

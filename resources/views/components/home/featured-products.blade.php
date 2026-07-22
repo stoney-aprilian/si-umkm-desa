@@ -2,19 +2,19 @@
     'products',
 ])
 
-<section class="pb-24">
+<section class="bg-white py-24">
 
     <div class="app-container">
 
         <x-ui.section-title
-            title="Produk Terbaru"
-            subtitle="Temukan berbagai produk unggulan dari UMKM desa yang siap dipasarkan kepada masyarakat." />
+            title="Produk Unggulan"
+            subtitle="Temukan berbagai produk unggulan hasil karya pelaku UMKM desa yang siap dipasarkan kepada masyarakat." />
 
-        @if($products->isNotEmpty())
+        @if ($products->isNotEmpty())
 
             <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
-                @foreach($products as $product)
+                @foreach ($products as $product)
 
                     <x-product.card
                         :product="$product" />
@@ -23,7 +23,13 @@
 
             </div>
 
-            <div class="mt-12 text-center">
+            <div class="mt-14 text-center">
+
+                <p class="mb-5 text-sm text-slate-500">
+
+                    Ingin melihat lebih banyak produk dari UMKM Desa?
+
+                </p>
 
                 <a
                     href="{{ route('public.products.index') }}"
@@ -37,11 +43,15 @@
 
         @else
 
-            <x-ui.empty-state>
+            <div class="mt-10">
 
-                Belum ada produk yang tersedia.
+                <x-ui.empty-state>
 
-            </x-ui.empty-state>
+                    Produk akan ditampilkan setelah data tersedia.
+
+                </x-ui.empty-state>
+
+            </div>
 
         @endif
 

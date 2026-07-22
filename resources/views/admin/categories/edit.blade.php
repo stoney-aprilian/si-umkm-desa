@@ -4,41 +4,54 @@
 
 @section('content')
 
-<div class="max-w-3xl">
+<div class="mx-auto max-w-4xl">
 
-    <x-ui.section-title
-        title="Edit Kategori"
-        subtitle="Perbarui data kategori." />
+    {{-- Page Header --}}
+    <div class="mb-8">
 
-    <x-ui.card class="mt-6">
+        <x-ui.section-title
+            title="Edit Kategori"
+            subtitle="Perbarui informasi kategori agar data UMKM tetap terstruktur dan mudah dikelola." />
+
+    </div>
+
+    {{-- Form Card --}}
+    <x-ui.card class="overflow-hidden">
 
         <form
             action="{{ route('admin.categories.update', $category) }}"
             method="POST"
-            class="space-y-6">
+            class="space-y-8">
 
             @csrf
             @method('PUT')
 
-            @include('admin.categories._form')
+            {{-- Form Content --}}
+            <div class="p-6 md:p-8">
 
-            <x-ui.form-actions>
+                @include('admin.categories._form')
+
+            </div>
+
+            {{-- Footer Actions --}}
+            <div class="flex flex-col-reverse gap-3 border-t border-gray-200 bg-gray-50 px-6 py-5 md:flex-row md:items-center md:justify-end md:px-8">
 
                 <x-ui.button
                     variant="secondary"
                     href="{{ route('admin.categories.index') }}">
 
-                    Batal
+                    Kembali
 
                 </x-ui.button>
 
-                <x-ui.button type="submit">
+                <x-ui.button
+                    type="submit">
 
-                    Update
+                    Perbarui Kategori
 
                 </x-ui.button>
 
-            </x-ui.form-actions>
+            </div>
 
         </form>
 

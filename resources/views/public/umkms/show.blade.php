@@ -4,119 +4,157 @@
 
 @section('content')
 
-{{-- Hero --}}
-<section class="bg-slate-100">
+    {{-- Hero --}}
+    <section class="bg-slate-100">
 
-    <div class="relative h-72 overflow-hidden">
+        <div class="relative h-72 overflow-hidden">
 
-        @if ($umkm->banner)
-            <img
-                src="{{ asset('storage/' . $umkm->banner) }}"
-                alt="{{ $umkm->business_name }}"
-                class="h-full w-full object-cover">
-        @else
-            <div class="flex h-full items-center justify-center bg-gradient-to-r from-emerald-500 to-emerald-700">
-                <span class="text-2xl font-semibold text-white">
-                    {{ $umkm->business_name }}
-                </span>
-            </div>
-        @endif
+            @if ($umkm->banner)
 
-    </div>
+                <img
+                    src="{{ asset('storage/' . $umkm->banner) }}"
+                    alt="{{ $umkm->business_name }}"
+                    class="h-full w-full object-cover">
 
-</section>
+            @else
 
-{{-- Information --}}
-<section class="py-12">
+                <div class="flex h-full items-center justify-center bg-gradient-to-r from-emerald-500 to-emerald-700">
 
-    <div class="mx-auto max-w-7xl px-6">
+                    <span class="text-2xl font-bold tracking-tight text-white">
 
-        <div class="grid gap-10 lg:grid-cols-3">
+                        {{ $umkm->business_name }}
 
-            {{-- Left --}}
-            <div>
+                    </span>
 
-                <div class="overflow-hidden rounded-2xl border bg-white shadow-sm">
+                </div>
 
-                    @if($umkm->logo)
+            @endif
 
-                        <img
-                            src="{{ asset('storage/'.$umkm->logo) }}"
-                            class="h-60 w-full object-cover">
+        </div>
 
-                    @else
+    </section>
 
-                        <div class="flex h-60 items-center justify-center bg-slate-100">
+    {{-- Business Information --}}
+    <section class="py-12">
 
-                            <span class="text-slate-400">
-                                Logo UMKM
-                            </span>
+        <div class="app-container">
+
+            <div class="grid gap-10 lg:grid-cols-3">
+
+                {{-- Business Logo --}}
+                <div>
+
+                    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+                        @if ($umkm->logo)
+
+                            <img
+                                src="{{ asset('storage/' . $umkm->logo) }}"
+                                alt="{{ $umkm->business_name }}"
+                                class="aspect-square h-60 w-full object-cover">
+
+                        @else
+
+                            <div class="flex aspect-square h-60 items-center justify-center bg-slate-100">
+
+                                <span class="text-sm text-slate-400">
+
+                                    Logo UMKM
+
+                                </span>
+
+                            </div>
+
+                        @endif
+
+                    </div>
+
+                </div>
+
+                {{-- Business Details --}}
+                <div class="lg:col-span-2">
+
+                    <x-ui.badge>
+
+                        {{ $umkm->category->name }}
+
+                    </x-ui.badge>
+
+                    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-900">
+
+                        {{ $umkm->business_name }}
+
+                    </h1>
+
+                    <div class="mt-8 grid gap-6 text-slate-600 md:grid-cols-2">
+
+                        <div>
+
+                            <p class="text-sm font-medium text-slate-500">
+
+                                Alamat
+
+                            </p>
+
+                            <p class="mt-1 text-slate-900">
+
+                                {{ $umkm->address }}
+
+                            </p>
 
                         </div>
 
-                    @endif
+                        <div>
 
-                </div>
+                            <p class="text-sm font-medium text-slate-500">
 
-            </div>
+                                Wilayah
 
-            {{-- Right --}}
-            <div class="lg:col-span-2">
+                            </p>
 
-                <x-ui.badge>
+                            <p class="mt-1 text-slate-900">
 
-                    {{ $umkm->category->name }}
+                                {{ collect([
+                                    $umkm->village,
+                                    $umkm->district,
+                                    $umkm->regency,
+                                ])->filter()->implode(', ') }}
 
-                </x-ui.badge>
+                            </p>
 
-                <h1 class="mt-4 text-4xl font-bold text-slate-800">
+                        </div>
 
-                    {{ $umkm->business_name }}
+                        <div>
 
-                </h1>
+                            <p class="text-sm font-medium text-slate-500">
 
-                <div class="mt-6 space-y-3 text-slate-600">
+                                Telepon
 
-                    <p>
+                            </p>
 
-                        <strong>Alamat :</strong>
+                            <p class="mt-1 text-slate-900">
 
-                        {{ $umkm->address }}
+                                {{ $umkm->phone }}
 
-                    </p>
+                            </p>
 
-                    <p>
+                        </div>
 
-                        <strong>Wilayah :</strong>
+                    </div>
 
-                        {{ collect([
-                            $umkm->village,
-                            $umkm->district,
-                            $umkm->regency
-                        ])->filter()->implode(', ') }}
+                    <div class="mt-8">
 
-                    </p>
+                        <a
+                            href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $umkm->phone) }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-6 py-3 font-medium text-white transition-colors duration-200 hover:bg-emerald-700">
 
-                    <p>
+                            Hubungi via WhatsApp
 
-                        <strong>Telepon :</strong>
+                        </a>
 
-                        {{ $umkm->phone }}
-
-                    </p>
-
-                </div>
-
-                <div class="mt-8">
-
-                    <a
-                        href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $umkm->phone) }}"
-                        target="_blank"
-                        class="inline-flex rounded-xl bg-emerald-600 px-6 py-3 font-medium text-white transition hover:bg-emerald-700">
-
-                        Hubungi via WhatsApp
-
-                    </a>
+                    </div>
 
                 </div>
 
@@ -124,92 +162,93 @@
 
         </div>
 
-    </div>
+    </section>
 
-</section>
+    {{-- About Business --}}
+    <section class="pb-16">
 
-{{-- Description --}}
-<section class="pb-16">
+        <div class="app-container">
 
-    <div class="mx-auto max-w-7xl px-6">
+            <x-ui.section-title
+                title="Tentang UMKM"
+                subtitle="Informasi mengenai usaha." />
 
-        <x-ui.section-title
-            title="Tentang UMKM"
-            subtitle="Informasi mengenai usaha." />
+            <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
 
-        <div class="rounded-2xl border bg-white p-8 shadow-sm">
+                <p class="leading-8 text-slate-700">
 
-            <p class="leading-8 text-slate-700">
+                    {{ $umkm->description ?: 'Belum ada deskripsi.' }}
 
-                {{ $umkm->description ?: 'Belum ada deskripsi.' }}
+                </p>
 
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-{{-- Products --}}
-<section class="pb-16">
-
-    <div class="mx-auto max-w-7xl px-6">
-
-        <x-ui.section-title
-            title="Produk"
-            subtitle="Produk yang dimiliki UMKM ini." />
-
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-
-            @forelse($umkm->products as $product)
-
-                <x-product.card
-                    :product="$product"/>
-
-            @empty
-
-                <x-ui.empty-state
-                    title="Belum Ada Produk"
-                    description="UMKM ini belum menambahkan produk." />
-
-            @endforelse
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
-</section>
+    {{-- Products --}}
+    <section class="pb-16">
 
-{{-- Maps --}}
-@if($umkm->maps_url)
+        <div class="app-container">
 
-<section class="pb-20">
+            <x-ui.section-title
+                title="Produk"
+                subtitle="Produk yang dimiliki UMKM ini." />
 
-    <div class="mx-auto max-w-7xl px-6">
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 
-        <x-ui.section-title
-            title="Lokasi"
-            subtitle="Temukan lokasi UMKM." />
+                @forelse ($umkm->products as $product)
 
-        <div class="overflow-hidden rounded-2xl border shadow-sm">
+                    <x-product.card
+                        :product="$product" />
 
-            <iframe
-                src="{{ $umkm->maps_url }}"
-                width="100%"
-                height="450"
-                style="border:0;"
-                loading="lazy"
-                allowfullscreen>
+                @empty
 
-            </iframe>
+                    <div class="md:col-span-2 lg:col-span-3">
+
+                        <x-ui.empty-state
+                            title="Belum Ada Produk"
+                            description="UMKM ini belum menambahkan produk." />
+
+                    </div>
+
+                @endforelse
+
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
-</section>
+    {{-- Location --}}
+    @if ($umkm->maps_url)
 
-@endif
+        <section class="pb-20">
+
+            <div class="app-container">
+
+                <x-ui.section-title
+                    title="Lokasi"
+                    subtitle="Temukan lokasi UMKM." />
+
+                <div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+
+                    <iframe
+                        src="{{ $umkm->maps_url }}"
+                        class="h-[450px] w-full"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen>
+
+                    </iframe>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    @endif
 
 @endsection

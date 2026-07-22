@@ -4,6 +4,8 @@
 
 <textarea
     rows="{{ $rows }}"
-    {{ $attributes->merge([
-        'class' => 'app-input resize-y',
-    ]) }}>{{ $slot }}</textarea>
+    {{
+        $attributes->class([
+            'app-input resize-y',
+        ])
+    }}>{{ $slot }}</textarea>

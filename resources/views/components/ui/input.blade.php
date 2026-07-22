@@ -4,6 +4,8 @@
 
 <input
     type="{{ $type }}"
-    {{ $attributes->merge([
-        'class' => 'app-input',
-    ]) }}>
+    {{
+        $attributes->class([
+            'app-input',
+        ])
+    }}>

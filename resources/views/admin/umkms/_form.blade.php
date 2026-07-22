@@ -1,166 +1,338 @@
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-10">
 
-    <div>
-        <label class="block mb-2 font-medium">Nama UMKM</label>
+    {{-- Basic Information --}}
+    <section>
 
-        <input
-            type="text"
-            name="business_name"
-            value="{{ old('business_name', $umkm->business_name ?? '') }}"
-            class="w-full rounded-lg border-slate-300"
-            required>
+        <div class="mb-6">
 
-        @error('business_name')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-        @enderror
-    </div>
+            <h2 class="text-lg font-semibold text-gray-900">
+                Informasi UMKM
+            </h2>
 
-    <div>
-        <label class="block mb-2 font-medium">Kategori</label>
+            <p class="mt-1 text-sm text-gray-500">
+                Informasi utama mengenai UMKM yang akan ditampilkan pada website.
+            </p>
 
-        <select
-            name="category_id"
-            class="w-full rounded-lg border-slate-300"
-            required>
+        </div>
 
-            <option value="">Pilih Kategori</option>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 
-            @foreach($categories as $category)
+            {{-- Nama UMKM --}}
+            <x-ui.field
+                name="business_name"
+                helper="Gunakan nama resmi UMKM.">
 
-                <option
-                    value="{{ $category->id }}"
-                    @selected(old('category_id', $umkm->category_id ?? '') == $category->id)>
+                <x-ui.label
+                    for="business_name"
+                    required>
 
-                    {{ $category->name }}
+                    Nama UMKM
 
-                </option>
+                </x-ui.label>
 
-            @endforeach
+                <x-ui.input
+                    id="business_name"
+                    name="business_name"
+                    :value="old('business_name', $umkm->business_name ?? '')"
+                    placeholder="Contoh: Keripik Singkong Bu Ijah"
+                    required />
 
-        </select>
-    </div>
+            </x-ui.field>
 
-    <div>
-        <label class="block mb-2 font-medium">Owner</label>
+            {{-- Kategori --}}
+            <x-ui.field
+                name="category_id">
 
-        <select
-            name="user_id"
-            class="w-full rounded-lg border-slate-300"
-            required>
+                <x-ui.label
+                    for="category_id"
+                    required>
 
-            <option value="">Pilih Owner</option>
+                    Kategori
 
-            @foreach($owners as $owner)
+                </x-ui.label>
 
-                <option
-                    value="{{ $owner->id }}"
-                    @selected(old('user_id', $umkm->user_id ?? '') == $owner->id)>
+                <select
+                    id="category_id"
+                    name="category_id"
+                    class="w-full rounded-xl border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    required>
 
-                    {{ $owner->name }}
+                    <option value="">
+                        Pilih Kategori
+                    </option>
 
-                </option>
+                    @foreach($categories as $category)
 
-            @endforeach
+                        <option
+                            value="{{ $category->id }}"
+                            @selected(old('category_id', $umkm->category_id ?? '') == $category->id)>
 
-        </select>
-    </div>
+                            {{ $category->name }}
 
-    <div>
-        <label class="block mb-2 font-medium">Nomor HP</label>
+                        </option>
 
-        <input
-            type="text"
-            name="phone"
-            value="{{ old('phone', $umkm->phone ?? '') }}"
-            class="w-full rounded-lg border-slate-300">
-    </div>
+                    @endforeach
 
-    <div class="md:col-span-2">
-        <label class="block mb-2 font-medium">Deskripsi</label>
+                </select>
 
-        <textarea
-            name="description"
-            rows="4"
-            class="w-full rounded-lg border-slate-300">{{ old('description', $umkm->description ?? '') }}</textarea>
-    </div>
+            </x-ui.field>
 
-    <div class="md:col-span-2">
-        <label class="block mb-2 font-medium">Alamat</label>
+            {{-- Owner --}}
+            <x-ui.field
+                name="user_id">
 
-        <textarea
-            name="address"
-            rows="3"
-            class="w-full rounded-lg border-slate-300">{{ old('address', $umkm->address ?? '') }}</textarea>
-    </div>
+                <x-ui.label
+                    for="user_id"
+                    required>
 
-    <div>
-        <label class="block mb-2 font-medium">Desa</label>
+                    Pemilik UMKM
 
-        <input
-            type="text"
-            name="village"
-            value="{{ old('village', $umkm->village ?? '') }}"
-            class="w-full rounded-lg border-slate-300">
-    </div>
+                </x-ui.label>
 
-    <div>
-        <label class="block mb-2 font-medium">Kecamatan</label>
+                <select
+                    id="user_id"
+                    name="user_id"
+                    class="w-full rounded-xl border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    required>
 
-        <input
-            type="text"
-            name="district"
-            value="{{ old('district', $umkm->district ?? '') }}"
-            class="w-full rounded-lg border-slate-300">
-    </div>
+                    <option value="">
+                        Pilih Pemilik
+                    </option>
 
-    <div>
-        <label class="block mb-2 font-medium">Kabupaten</label>
+                    @foreach($owners as $owner)
 
-        <input
-            type="text"
-            name="regency"
-            value="{{ old('regency', $umkm->regency ?? '') }}"
-            class="w-full rounded-lg border-slate-300">
-    </div>
+                        <option
+                            value="{{ $owner->id }}"
+                            @selected(old('user_id', $umkm->user_id ?? '') == $owner->id)>
 
-    <div>
-        <label class="block mb-2 font-medium">Google Maps</label>
+                            {{ $owner->name }}
 
-        <input
-            type="url"
-            name="maps_url"
-            value="{{ old('maps_url', $umkm->maps_url ?? '') }}"
-            class="w-full rounded-lg border-slate-300">
-    </div>
+                        </option>
 
-    <div>
-        <label class="block mb-2 font-medium">Status</label>
+                    @endforeach
 
-        <select
-            name="status"
-            class="w-full rounded-lg border-slate-300">
+                </select>
 
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
+            </x-ui.field>
 
-        </select>
-    </div>
+            {{-- Nomor HP --}}
+            <x-ui.field
+                name="phone">
 
-    <div class="flex items-center">
+                <x-ui.label
+                    for="phone">
 
-        <label class="inline-flex items-center gap-2">
+                    Nomor HP
 
-            <input
-                type="checkbox"
-                name="is_active"
-                value="1"
-                {{ old('is_active', $umkm->is_active ?? true) ? 'checked' : '' }}>
+                </x-ui.label>
 
-            <span>Aktif</span>
+                <x-ui.input
+                    id="phone"
+                    name="phone"
+                    type="text"
+                    :value="old('phone', $umkm->phone ?? '')"
+                    placeholder="08xxxxxxxxxx" />
 
-        </label>
+            </x-ui.field>
 
-    </div>
+        </div>
+
+    </section>
+
+    {{-- Description --}}
+    <section class="border-t border-gray-200 pt-8">
+
+        <h3 class="text-base font-semibold text-gray-900">
+            Deskripsi
+        </h3>
+
+        <p class="mt-1 mb-5 text-sm text-gray-500">
+            Jelaskan secara singkat profil dan keunggulan UMKM.
+        </p>
+
+        <x-ui.field
+            name="description">
+
+            <x-ui.label
+                for="description">
+
+                Deskripsi UMKM
+
+            </x-ui.label>
+
+            <x-ui.textarea
+                id="description"
+                name="description"
+                rows="5"
+                placeholder="Tuliskan deskripsi singkat mengenai UMKM...">{{ old('description', $umkm->description ?? '') }}</x-ui.textarea>
+
+        </x-ui.field>
+
+    </section>
+
+    {{-- Address --}}
+    <section class="border-t border-gray-200 pt-8">
+
+        <h3 class="text-base font-semibold text-gray-900">
+            Informasi Lokasi
+        </h3>
+
+        <p class="mt-1 mb-5 text-sm text-gray-500">
+            Masukkan alamat lengkap lokasi usaha.
+        </p>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+
+            <div class="md:col-span-2">
+
+                <x-ui.field
+                    name="address">
+
+                    <x-ui.label
+                        for="address">
+
+                        Alamat
+
+                    </x-ui.label>
+
+                    <x-ui.textarea
+                        id="address"
+                        name="address"
+                        rows="3"
+                        placeholder="Masukkan alamat lengkap UMKM...">{{ old('address', $umkm->address ?? '') }}</x-ui.textarea>
+
+                </x-ui.field>
+
+            </div>
+
+            <x-ui.field name="village">
+
+                <x-ui.label for="village">
+                    Desa
+                </x-ui.label>
+
+                <x-ui.input
+                    id="village"
+                    name="village"
+                    :value="old('village', $umkm->village ?? '')"
+                    placeholder="Nama desa" />
+
+            </x-ui.field>
+
+            <x-ui.field name="district">
+
+                <x-ui.label for="district">
+                    Kecamatan
+                </x-ui.label>
+
+                <x-ui.input
+                    id="district"
+                    name="district"
+                    :value="old('district', $umkm->district ?? '')"
+                    placeholder="Nama kecamatan" />
+
+            </x-ui.field>
+
+            <x-ui.field name="regency">
+
+                <x-ui.label for="regency">
+                    Kabupaten
+                </x-ui.label>
+
+                <x-ui.input
+                    id="regency"
+                    name="regency"
+                    :value="old('regency', $umkm->regency ?? '')"
+                    placeholder="Nama kabupaten" />
+
+            </x-ui.field>
+
+            <x-ui.field name="maps_url">
+
+                <x-ui.label for="maps_url">
+                    Google Maps
+                </x-ui.label>
+
+                <x-ui.input
+                    id="maps_url"
+                    type="url"
+                    name="maps_url"
+                    :value="old('maps_url', $umkm->maps_url ?? '')"
+                    placeholder="https://maps.google.com/..." />
+
+            </x-ui.field>
+
+        </div>
+
+    </section>
+
+    {{-- Status --}}
+    <section class="border-t border-gray-200 pt-8">
+
+        <h3 class="text-base font-semibold text-gray-900">
+            Status Publikasi
+        </h3>
+
+        <p class="mt-1 mb-5 text-sm text-gray-500">
+            Atur status verifikasi dan visibilitas UMKM.
+        </p>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+
+            <x-ui.field
+                name="status">
+
+                <x-ui.label
+                    for="status">
+
+                    Status Verifikasi
+
+                </x-ui.label>
+
+                <select
+                    id="status"
+                    name="status"
+                    class="w-full rounded-xl border-gray-300 focus:border-green-500 focus:ring-green-500">
+
+                    <option
+                        value="pending"
+                        @selected(old('status', $umkm->status ?? '') == 'pending')>
+
+                        Pending
+
+                    </option>
+
+                    <option
+                        value="approved"
+                        @selected(old('status', $umkm->status ?? '') == 'approved')>
+
+                        Approved
+
+                    </option>
+
+                    <option
+                        value="rejected"
+                        @selected(old('status', $umkm->status ?? '') == 'rejected')>
+
+                        Rejected
+
+                    </option>
+
+                </select>
+
+            </x-ui.field>
+
+            <div class="flex items-end">
+
+                <x-ui.checkbox
+                    name="is_active"
+                    :checked="old('is_active', $umkm->is_active ?? true)"
+                    label="UMKM Aktif" />
+
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
