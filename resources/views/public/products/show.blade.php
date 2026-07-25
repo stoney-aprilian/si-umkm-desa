@@ -1,202 +1,469 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 @extends('layouts.public')
+
 
 @section('title', $product->name)
 
+
+
+@section(
+    'meta_description',
+    Str::limit(strip_tags($product->description ?? ''), 160)
+)
+
+
+
+@section(
+    'og_image',
+    $product->image
+        ? asset('storage/' . $product->image)
+        : asset('images/og-image.jpg')
+)
+
+
+
 @section('content')
 
-    {{-- Product Hero --}}
-    <section class="bg-slate-50 py-16">
 
-        <div class="app-container">
 
-            <div class="grid gap-12 lg:grid-cols-2">
+{{-- Product Hero --}}
+<section class="public-section">
 
-                {{-- Product Image --}}
-                <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+    <div class="app-container">
+
+
+        <div class="grid gap-12 lg:grid-cols-2">
+
+
+
+            {{-- Product Image --}}
+            <div>
+
+
+                <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+
 
                     @if ($product->image)
+
 
                         <img
                             src="{{ asset('storage/' . $product->image) }}"
                             alt="{{ $product->name }}"
-                            class="aspect-square h-full w-full object-cover">
+                            loading="lazy"
+                            class="aspect-square w-full object-cover">
+
+
 
                     @else
 
-                        <div class="flex aspect-square items-center justify-center bg-slate-100">
 
-                            <span class="text-sm text-slate-400">
+                        <div class="flex aspect-square items-center justify-center bg-slate-100 text-slate-400">
 
-                                Tidak ada gambar produk
+
+                            <span class="text-sm font-medium">
+
+                                Gambar produk belum tersedia
 
                             </span>
 
+
                         </div>
 
+
                     @endif
+
 
                 </div>
 
-                {{-- Product Information --}}
-                <div class="flex flex-col justify-center">
 
-                    <p class="text-sm font-semibold uppercase tracking-wide text-emerald-600">
+            </div>
+
+
+
+
+
+            {{-- Product Identity --}}
+            <div class="flex flex-col justify-center">
+
+
+
+                @if ($product->umkm)
+
+
+                    <a
+                        href="{{ route('public.umkms.show', $product->umkm) }}"
+                        class="w-fit text-sm font-semibold text-emerald-600 transition hover:text-emerald-700">
+
 
                         {{ $product->umkm->business_name }}
 
-                    </p>
 
-                    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">
+                    </a>
 
-                        {{ $product->name }}
 
-                    </h1>
+                @endif
 
-                    @if ($product->price)
 
-                        <p class="mt-6 text-3xl font-bold text-emerald-600">
 
-                            Rp {{ number_format($product->price, 0, ',', '.') }}
+
+
+                <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 lg:text-5xl">
+
+
+                    {{ $product->name }}
+
+
+                </h1>
+
+
+
+
+                @if ($product->price)
+
+
+                    <div class="mt-6">
+
+
+                        <p class="text-sm font-medium uppercase tracking-wider text-slate-400">
+
+                            Harga Produk
 
                         </p>
 
-                    @endif
 
-                    <div class="mt-8 space-y-3">
 
-                        <h2 class="text-lg font-semibold text-slate-900">
+                        <p class="mt-2 text-3xl font-bold text-emerald-600">
 
-                            Deskripsi
 
-                        </h2>
+                            Rp {{ number_format($product->price,0,',','.') }}
 
-                        <p class="leading-8 text-slate-600">
-
-                            {{ $product->description ?: 'Belum ada deskripsi produk.' }}
 
                         </p>
+
 
                     </div>
 
-                    <div class="mt-10 flex flex-wrap gap-4">
+
+                @endif
+
+
+
+
+
+
+                <div class="mt-8">
+
+
+                    <h2 class="text-lg font-bold text-slate-900">
+
+
+                        Deskripsi Produk
+
+
+                    </h2>
+
+
+
+                    <p class="mt-4 leading-8 text-slate-600">
+
+
+                        {{ $product->description ?: 'Belum ada deskripsi produk.' }}
+
+
+                    </p>
+
+
+                </div>
+
+
+
+
+
+
+                <div class="mt-10 flex flex-wrap gap-4">
+
+
+                    @if($product->umkm)
 
                         <a
                             href="{{ route('public.umkms.show', $product->umkm) }}"
-                            class="inline-flex items-center justify-center rounded-xl border border-emerald-600 px-6 py-3 font-medium text-emerald-600 transition-colors duration-200 hover:bg-emerald-50">
+                            class="btn-secondary">
 
-                            Lihat UMKM
+                            Lihat Profil UMKM
 
                         </a>
+
+                    @endif
+
+                    @if($product->umkm?->phone)
+
 
                         <a
                             href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $product->umkm->phone) }}"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-6 py-3 font-medium text-white transition-colors duration-200 hover:bg-emerald-700">
+                            class="btn btn-primary">
 
-                            Hubungi via WhatsApp
+
+                            Hubungi WhatsApp
+
 
                         </a>
 
-                    </div>
+
+                    @endif
+
 
                 </div>
 
+
+
             </div>
+
+
 
         </div>
 
-    </section>
 
-    {{-- Business Information --}}
-    <section class="pb-20">
+    </div>
 
-        <div class="app-container">
 
-            <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+</section>
 
-                <h2 class="text-2xl font-semibold text-slate-900">
+{{-- UMKM Information --}}
+<section class="public-section bg-slate-50">
 
-                    Informasi UMKM
 
-                </h2>
+    <div class="app-container">
 
-                <div class="mt-6 grid gap-6 text-slate-600 md:grid-cols-2">
 
-                    <div>
+        <div class="app-card p-8 lg:p-10">
 
-                        <p class="text-sm font-medium text-slate-500">
 
-                            Nama UMKM
+            <x-ui.section-title
+                title="Tentang Pelaku UMKM"
+                subtitle="Kenali usaha yang menghasilkan produk ini." />
 
-                        </p>
 
-                        <p class="mt-1 font-medium text-slate-900">
 
-                            {{ $product->umkm->business_name }}
+            <div class="mt-10 grid gap-8 md:grid-cols-2">
 
-                        </p>
 
-                    </div>
 
-                    <div>
+                {{-- Business Name --}}
+                <div>
 
-                        <p class="text-sm font-medium text-slate-500">
 
-                            Kategori
+                    <p class="text-sm font-medium text-slate-500">
 
-                        </p>
+                        Nama UMKM
 
-                        <p class="mt-1 font-medium text-slate-900">
+                    </p>
 
-                            {{ $product->umkm->category->name }}
 
-                        </p>
+                    <p class="mt-2 font-semibold text-slate-900">
 
-                    </div>
 
-                    <div>
+                        {{ $product->umkm?->business_name ?? '-' }}
 
-                        <p class="text-sm font-medium text-slate-500">
 
-                            Alamat
+                    </p>
 
-                        </p>
-
-                        <p class="mt-1 text-slate-900">
-
-                            {{ $product->umkm->address }}
-
-                        </p>
-
-                    </div>
-
-                    <div>
-
-                        <p class="text-sm font-medium text-slate-500">
-
-                            Wilayah
-
-                        </p>
-
-                        <p class="mt-1 text-slate-900">
-
-                            {{ collect([
-                                $product->umkm->village,
-                                $product->umkm->district,
-                                $product->umkm->regency,
-                            ])->filter()->implode(', ') }}
-
-                        </p>
-
-                    </div>
 
                 </div>
 
+
+
+
+
+                {{-- Category --}}
+                <div>
+
+
+                    <p class="text-sm font-medium text-slate-500">
+
+                        Kategori Usaha
+
+                    </p>
+
+
+                    <p class="mt-2 font-semibold text-slate-900">
+
+
+                        {{ $product->umkm?->category?->name ?? '-' }}
+
+
+                    </p>
+
+
+                </div>
+
+
+
+
+
+                {{-- Address --}}
+                <div>
+
+
+                    <p class="text-sm font-medium text-slate-500">
+
+                        Alamat
+
+                    </p>
+
+
+                    <p class="mt-2 text-slate-900">
+
+
+                        {{ $product->umkm?->address ?? '-' }}
+
+
+                    </p>
+
+
+                </div>
+
+
+
+
+
+                {{-- Region --}}
+                <div>
+
+
+                    <p class="text-sm font-medium text-slate-500">
+
+                        Wilayah
+
+                    </p>
+
+
+                    <p class="mt-2 text-slate-900">
+
+
+                        {{
+                            collect([
+                                $product->umkm?->village,
+                                $product->umkm?->district,
+                                $product->umkm?->regency,
+                            ])->filter()->implode(', ')
+                        }}
+
+
+                    </p>
+
+
+                </div>
+
+
+
             </div>
+
+
+
+
+            @if($product->umkm)
+
+
+                <div class="mt-10">
+
+
+                    <a
+                        href="{{ route('public.umkms.show', $product->umkm) }}"
+                        class="btn-secondary">
+
+
+                        Lihat Profil Lengkap UMKM
+
+
+                    </a>
+
+
+                </div>
+
+
+            @endif
+
 
         </div>
 
-    </section>
+
+    </div>
+
+
+</section>
+
+
+
+
+
+{{-- Explore CTA --}}
+<section class="public-section pb-20">
+
+
+    <div class="app-container">
+
+
+        <div class="rounded-3xl bg-emerald-600 p-8 text-white lg:p-10">
+
+
+            <div class="flex flex-col items-center justify-between gap-6 text-center lg:flex-row lg:text-left">
+
+
+                <div>
+
+
+                    <h2 class="text-2xl font-bold">
+
+
+                        Temukan Produk Lokal Lainnya
+
+
+                    </h2>
+
+
+
+                    <p class="mt-3 max-w-xl text-emerald-50">
+
+
+                        Jelajahi berbagai produk unggulan dari UMKM Desa Salamnunggal.
+
+
+                    </p>
+
+
+                </div>
+
+
+
+
+                <a
+                    href="{{ route('public.products.index') }}"
+                    class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 font-semibold text-emerald-700 transition hover:bg-emerald-50">
+
+
+                    Jelajahi Produk
+
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
 
 @endsection

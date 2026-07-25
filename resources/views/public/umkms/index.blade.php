@@ -2,6 +2,11 @@
 
 @section('title', 'Daftar UMKM')
 
+@section(
+    'meta_description',
+    'Jelajahi daftar UMKM Desa Salamnunggal berdasarkan kategori dan temukan berbagai produk unggulan dari pelaku usaha lokal.'
+)
+
 @section('content')
 
     <section class="bg-slate-50 py-16">
@@ -23,36 +28,54 @@
 
             </div>
 
-            {{-- Active Filter --}}
-            @if (request()->filled('search') || request()->filled('category'))
+            {{-- Result Summary --}}
+            <div class="mt-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
 
-                <div class="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                @if (request()->filled('search') || request()->filled('category'))
 
-                    Menampilkan hasil
+                    <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
 
-                    @if (request()->filled('search'))
+                        Menampilkan hasil
 
-                        pencarian
+                        @if (request()->filled('search'))
 
-                        <span class="font-semibold">
-                            "{{ request('search') }}"
-                        </span>
+                            pencarian
 
-                    @endif
+                            <span class="font-semibold">
+                                "{{ request('search') }}"
+                            </span>
 
-                    @if (request()->filled('category'))
+                        @endif
 
-                        pada kategori
+                        @if (request()->filled('category'))
 
-                        <span class="font-semibold">
-                            {{ $categories->firstWhere('slug', request('category'))->name ?? request('category') }}
-                        </span>
+                            pada kategori
 
-                    @endif
+                            <span class="font-semibold">
+                                {{ optional($categories->firstWhere('slug', request('category')))->name ?? request('category') }}
+                            </span>
 
-                </div>
+                        @endif
 
-            @endif
+                    </div>
+
+                @endif
+
+                <p class="text-sm text-slate-500">
+
+                    Total
+
+                    <span class="font-semibold text-slate-700">
+
+                        {{ $umkms->total() }}
+
+                    </span>
+
+                    UMKM ditemukan.
+
+                </p>
+
+            </div>
 
             {{-- UMKM Grid --}}
             <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -80,7 +103,7 @@
 
                 <div class="mt-10">
 
-                    {{ $umkms->links() }}
+                    {{ $umkms->withQueryString()->links() }}
 
                 </div>
 

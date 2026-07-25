@@ -1,0 +1,874 @@
+/* ==========================================================
+   SI UMKM Desa Salamnunggal
+   Design System v1.0
+   Foundation
+========================================================== */
+
+@layer base {
+
+  /* =======================================================
+     Root
+  ======================================================= */
+
+  :root {
+
+    /* Colors */
+
+    --color-primary: #059669;
+    --color-primary-dark: #047857;
+
+    --color-secondary: #F59E0B;
+
+    --color-accent: #0EA5E9;
+
+    --color-background: #F8FAFC;
+
+    --color-surface: #FFFFFF;
+
+    --color-heading: #0F172A;
+
+    --color-body: #475569;
+
+    --color-muted: #94A3B8;
+
+    --color-border: #E2E8F0;
+
+    --color-danger: #DC2626;
+
+    --color-success: #059669;
+
+    --color-warning: #F59E0B;
+
+    --color-info: #0EA5E9;
+
+    /* Radius */
+
+    --radius-sm: .5rem;
+    --radius-md: .75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    --radius-2xl: 1.5rem;
+
+    /* Shadow */
+
+    --shadow-xs:
+      0 1px 2px rgba(15,23,42,.04);
+
+    --shadow-sm:
+      0 2px 8px rgba(15,23,42,.05);
+
+    --shadow-md:
+      0 8px 20px rgba(15,23,42,.08);
+
+    --shadow-lg:
+      0 20px 40px rgba(15,23,42,.12);
+
+    /* Transition */
+
+    --transition-fast:200ms ease;
+
+    --transition:
+      300ms ease;
+
+    /* Container */
+
+    --container-width:80rem;
+
+  }
+
+  /* =======================================================
+     HTML
+  ======================================================= */
+
+  html{
+
+    scroll-behavior:smooth;
+
+    -webkit-text-size-adjust:100%;
+
+  }
+
+  /* =======================================================
+     Body
+  ======================================================= */
+
+  body {
+
+    @apply antialiased;
+
+    background:var(--color-background);
+
+    color:var(--color-body);
+
+    font-family:
+        "Plus Jakarta Sans",
+        ui-sans-serif,
+        system-ui,
+        sans-serif;
+
+}
+
+  /* =======================================================
+     Selection
+  ======================================================= */
+
+  ::selection{
+
+    background:var(--color-primary);
+
+    color:white;
+
+  }
+
+  /* =======================================================
+     Scrollbar
+  ======================================================= */
+
+  *{
+
+    scrollbar-width:thin;
+
+    scrollbar-color:
+
+      #94A3B8
+
+      #F8FAFC;
+
+  }
+
+  *::-webkit-scrollbar{
+
+    width:10px;
+
+    height:10px;
+
+  }
+
+  *::-webkit-scrollbar-track{
+
+    background:#F1F5F9;
+
+  }
+
+  *::-webkit-scrollbar-thumb{
+
+    background:#94A3B8;
+
+    border-radius:999px;
+
+  }
+
+  *::-webkit-scrollbar-thumb:hover{
+
+    background:#64748B;
+
+  }
+
+  /* =======================================================
+     Typography
+  ======================================================= */
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6{
+
+    color:var(--color-heading);
+
+    @apply font-bold tracking-tight;
+
+    line-height:1.2;
+
+    margin:0;
+
+  }
+
+  h1{
+
+    @apply text-4xl lg:text-5xl;
+
+  }
+
+  h2{
+
+    @apply text-3xl lg:text-4xl;
+
+  }
+
+  h3{
+
+    @apply text-2xl lg:text-3xl;
+
+  }
+
+  h4{
+
+    @apply text-xl lg:text-2xl;
+
+  }
+
+  h5{
+
+    @apply text-lg;
+
+  }
+
+  h6{
+
+    @apply text-base;
+
+  }
+
+  p{
+
+    @apply leading-7;
+
+    color:var(--color-body);
+
+  }
+
+  strong{
+
+    @apply font-semibold;
+
+    color:var(--color-heading);
+
+  }
+
+  small{
+
+    @apply text-sm;
+
+    color:var(--color-muted);
+
+  }
+
+  /* =======================================================
+     Links
+  ======================================================= */
+
+  a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+    transition:var(--transition);
+
+  }
+
+  a:hover{
+
+    color:var(--color-primary);
+
+  }
+
+  /* =======================================================
+     Lists
+  ======================================================= */
+
+  ul,
+  ol{
+
+    @apply pl-5;
+
+  }
+
+  li{
+
+    @apply leading-7;
+
+  }
+
+  /* =======================================================
+     Images
+  ======================================================= */
+
+  img{
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+  }
+
+  picture{
+
+    display:block;
+
+  }
+
+  /* =======================================================
+     Media
+  ======================================================= */
+
+  svg{
+
+    flex-shrink:0;
+
+  }
+
+  iframe{
+
+    width:100%;
+
+    border:0;
+
+  }
+
+  /* =======================================================
+     Container System
+  ======================================================= */
+
+  .app-container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin-inline: auto;
+
+    @apply px-5 md:px-6 lg:px-8;
+  }
+
+  .container-sm {
+    @apply mx-auto max-w-4xl px-5 lg:px-6;
+  }
+
+  .container-md {
+    @apply mx-auto max-w-5xl px-5 lg:px-6;
+  }
+
+  .container-lg {
+    @apply mx-auto max-w-6xl px-6 lg:px-8;
+  }
+
+  .container-xl {
+    @apply mx-auto max-w-7xl px-6 lg:px-8;
+  }
+
+  /* =======================================================
+     Section
+  ======================================================= */
+
+  section {
+
+    position: relative;
+
+  }
+
+  .app-section {
+
+    @apply py-16 lg:py-20;
+
+  }
+
+  .section-sm {
+
+    @apply py-12;
+
+  }
+
+  .section-lg {
+
+    @apply py-24;
+
+  }
+
+  .section-divider {
+
+    @apply border-t border-slate-200;
+
+  }
+
+  /* =======================================================
+     Layout Helpers
+  ======================================================= */
+
+  .page-wrapper {
+
+    @apply min-h-screen;
+
+  }
+
+  .page-content {
+
+    @apply py-10 lg:py-12;
+
+  }
+
+  .page-header {
+
+    @apply mb-10;
+
+  }
+
+  .page-title {
+
+    @apply text-3xl font-bold text-slate-900;
+
+  }
+
+  .page-description {
+
+    @apply mt-2 max-w-3xl text-slate-600;
+
+  }
+
+  .content-wrapper {
+
+    @apply space-y-8;
+
+  }
+
+  /* =======================================================
+     Grid System
+  ======================================================= */
+
+  .grid-auto {
+
+    @apply grid gap-6;
+
+  }
+
+  .grid-2 {
+
+    @apply grid gap-6 md:grid-cols-2;
+
+  }
+
+  .grid-3 {
+
+    @apply grid gap-6 lg:grid-cols-3;
+
+  }
+
+  .grid-4 {
+
+    @apply grid gap-6 md:grid-cols-2 xl:grid-cols-4;
+
+  }
+
+  .content-grid {
+
+    @apply grid gap-8 lg:grid-cols-12;
+
+  }
+
+  .main-content {
+
+    @apply lg:col-span-8;
+
+  }
+
+  .side-content {
+
+    @apply lg:col-span-4;
+
+  }
+
+  /* =======================================================
+     Vertical Rhythm
+  ======================================================= */
+
+  .stack-xs>*+* {
+
+    @apply mt-2;
+
+  }
+
+  .stack-sm>*+* {
+
+    @apply mt-3;
+
+  }
+
+  .stack>*+* {
+
+    @apply mt-4;
+
+  }
+
+  .stack-lg>*+* {
+
+    @apply mt-6;
+
+  }
+
+  .stack-xl>*+* {
+
+    @apply mt-8;
+
+  }
+
+  /* =======================================================
+     Surface
+  ======================================================= */
+
+  .surface {
+
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+
+  }
+
+  .surface-muted {
+
+    @apply rounded-2xl bg-slate-100;
+
+  }
+
+  .surface-hover {
+
+    transition: var(--transition);
+
+  }
+
+  .surface-hover:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-lg);
+
+  }
+
+  /* =======================================================
+     Divider
+  ======================================================= */
+
+  hr {
+
+    @apply border-slate-200;
+
+  }
+
+  .divider {
+
+    @apply border-t border-slate-200;
+
+  }
+
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+
+    @apply cursor-not-allowed bg-slate-100 opacity-70;
+
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+
+    @apply text-slate-400;
+
+  }
+
+  /* =======================================================
+     Button Base
+  ======================================================= */
+
+  button {
+
+    font: inherit;
+
+  }
+
+  button:disabled {
+
+    @apply cursor-not-allowed opacity-60;
+
+  }
+
+  /* =======================================================
+     Table Base
+  ======================================================= */
+
+  table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+  }
+
+  th {
+
+    @apply font-semibold;
+
+  }
+
+  td,
+  th {
+
+    vertical-align: middle;
+
+  }
+
+  /* =======================================================
+     Interaction
+  ======================================================= */
+
+  button,
+  a,
+
+  /* =======================================================
+     Accessibility
+  ======================================================= */
+
+  :focus-visible {
+
+    outline: none;
+
+    box-shadow:
+      0 0 0 4px rgb(16 185 129 / .18);
+
+  }
+
+  [hidden] {
+
+    display: none !important;
+
+  }
+
+  /* =======================================================
+     Motion Preference
+  ======================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+      animation-duration: .01ms !important;
+
+      animation-iteration-count: 1 !important;
+
+      transition-duration: .01ms !important;
+
+      scroll-behavior: auto !important;
+
+    }
+
+  }
+
+  /* =======================================================
+     Responsive Foundation
+  ======================================================= */
+
+  @media (max-width: 1023px) {
+
+    .app-section {
+      @apply py-16;
+    }
+
+    .page-content {
+      @apply py-8;
+    }
+
+    .content-grid {
+      @apply grid-cols-1 gap-6;
+    }
+
+  }
+
+  @media (max-width: 767px) {
+
+    h1 {
+      @apply text-3xl;
+    }
+
+    h2 {
+      @apply text-2xl;
+    }
+
+    h3 {
+      @apply text-xl;
+    }
+
+    h4 {
+      @apply text-lg;
+    }
+
+    p {
+      @apply text-sm leading-7;
+    }
+
+    .app-section {
+      @apply py-12;
+    }
+
+    .page-header {
+      @apply mb-8;
+    }
+
+    .page-title {
+      @apply text-2xl;
+    }
+
+    .page-description {
+      @apply text-sm;
+    }
+
+  }
+
+  /* =======================================================
+     Native Element Reset
+  ======================================================= */
+
+  fieldset {
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+  }
+
+  legend {
+
+    @apply mb-4 text-lg font-semibold text-slate-900;
+
+  }
+
+  blockquote {
+
+    @apply border-l-4 border-emerald-600 pl-5 italic text-slate-600;
+
+  }
+
+  code {
+
+    @apply rounded bg-slate-100 px-1.5 py-1 text-sm text-emerald-700;
+
+  }
+
+  pre {
+
+    @apply overflow-x-auto rounded-2xl bg-slate-900 p-6 text-slate-100;
+
+  }
+
+  pre code {
+
+    @apply bg-transparent p-0 text-inherit;
+
+  }
+
+  mark {
+
+    @apply rounded bg-amber-100 px-1 text-amber-800;
+
+  }
+
+  kbd {
+
+    @apply rounded border border-slate-300 bg-white px-2 py-1 text-xs font-semibold shadow-sm;
+
+  }
+
+  /* =======================================================
+     Form Validation
+  ======================================================= */
+
+  input:invalid,
+  textarea:invalid,
+  select:invalid {
+
+    box-shadow: none;
+
+  }
+
+  input:required,
+  textarea:required,
+  select:required {
+
+    scroll-margin-top: 120px;
+
+  }
+
+  /* =======================================================
+     Cursor Helpers
+  ======================================================= */
+
+  button,
+  [role="button"] {
+
+    cursor: pointer;
+
+  }
+
+  /* =======================================================
+     Print
+  ======================================================= */
+
+  @media print {
+
+    body {
+
+      background: white !important;
+
+      color: black !important;
+
+    }
+
+    .no-print {
+
+      display: none !important;
+
+    }
+
+    .app-card,
+    .surface {
+
+      border: 1px solid #CBD5E1 !important;
+
+      box-shadow: none !important;
+
+    }
+
+    a {
+
+      color: inherit !important;
+
+      text-decoration: none !important;
+
+    }
+
+  }
+
+  /* =======================================================
+     Golden Rules
+  ======================================================= */
+
+  main {
+
+    min-height: 60vh;
+
+  }
+
+  .list-spacing>*+* {
+
+    @apply mt-4;
+
+  }
+
+  .reading-width {
+
+    max-width: 70ch;
+
+  }
+
+  .content-width {
+
+    max-width: 90ch;
+
+  }
+
+  .hero-width {
+
+    max-width: 48rem;
+
+  }
+
+}

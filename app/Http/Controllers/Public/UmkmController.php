@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Umkm;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -15,38 +17,62 @@ class UmkmController extends Controller
      */
     private const PER_PAGE = 9;
 
+
+
     /**
      * Display UMKM catalogue.
      */
-    public function index(Request $request): View
-    {
-        $search = trim($request->string('search'));
-        $category = trim($request->string('category'));
+    public function index(
+        Request $request
+    ): View {
 
-        return view('public.umkms.index', [
-            'umkms' => $this->umkms($search, $category),
-            'categories' => $this->categories(),
-            'search' => $search,
-            'category' => $category,
-        ]);
+        $search = trim(
+            $request->string('search')
+        );
+
+        $category = trim(
+            $request->string('category')
+        );
+
+
+
+        return view(
+            'public.umkms.index',
+            [
+                'umkms' => $this->umkms(
+                    $search,
+                    $category
+                ),
+
+                'categories' => $this->categories(),
+
+                'search' => $search,
+
+                'category' => $category,
+            ]
+        );
     }
+
+
+
+
 
     /**
      * Display UMKM detail.
      */
-    public function show(Umkm $umkm): View
-    {
-        abort_unless(
-            $umkm->status === 'approved'
-            && $umkm->is_active,
-            404
-        );
+    public function show(
+        Umkm $umkm
+    ): View {
 
         $umkm->load([
+
             'category:id,name,slug',
 
             'products' => function ($query) {
-                $query->select([
+
+                $query
+
+                    ->select([
                         'id',
                         'umkm_id',
                         'name',
@@ -54,41 +80,77 @@ class UmkmController extends Controller
                         'price',
                         'is_featured',
                     ])
-                    ->where('is_active', true)
+
+                    ->active()
+
                     ->latest();
+
             },
+
         ]);
 
-        return view('public.umkms.show', [
-            'umkm' => $umkm,
-        ]);
+
+
+        abort_unless(
+
+            $umkm->status === 'approved'
+            &&
+            $umkm->is_active,
+
+            404
+
+        );
+
+
+
+        return view(
+            'public.umkms.show',
+            compact('umkm')
+        );
     }
+
+
+
+
 
     /**
      * Retrieve active categories.
      */
-    private function categories()
+    private function categories(): Collection
     {
         return Category::query()
+
+            ->active()
+
             ->select([
                 'id',
                 'name',
                 'slug',
             ])
-            ->where('is_active', true)
+
             ->orderBy('name')
+
             ->get();
     }
 
+
+
+
+
     /**
-     * Retrieve UMKM list.
+     * Retrieve published UMKM list.
      */
     private function umkms(
         ?string $search,
         ?string $category
-    )
-    {
+    ): LengthAwarePaginator {
+
         return Umkm::query()
+
+            ->approved()
+
+            ->active()
+
             ->select([
                 'id',
                 'category_id',
@@ -99,14 +161,11 @@ class UmkmController extends Controller
                 'village',
                 'district',
                 'regency',
-                'status',
-                'is_active',
             ])
+
             ->with([
                 'category:id,name,slug',
             ])
-            ->where('status', 'approved')
-            ->where('is_active', true)
 
             ->when(
                 $search,
@@ -114,24 +173,26 @@ class UmkmController extends Controller
 
                     $query->where(function ($query) use ($search) {
 
-                        $query->where(
-                            'business_name',
-                            'like',
-                            "%{$search}%"
-                        )
+                        $query
 
-                        ->orWhereHas(
-                            'category',
-                            function ($query) use ($search) {
+                            ->where(
+                                'business_name',
+                                'like',
+                                "%{$search}%"
+                            )
 
-                                $query->where(
-                                    'name',
-                                    'like',
-                                    "%{$search}%"
-                                );
+                            ->orWhereHas(
+                                'category',
+                                function ($query) use ($search) {
 
-                            }
-                        );
+                                    $query->where(
+                                        'name',
+                                        'like',
+                                        "%{$search}%"
+                                    );
+
+                                }
+                            );
 
                     });
 
@@ -158,7 +219,11 @@ class UmkmController extends Controller
             )
 
             ->latest()
-            ->paginate(self::PER_PAGE)
+
+            ->paginate(
+                self::PER_PAGE
+            )
+
             ->withQueryString();
     }
 }

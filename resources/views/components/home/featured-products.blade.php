@@ -2,48 +2,72 @@
     'products',
 ])
 
-<section class="bg-white py-24">
+
+<section class="public-section">
+
 
     <div class="app-container">
 
+
         <x-ui.section-title
             title="Produk Unggulan"
-            subtitle="Temukan berbagai produk unggulan hasil karya pelaku UMKM desa yang siap dipasarkan kepada masyarakat." />
+            subtitle="Temukan berbagai produk lokal hasil karya pelaku UMKM Desa Salamnunggal yang memiliki nilai ekonomi dan potensi untuk dikembangkan." />
+
+
 
         @if ($products->isNotEmpty())
 
-            <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+            <div class="public-product-grid mt-12">
+
 
                 @foreach ($products as $product)
+
 
                     <x-product.card
                         :product="$product" />
 
+
                 @endforeach
+
 
             </div>
 
+
+
             <div class="mt-14 text-center">
+
 
                 <p class="mb-5 text-sm text-slate-500">
 
-                    Ingin melihat lebih banyak produk dari UMKM Desa?
+
+                    Jelajahi lebih banyak produk lokal dari berbagai UMKM desa.
+
 
                 </p>
+
+
 
                 <a
                     href="{{ route('public.products.index') }}"
                     class="btn-secondary">
 
-                    Lihat Semua Produk
+
+                    Jelajahi Semua Produk
+
 
                 </a>
 
+
             </div>
+
+
 
         @else
 
+
             <div class="mt-10">
+
 
                 <x-ui.empty-state>
 
@@ -51,10 +75,14 @@
 
                 </x-ui.empty-state>
 
+
             </div>
+
 
         @endif
 
+
     </div>
+
 
 </section>

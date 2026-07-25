@@ -4,11 +4,14 @@
     'footer' => null,
 ])
 
+
 <div
     {{ $attributes->merge([
-        'class' => 'app-card overflow-hidden',
+        'class' => 'overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm',
     ]) }}>
 
+
+    {{-- Header --}}
     @if ($header)
 
         <div class="border-b border-slate-200 px-6 py-5">
@@ -19,9 +22,12 @@
 
     @endif
 
+
+
+    {{-- Body --}}
     @if ($padding)
 
-        <div class="card-body">
+        <div class="px-6 py-6">
 
             {{ $slot }}
 
@@ -33,14 +39,18 @@
 
     @endif
 
+
+
+    {{-- Footer --}}
     @if ($footer)
 
-        <div class="border-t border-slate-200 px-6 py-5">
+        <div class="border-t border-slate-200 bg-slate-50 px-6 py-5">
 
             {{ $footer }}
 
         </div>
 
     @endif
+
 
 </div>

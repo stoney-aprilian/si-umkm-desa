@@ -1,254 +1,636 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
+
+
 @extends('layouts.public')
+
 
 @section('title', $umkm->business_name)
 
+
+@section(
+    'meta_description',
+    Str::limit(strip_tags($umkm->description ?? ''), 160)
+)
+
+
+@section(
+    'og_image',
+    $umkm->banner
+        ? asset('storage/' . $umkm->banner)
+        : asset('images/og-image.jpg')
+)
+
+
+
 @section('content')
 
-    {{-- Hero --}}
-    <section class="bg-slate-100">
 
-        <div class="relative h-72 overflow-hidden">
+{{-- Hero Profile --}}
+<section class="relative">
 
-            @if ($umkm->banner)
 
-                <img
-                    src="{{ asset('storage/' . $umkm->banner) }}"
-                    alt="{{ $umkm->business_name }}"
-                    class="h-full w-full object-cover">
+    <div class="relative h-[22rem] overflow-hidden lg:h-[28rem]">
 
-            @else
 
-                <div class="flex h-full items-center justify-center bg-gradient-to-r from-emerald-500 to-emerald-700">
+        {{-- Banner --}}
+        @if ($umkm->banner)
 
-                    <span class="text-2xl font-bold tracking-tight text-white">
 
-                        {{ $umkm->business_name }}
+            <img
+                src="{{ asset('storage/' . $umkm->banner) }}"
+                alt="{{ $umkm->business_name }}"
+                loading="lazy"
+                class="h-full w-full object-cover">
 
-                    </span>
 
-                </div>
+        @else
 
-            @endif
 
-        </div>
+            <div class="h-full bg-gradient-to-br from-emerald-600 to-teal-700"></div>
 
-    </section>
 
-    {{-- Business Information --}}
-    <section class="py-12">
+        @endif
 
-        <div class="app-container">
 
-            <div class="grid gap-10 lg:grid-cols-3">
 
-                {{-- Business Logo --}}
-                <div>
+        {{-- Overlay --}}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div>
 
-                    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
 
-                        @if ($umkm->logo)
 
-                            <img
-                                src="{{ asset('storage/' . $umkm->logo) }}"
-                                alt="{{ $umkm->business_name }}"
-                                class="aspect-square h-60 w-full object-cover">
 
-                        @else
+        {{-- Header Content --}}
+        <div class="absolute inset-x-0 bottom-0">
 
-                            <div class="flex aspect-square h-60 items-center justify-center bg-slate-100">
 
-                                <span class="text-sm text-slate-400">
+            <div class="app-container pb-12">
 
-                                    Logo UMKM
 
-                                </span>
+                <div class="max-w-3xl">
 
-                            </div>
-
-                        @endif
-
-                    </div>
-
-                </div>
-
-                {{-- Business Details --}}
-                <div class="lg:col-span-2">
 
                     <x-ui.badge>
 
-                        {{ $umkm->category->name }}
+
+                        {{ $umkm->category?->name ?? 'UMKM Desa' }}
+
 
                     </x-ui.badge>
 
-                    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-900">
+
+
+
+                    <h1 class="mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+
 
                         {{ $umkm->business_name }}
 
+
                     </h1>
 
-                    <div class="mt-8 grid gap-6 text-slate-600 md:grid-cols-2">
 
-                        <div>
 
-                            <p class="text-sm font-medium text-slate-500">
+                    <p class="mt-4 flex items-center gap-2 text-white/90">
 
-                                Alamat
 
-                            </p>
+                        <svg
+                            class="h-5 w-5 shrink-0"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24">
 
-                            <p class="mt-1 text-slate-900">
 
-                                {{ $umkm->address }}
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0L6.343 16.657A8 8 0 1117.657 16.657z"/>
 
-                            </p>
 
-                        </div>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
 
-                        <div>
 
-                            <p class="text-sm font-medium text-slate-500">
+                        </svg>
 
-                                Wilayah
 
-                            </p>
 
-                            <p class="mt-1 text-slate-900">
+                        <span>
 
-                                {{ collect([
+
+                            {{
+                                collect([
                                     $umkm->village,
                                     $umkm->district,
                                     $umkm->regency,
-                                ])->filter()->implode(', ') }}
+                                ])->filter()->implode(', ')
+                            }}
 
-                            </p>
+
+                        </span>
+
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+{{-- Identity Section --}}
+<section class="relative -mt-10 pb-16">
+
+
+    <div class="app-container">
+
+
+        <div class="grid gap-8 lg:grid-cols-4">
+
+
+
+            {{-- Logo Card --}}
+            <div class="lg:col-span-1">
+
+
+                <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white p-3 shadow-lg">
+
+
+                    @if ($umkm->logo)
+
+
+                        <img
+                            src="{{ asset('storage/' . $umkm->logo) }}"
+                            alt="{{ $umkm->business_name }}"
+                            loading="lazy"
+                            class="aspect-square w-full rounded-2xl object-cover">
+
+
+                    @else
+
+
+                        <div class="flex aspect-square items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+
+
+                            <span class="text-sm font-medium">
+
+                                Logo UMKM
+
+                            </span>
+
 
                         </div>
+
+
+                    @endif
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+            {{-- Quick Identity --}}
+            <div class="lg:col-span-3">
+
+
+                <div class="app-card p-8">
+
+
+                    <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+
 
                         <div>
 
+
                             <p class="text-sm font-medium text-slate-500">
 
-                                Telepon
+                                Profil UMKM
 
                             </p>
 
-                            <p class="mt-1 text-slate-900">
 
-                                {{ $umkm->phone }}
+                            <h2 class="mt-2 text-2xl font-bold text-slate-900">
+
+
+                                {{ $umkm->business_name }}
+
+
+                            </h2>
+
+
+                            <p class="mt-3 text-slate-600">
+
+
+                                {{ $umkm->category?->name ?? 'Kategori belum tersedia' }}
+
 
                             </p>
+
 
                         </div>
 
+
+
+                        @if($umkm->phone)
+
+
+                            <a
+                                href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $umkm->phone) }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-primary">
+
+
+                                Hubungi WhatsApp
+
+
+                            </a>
+
+
+                        @endif
+
+
                     </div>
 
-                    <div class="mt-8">
-
-                        <a
-                            href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $umkm->phone) }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-6 py-3 font-medium text-white transition-colors duration-200 hover:bg-emerald-700">
-
-                            Hubungi via WhatsApp
-
-                        </a>
-
-                    </div>
 
                 </div>
 
+
             </div>
+
 
         </div>
 
-    </section>
 
-    {{-- About Business --}}
-    <section class="pb-16">
+    </div>
 
-        <div class="app-container">
+</section>
+
+{{-- Business Information --}}
+<section class="public-section">
+
+
+    <div class="app-container">
+
+
+        <div class="app-card p-8 lg:p-10">
+
 
             <x-ui.section-title
-                title="Tentang UMKM"
-                subtitle="Informasi mengenai usaha." />
+                title="Informasi UMKM"
+                subtitle="Informasi lengkap mengenai usaha dan kontak pelaku UMKM." />
 
-            <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
 
-                <p class="leading-8 text-slate-700">
 
-                    {{ $umkm->description ?: 'Belum ada deskripsi.' }}
+            <div class="mt-10 grid gap-8 md:grid-cols-2">
 
-                </p>
 
-            </div>
 
-        </div>
+                {{-- Category --}}
+                <div>
 
-    </section>
 
-    {{-- Products --}}
-    <section class="pb-16">
+                    <p class="text-sm font-medium text-slate-500">
 
-        <div class="app-container">
+                        Kategori Usaha
 
-            <x-ui.section-title
-                title="Produk"
-                subtitle="Produk yang dimiliki UMKM ini." />
+                    </p>
 
-            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 
-                @forelse ($umkm->products as $product)
+                    <p class="mt-2 font-semibold text-slate-900">
 
-                    <x-product.card
-                        :product="$product" />
+                        {{ $umkm->category?->name ?? '-' }}
 
-                @empty
+                    </p>
 
-                    <div class="md:col-span-2 lg:col-span-3">
-
-                        <x-ui.empty-state
-                            title="Belum Ada Produk"
-                            description="UMKM ini belum menambahkan produk." />
-
-                    </div>
-
-                @endforelse
-
-            </div>
-
-        </div>
-
-    </section>
-
-    {{-- Location --}}
-    @if ($umkm->maps_url)
-
-        <section class="pb-20">
-
-            <div class="app-container">
-
-                <x-ui.section-title
-                    title="Lokasi"
-                    subtitle="Temukan lokasi UMKM." />
-
-                <div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-
-                    <iframe
-                        src="{{ $umkm->maps_url }}"
-                        class="h-[450px] w-full"
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        allowfullscreen>
-
-                    </iframe>
 
                 </div>
 
+
+
+                {{-- Phone --}}
+                <div>
+
+
+                    <p class="text-sm font-medium text-slate-500">
+
+                        Nomor Telepon
+
+                    </p>
+
+
+                    <p class="mt-2 font-semibold text-slate-900">
+
+                        {{ $umkm->phone ?: '-' }}
+
+                    </p>
+
+
+                </div>
+
+
+
+
+                {{-- Address --}}
+                <div>
+
+
+                    <p class="text-sm font-medium text-slate-500">
+
+                        Alamat
+
+                    </p>
+
+
+                    <p class="mt-2 text-slate-900">
+
+                        {{ $umkm->address ?: '-' }}
+
+                    </p>
+
+
+                </div>
+
+
+
+
+                {{-- Region --}}
+                <div>
+
+
+                    <p class="text-sm font-medium text-slate-500">
+
+                        Wilayah
+
+                    </p>
+
+
+                    <p class="mt-2 text-slate-900">
+
+
+                        {{
+                            collect([
+                                $umkm->village,
+                                $umkm->district,
+                                $umkm->regency,
+                            ])->filter()->implode(', ')
+                        }}
+
+
+                    </p>
+
+
+                </div>
+
+
+
             </div>
 
-        </section>
 
-    @endif
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+{{-- About --}}
+<section class="public-section">
+
+
+    <div class="app-container">
+
+
+        <x-ui.section-title
+            title="Tentang UMKM"
+            subtitle="Kenali lebih dekat usaha dan cerita di balik produk yang dihasilkan." />
+
+
+
+        <div class="app-card p-8 lg:p-10">
+
+
+            <p class="leading-8 text-slate-700">
+
+
+                {{
+                    $umkm->description
+                    ?: 'Belum ada deskripsi mengenai UMKM ini.'
+                }}
+
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+{{-- Products --}}
+<section class="public-section bg-slate-50">
+
+
+    <div class="app-container">
+
+
+        <x-ui.section-title
+            title="Produk UMKM"
+            subtitle="Produk yang tersedia dari pelaku usaha ini." />
+
+
+
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+
+            @forelse ($umkm->products->take(6) as $product)
+
+
+                <x-product.card
+                    :product="$product" />
+
+
+            @empty
+
+
+                <div class="col-span-full">
+
+
+                    <x-ui.empty-state
+                        title="Belum Ada Produk"
+                        description="UMKM ini belum menambahkan produk ke dalam platform." />
+
+
+                </div>
+
+
+            @endforelse
+
+
+        </div>
+
+
+
+    </div>
+
+
+</section>
+
+
+{{-- Location --}}
+@if ($umkm->maps_url)
+
+
+<section class="public-section">
+
+
+    <div class="app-container">
+
+
+        <x-ui.section-title
+            title="Lokasi UMKM"
+            subtitle="Temukan lokasi usaha melalui peta digital." />
+
+
+
+        <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+
+
+            <iframe
+                src="{{ $umkm->maps_url }}"
+                class="h-[450px] w-full"
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade">
+
+            </iframe>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+@endif
+
+
+
+
+
+{{-- Explore More CTA --}}
+<section class="public-section pb-20">
+
+
+    <div class="app-container">
+
+
+        <div class="rounded-3xl bg-slate-100 p-8 lg:p-10">
+
+
+            <div class="flex flex-col items-center justify-between gap-6 text-center lg:flex-row lg:text-left">
+
+
+                <div>
+
+
+                    <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+
+
+                        Jelajahi UMKM Desa Lainnya
+
+
+                    </h2>
+
+
+
+                    <p class="mt-3 max-w-xl text-slate-600">
+
+
+                        Temukan lebih banyak pelaku usaha lokal dan
+                        produk unggulan dari Desa Salamnunggal.
+
+
+                    </p>
+
+
+                </div>
+
+
+
+
+                <div class="flex flex-wrap justify-center gap-3 lg:justify-end">
+
+
+                    <a
+                        href="{{ route('public.umkms.index') }}"
+                        class="btn-secondary">
+
+
+                        Lihat Semua UMKM
+
+
+                    </a>
+
+
+
+
+                    <a
+                        href="{{ route('public.products.index') }}"
+                        class="btn btn-primary">
+
+
+                        Jelajahi Produk
+
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
 
 @endsection

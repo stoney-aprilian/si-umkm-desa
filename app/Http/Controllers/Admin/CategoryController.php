@@ -19,6 +19,7 @@ class CategoryController extends Controller
      */
     private const PER_PAGE = 10;
 
+
     /**
      * Display a listing of the categories.
      */
@@ -26,17 +27,48 @@ class CategoryController extends Controller
     {
         $search = trim($request->string('search'));
 
+
         $categories = Category::query()
             ->search($search)
             ->latest()
             ->paginate(self::PER_PAGE)
             ->withQueryString();
 
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Statistics
+        |--------------------------------------------------------------------------
+        */
+
+        $totalCategories = Category::count();
+
+        $activeCategories = Category::where('is_active', true)
+            ->count();
+
+        $inactiveCategories = Category::where('is_active', false)
+            ->count();
+
+
+
         return view('admin.categories.index', compact(
+
             'categories',
-            'search'
+
+            'search',
+
+            'totalCategories',
+
+            'activeCategories',
+
+            'inactiveCategories'
+
         ));
     }
+
+
+
 
     /**
      * Show the form for creating a new category.
@@ -46,6 +78,9 @@ class CategoryController extends Controller
         return view('admin.categories.create');
     }
 
+
+
+
     /**
      * Store a newly created category.
      */
@@ -53,10 +88,13 @@ class CategoryController extends Controller
     {
         $data = $this->payload($request);
 
+
         // Kategori baru selalu aktif.
         $data['is_active'] = true;
 
+
         Category::create($data);
+
 
         return to_route('admin.categories.index')
             ->with(
@@ -65,6 +103,9 @@ class CategoryController extends Controller
             );
     }
 
+
+
+
     /**
      * Redirect show request.
      */
@@ -72,6 +113,9 @@ class CategoryController extends Controller
     {
         return to_route('admin.categories.index');
     }
+
+
+
 
     /**
      * Show the form for editing the specified category.
@@ -84,6 +128,9 @@ class CategoryController extends Controller
         );
     }
 
+
+
+
     /**
      * Update the specified category.
      */
@@ -94,10 +141,14 @@ class CategoryController extends Controller
 
         $data = $this->payload($request);
 
+
         // Status mengikuti pilihan admin.
         $data['is_active'] = $request->boolean('is_active');
 
+
         $category->update($data);
+
+
 
         return to_route('admin.categories.index')
             ->with(
@@ -106,12 +157,36 @@ class CategoryController extends Controller
             );
     }
 
+
+
+
     /**
      * Remove the specified category.
      */
     public function destroy(Category $category): RedirectResponse
     {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Prevent deleting category that is still used
+        |--------------------------------------------------------------------------
+        */
+
+        if ($category->umkms()->exists()) {
+
+            return back()
+                ->with(
+                    'error',
+                    'Kategori tidak dapat dihapus karena masih digunakan oleh UMKM.'
+                );
+
+        }
+
+
+
         $category->delete();
+
+
 
         return to_route('admin.categories.index')
             ->with(
@@ -120,6 +195,9 @@ class CategoryController extends Controller
             );
     }
 
+
+
+
     /**
      * Build category payload.
      */
@@ -127,7 +205,9 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
 
+
         $data['slug'] = Str::slug($data['name']);
+
 
         return $data;
     }

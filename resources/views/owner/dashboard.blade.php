@@ -4,36 +4,30 @@
 
 @section('content')
 
-    <section class="space-y-6">
+<div class="space-y-6">
 
-        {{-- Page Header --}}
+    @include('owner.partials.dashboard-header')
+
+    @include('owner.partials.statistics')
+
+    <div class="grid gap-6 lg:grid-cols-3">
+
+        <div class="space-y-6 lg:col-span-2">
+
+            @include('owner.partials.profile-summary')
+
+            @include('owner.partials.recent-products')
+
+        </div>
+
         <div>
 
-            <h1 class="text-3xl font-bold tracking-tight text-slate-900">
-                Dashboard Owner
-            </h1>
-
-            <p class="mt-2 text-sm text-slate-500">
-                Selamat datang kembali. Kelola UMKM Anda melalui dashboard ini.
-            </p>
+            @include('owner.partials.quick-actions')
 
         </div>
 
-        {{-- Welcome Card --}}
-        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    </div>
 
-            <h2 class="text-lg font-semibold text-slate-900">
-                Selamat Datang 👋
-            </h2>
-
-            <p class="mt-2 text-sm leading-6 text-slate-600">
-                Anda berhasil masuk sebagai <strong>Owner UMKM</strong>.
-                Gunakan menu di samping untuk mengelola produk, informasi usaha,
-                serta melihat perkembangan UMKM Anda.
-            </p>
-
-        </div>
-
-    </section>
+</div>
 
 @endsection

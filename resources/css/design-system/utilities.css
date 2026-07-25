@@ -1,0 +1,1010 @@
+/* =======================================================
+   Surface Utilities
+======================================================= */
+
+@layer utilities {
+
+.surface {
+
+  @apply rounded-2xl border border-slate-200 bg-white;
+
+}
+
+.surface-sm {
+
+  @apply rounded-xl border border-slate-200 bg-white;
+
+}
+
+.surface-lg {
+
+  @apply rounded-3xl border border-slate-200 bg-white;
+
+}
+
+.surface-muted {
+
+  @apply rounded-2xl border border-slate-200 bg-slate-50;
+
+}
+
+.surface-primary {
+
+  @apply rounded-2xl border border-emerald-100 bg-emerald-50;
+
+}
+
+.surface-warning {
+
+  @apply rounded-2xl border border-amber-100 bg-amber-50;
+
+}
+
+.surface-danger {
+
+  @apply rounded-2xl border border-red-100 bg-red-50;
+
+}
+
+
+/* =======================================================
+   Elevation
+======================================================= */
+
+.shadow-card {
+
+  box-shadow:
+    0 1px 3px rgb(15 23 42 / .08),
+    0 8px 24px rgb(15 23 42 / .04);
+
+}
+
+.shadow-card-hover {
+
+  transition:
+    box-shadow .3s ease,
+    transform .3s ease;
+
+}
+
+.shadow-card-hover:hover {
+
+  box-shadow:
+    0 12px 30px rgb(15 23 42 / .12);
+
+  transform: translateY(-3px);
+
+}
+
+.shadow-popover {
+
+  box-shadow:
+    0 10px 30px rgb(15 23 42 / .15);
+
+}
+
+.shadow-floating {
+
+  box-shadow:
+    0 20px 50px rgb(15 23 42 / .18);
+
+}
+
+.shadow-modal {
+
+  box-shadow:
+    0 25px 80px rgb(15 23 42 / .22);
+
+}
+
+
+/* =======================================================
+   Glass
+======================================================= */
+
+.glass {
+
+  background:
+
+    rgba(255,255,255,.72);
+
+  backdrop-filter:
+
+    blur(16px);
+
+  -webkit-backdrop-filter:
+
+    blur(16px);
+
+}
+
+.glass-dark {
+
+  background:
+
+    rgba(15,23,42,.72);
+
+  backdrop-filter:
+
+    blur(16px);
+
+  -webkit-backdrop-filter:
+
+    blur(16px);
+
+}
+
+
+/* =======================================================
+   Border
+======================================================= */
+
+.border-soft {
+
+  @apply border border-slate-200;
+
+}
+
+.border-primary {
+
+  @apply border border-emerald-200;
+
+}
+
+.border-warning {
+
+  @apply border border-amber-200;
+
+}
+
+.border-danger {
+
+  @apply border border-red-200;
+
+}
+
+
+/* =======================================================
+   Divider
+======================================================= */
+
+.divider {
+
+  @apply border-t border-slate-200;
+
+}
+
+.divider-soft {
+
+  border-color:
+
+    rgb(226 232 240 / .6);
+
+}
+
+.divider-dashed {
+
+  @apply border-t border-dashed border-slate-300;
+
+}
+
+/* =======================================================
+   Content Width
+======================================================= */
+
+.content-width {
+
+  @apply mx-auto w-full max-w-7xl;
+
+}
+
+.content-wide {
+
+  @apply mx-auto w-full max-w-[1440px];
+
+}
+
+.content-narrow {
+
+  @apply mx-auto w-full max-w-3xl;
+
+}
+
+.content-readable {
+
+  @apply mx-auto w-full max-w-2xl;
+
+}
+
+
+/* =======================================================
+   Container
+======================================================= */
+
+.container-app {
+
+  @apply mx-auto w-full;
+
+  @apply px-4 sm:px-6 lg:px-8;
+
+}
+
+.container-section {
+
+  @apply mx-auto w-full max-w-7xl;
+
+  @apply px-4 sm:px-6 lg:px-8;
+
+}
+
+
+/* =======================================================
+   Section Spacing
+======================================================= */
+
+.section-spacing {
+
+  @apply py-20;
+
+}
+
+.section-spacing-sm {
+
+  @apply py-12;
+
+}
+
+.section-spacing-lg {
+
+  @apply py-28;
+
+}
+
+.section-gap {
+
+  @apply space-y-12;
+
+}
+
+
+/* =======================================================
+   Aspect Ratio
+======================================================= */
+
+.aspect-banner {
+
+  aspect-ratio:
+
+    16 / 7;
+
+}
+
+.aspect-video {
+
+  aspect-ratio:
+
+    16 / 9;
+
+}
+
+.aspect-card {
+
+  aspect-ratio:
+
+    16 / 10;
+
+}
+
+.aspect-square {
+
+  aspect-ratio:
+
+    1 / 1;
+
+}
+
+
+/* =======================================================
+   Media Wrapper
+======================================================= */
+
+.media-wrapper {
+
+  @apply relative overflow-hidden;
+
+}
+
+.media-cover {
+
+  @apply h-full w-full object-cover;
+
+}
+
+.media-contain {
+
+  @apply h-full w-full object-contain;
+
+}
+
+
+/* =======================================================
+   Icon Wrapper
+======================================================= */
+
+.icon-wrapper {
+
+  @apply flex items-center justify-center;
+
+  @apply rounded-xl;
+
+  @apply bg-slate-100 text-slate-600;
+
+  flex-shrink: 0;
+
+}
+
+.icon-wrapper-sm {
+
+  @apply h-8 w-8;
+
+}
+
+.icon-wrapper-md {
+
+  @apply h-12 w-12;
+
+}
+
+.icon-wrapper-lg {
+
+  @apply h-16 w-16;
+
+}
+
+.icon-wrapper-primary {
+
+  @apply bg-emerald-100 text-emerald-600;
+
+}
+
+.icon-wrapper-warning {
+
+  @apply bg-amber-100 text-amber-600;
+
+}
+
+.icon-wrapper-danger {
+
+  @apply bg-red-100 text-red-600;
+
+}
+
+.icon-wrapper-info {
+
+  @apply bg-sky-100 text-sky-600;
+
+}
+
+
+/* =======================================================
+   Avatar Wrapper
+======================================================= */
+
+.avatar-wrapper {
+
+  @apply flex items-center justify-center;
+
+  @apply overflow-hidden rounded-full;
+
+  @apply bg-slate-200;
+
+}
+
+.avatar-wrapper img {
+
+  @apply h-full w-full object-cover;
+
+}
+
+.avatar-sm {
+
+  @apply h-8 w-8;
+
+}
+
+.avatar-md {
+
+  @apply h-12 w-12;
+
+}
+
+.avatar-lg {
+
+  @apply h-16 w-16;
+
+}
+
+.avatar-xl {
+
+  @apply h-24 w-24;
+
+}
+
+/* =======================================================
+   Interaction
+======================================================= */
+
+.interactive {
+
+  @apply transition-all duration-300;
+
+}
+
+.interactive:hover {
+
+  transform: translateY(-2px);
+
+}
+
+.clickable {
+
+  cursor: pointer;
+
+  user-select: none;
+
+}
+
+.no-select {
+
+  user-select: none;
+
+}
+
+
+/* =======================================================
+   Hover Effects
+======================================================= */
+
+.hover-lift {
+
+  transition:
+
+    transform .3s ease,
+
+    box-shadow .3s ease;
+
+}
+
+.hover-lift:hover {
+
+  transform: translateY(-4px);
+
+  @apply shadow-lg;
+
+}
+
+
+.hover-scale {
+
+  transition:
+
+    transform .3s ease;
+
+}
+
+.hover-scale:hover {
+
+  transform: scale(1.03);
+
+}
+
+
+.hover-bright:hover {
+
+  filter: brightness(1.05);
+
+}
+
+
+/* =======================================================
+   Loading State
+======================================================= */
+
+.is-loading {
+
+  position: relative;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+}
+
+
+.is-loading::after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+
+    rgba(255,255,255,.65);
+
+  backdrop-filter:
+
+    blur(2px);
+
+}
+
+
+.loading-state {
+
+  @apply flex items-center justify-center;
+
+}
+
+
+.loading-disabled {
+
+  opacity: .6;
+
+  pointer-events: none;
+
+}
+
+
+/* =======================================================
+   Disabled State
+======================================================= */
+
+.disabled-state {
+
+  opacity: .5;
+
+  cursor: not-allowed;
+
+  pointer-events: none;
+
+}
+
+
+/* =======================================================
+   Focus Accessibility
+======================================================= */
+
+.focus-ring {
+
+  outline: none;
+
+}
+
+.focus-ring:focus-visible {
+
+  outline:
+
+    3px solid rgb(16 185 129 / .35);
+
+  outline-offset:
+
+    3px;
+
+}
+
+
+.focus-ring-danger:focus-visible {
+
+  outline:
+
+    3px solid rgb(239 68 68 / .35);
+
+}
+
+
+/* =======================================================
+   Visibility Helpers
+======================================================= */
+
+.invisible-scroll {
+
+  scrollbar-width: none;
+
+}
+
+.invisible-scroll::-webkit-scrollbar {
+
+  display: none;
+
+}
+
+
+.scroll-smooth {
+
+  scroll-behavior: smooth;
+
+}
+
+
+/* =======================================================
+   Scrollbar
+======================================================= */
+
+.scrollbar-soft {
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+
+    #cbd5e1
+
+    transparent;
+
+}
+
+
+.scrollbar-soft::-webkit-scrollbar {
+
+  width: 8px;
+
+}
+
+
+.scrollbar-soft::-webkit-scrollbar-track {
+
+  background:
+
+    transparent;
+
+}
+
+
+.scrollbar-soft::-webkit-scrollbar-thumb {
+
+  background:
+
+    #cbd5e1;
+
+  border-radius:
+
+    999px;
+
+}
+
+
+/* =======================================================
+   Overflow
+======================================================= */
+
+.clip-content {
+
+  overflow: hidden;
+
+}
+
+.truncate-lines {
+
+  display:
+
+    -webkit-box;
+
+  -webkit-box-orient:
+
+    vertical;
+
+  overflow:
+
+    hidden;
+
+}
+
+
+.line-clamp-2 {
+
+  -webkit-line-clamp:
+
+    2;
+
+}
+
+
+.line-clamp-3 {
+
+  -webkit-line-clamp:
+
+    3;
+
+}
+
+/* =======================================================
+   Text Utilities
+======================================================= */
+
+.text-muted {
+
+  @apply text-slate-500;
+
+}
+
+.text-secondary {
+
+  @apply text-slate-600;
+
+}
+
+.text-primary {
+
+  @apply text-emerald-600;
+
+}
+
+.text-success {
+
+  @apply text-emerald-700;
+
+}
+
+.text-warning {
+
+  @apply text-amber-700;
+
+}
+
+.text-danger {
+
+  @apply text-red-700;
+
+}
+
+.text-balance {
+
+  text-wrap: balance;
+
+}
+
+
+/* =======================================================
+   Gradient
+======================================================= */
+
+.gradient-primary {
+
+  background:
+
+    linear-gradient(
+
+      135deg,
+
+      #059669,
+
+      #0d9488
+
+    );
+
+}
+
+.gradient-soft {
+
+  background:
+
+    linear-gradient(
+
+      135deg,
+
+      #ecfdf5,
+
+      #f0fdfa
+
+    );
+
+}
+
+.gradient-hero {
+
+  background:
+
+    linear-gradient(
+
+      135deg,
+
+      #ecfdf5,
+
+      #ffffff,
+
+      #f0f9ff
+
+    );
+
+}
+
+
+/* =======================================================
+   Background Helper
+======================================================= */
+
+.bg-soft {
+
+  @apply bg-slate-50;
+
+}
+
+.bg-primary-soft {
+
+  @apply bg-emerald-50;
+
+}
+
+.bg-warning-soft {
+
+  @apply bg-amber-50;
+
+}
+
+.bg-danger-soft {
+
+  @apply bg-red-50;
+
+}
+
+.bg-info-soft {
+
+  @apply bg-sky-50;
+
+}
+
+
+/* =======================================================
+   State Helper
+======================================================= */
+
+.state-success {
+
+  @apply rounded-xl border border-emerald-200 bg-emerald-50;
+
+  @apply text-emerald-700;
+
+}
+
+.state-warning {
+
+  @apply rounded-xl border border-amber-200 bg-amber-50;
+
+  @apply text-amber-700;
+
+}
+
+.state-danger {
+
+  @apply rounded-xl border border-red-200 bg-red-50;
+
+  @apply text-red-700;
+
+}
+
+.state-info {
+
+  @apply rounded-xl border border-sky-200 bg-sky-50;
+
+  @apply text-sky-700;
+
+}
+
+
+/* =======================================================
+   Safe Area Mobile
+======================================================= */
+
+.safe-area-top {
+
+  padding-top:
+
+    env(safe-area-inset-top);
+
+}
+
+.safe-area-bottom {
+
+  padding-bottom:
+
+    env(safe-area-inset-bottom);
+
+}
+
+.safe-area-left {
+
+  padding-left:
+
+    env(safe-area-inset-left);
+
+}
+
+.safe-area-right {
+
+  padding-right:
+
+    env(safe-area-inset-right);
+
+}
+
+
+/* =======================================================
+   Accessibility
+======================================================= */
+
+.sr-only-focusable {
+
+  position: absolute;
+
+  width: 1px;
+
+  height: 1px;
+
+  padding: 0;
+
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0,0,0,0);
+
+  white-space: nowrap;
+
+  border: 0;
+
+}
+
+.sr-only-focusable:focus {
+
+  position: static;
+
+  width: auto;
+
+  height: auto;
+
+  margin: 0;
+
+  overflow: visible;
+
+  clip: auto;
+
+  white-space: normal;
+
+}
+
+
+/* =======================================================
+   Print
+======================================================= */
+
+.print-hidden {
+
+  @media print {
+
+    display: none !important;
+
+  }
+
+}
+
+.print-only {
+
+  display: none;
+
+}
+
+@media print {
+
+  .print-only {
+
+    display: block;
+
+  }
+
+}
+
+/* =======================================================
+   Layer End
+======================================================= */
+
+}

@@ -1,210 +1,304 @@
 @extends('layouts.admin')
 
+
 @section('title', 'Dashboard')
+
 
 @section('content')
 
-<div class="space-y-8">
+    <div class="space-y-10">
 
-    {{-- Header --}}
-    <x-ui.page-header
-        title="Dashboard"
-        subtitle="Selamat datang kembali, {{ auth()->user()->name }}. Berikut ringkasan data Sistem Informasi UMKM Desa.">
-    </x-ui.page-header>
 
-    {{-- Statistics --}}
-    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        {{-- Header --}}
+        <x-ui.page-header title="Dashboard"
+            subtitle="Selamat datang kembali, {{ auth()->user()->name }}. Berikut ringkasan data Sistem Informasi UMKM Desa.">
 
-        <x-ui.card>
+            <x-ui.button href="{{ route('admin.umkms.create') }}" variant="primary">
+                Tambah UMKM
+            </x-ui.button>
 
-            <div class="flex items-start justify-between">
+        </x-ui.page-header>
 
-                <div>
 
-                    <p class="text-sm font-medium text-gray-500">
-                        Total Pengguna
-                    </p>
 
-                    <h2 class="mt-3 text-3xl font-bold text-gray-900">
+        {{-- Statistics --}}
+        <section>
 
-                        {{ $statistics['users'] }}
+            <div class="kpi-row">
 
-                    </h2>
 
-                    <p class="mt-2 text-sm text-gray-500">
-                        Administrator & pemilik UMKM
-                    </p>
+                <x-ui.stat-card title="Total Pengguna" :value="$statistics['users']" description="Administrator dan pemilik UMKM">
+                    <x-slot:icon>
 
-                </div>
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5V4H2v16h5m10 0v-2a4 4 0 00-8 0v2m8 0H9m8-10a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
 
-                <div class="rounded-xl bg-blue-50 p-3">
+                    </x-slot:icon>
 
-                    <svg class="h-6 w-6 text-blue-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
+                </x-ui.stat-card>
 
-                        <path stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M17 20h5V4H2v16h5m10 0v-2a4 4 0 00-8 0v2m8 0H9m8-10a4 4 0 11-8 0 4 4 0 018 0z"/>
 
-                    </svg>
 
-                </div>
+                <x-ui.stat-card title="Total Kategori" :value="$statistics['categories']" description="Kategori usaha UMKM">
 
-            </div>
+                    <x-slot:icon>
 
-        </x-ui.card>
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 7h18M3 12h18M3 17h18" />
+                        </svg>
 
-        <x-ui.card>
+                    </x-slot:icon>
 
-            <div class="flex items-start justify-between">
+                </x-ui.stat-card>
 
-                <div>
 
-                    <p class="text-sm font-medium text-gray-500">
-                        Total Kategori
-                    </p>
 
-                    <h2 class="mt-3 text-3xl font-bold text-gray-900">
+                <x-ui.stat-card title="Total UMKM" :value="$statistics['umkms']" description="UMKM terdaftar">
 
-                        {{ $statistics['categories'] }}
+                    <x-slot:icon>
 
-                    </h2>
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 21h18M5 21V9l7-6 7 6v12" />
+                        </svg>
 
-                    <p class="mt-2 text-sm text-gray-500">
-                        Kategori usaha UMKM
-                    </p>
+                    </x-slot:icon>
 
-                </div>
+                </x-ui.stat-card>
 
-                <div class="rounded-xl bg-green-50 p-3">
 
-                    <svg class="h-6 w-6 text-green-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
 
-                        <path stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M3 7h18M3 12h18M3 17h18"/>
+                <x-ui.stat-card title="Total Produk" :value="$statistics['products']" description="Produk dipublikasikan">
 
-                    </svg>
+                    <x-slot:icon>
 
-                </div>
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 13V7a2 2 0 00-2-2h-3V3H9v2H6a2 2 0 00-2 2v6m16 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16 0H4" />
+                        </svg>
+
+                    </x-slot:icon>
+
+                </x-ui.stat-card>
+
 
             </div>
 
-        </x-ui.card>
+        </section>
 
-        <x-ui.card>
 
-            <div class="flex items-start justify-between">
+
+
+        {{-- Quick Management --}}
+        <section>
+
+            <x-ui.card>
+
+
+                <x-ui.section-title title="Manajemen Cepat" subtitle="Akses fitur utama administrasi data UMKM." />
+
+
+
+                <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+
+                    <a href="{{ route('admin.umkms.index') }}"
+                        class="group rounded-xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:bg-emerald-50 hover:shadow-md">
+
+
+                        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 21h18M5 21V9l7-6 7 6v12" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <h3 class="mt-5 text-lg font-bold text-slate-900">
+                            Kelola UMKM
+                        </h3>
+
+
+                        <p class="mt-2 text-sm leading-6 text-slate-500">
+                            Kelola data pelaku usaha yang terdaftar dalam sistem.
+                        </p>
+
+
+                    </a>
+
+
+
+
+                    <a href="{{ route('admin.products.index') }}"
+                        class="group rounded-xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:bg-emerald-50 hover:shadow-md">
+
+
+                        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20 7L12 3 4 7l8 4 8-4zM4 9v8l8 4 8-4V9" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <h3 class="mt-5 text-lg font-bold text-slate-900">
+                            Kelola Produk
+                        </h3>
+
+
+                        <p class="mt-2 text-sm leading-6 text-slate-500">
+                            Atur katalog produk unggulan UMKM desa.
+                        </p>
+
+
+                    </a>
+
+
+
+
+                    <a href="{{ route('admin.categories.index') }}"
+                        class="group rounded-xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:bg-emerald-50 hover:shadow-md">
+
+
+                        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 7h6l2 2h10v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <h3 class="mt-5 text-lg font-bold text-slate-900">
+                            Kelola Kategori
+                        </h3>
+
+
+                        <p class="mt-2 text-sm leading-6 text-slate-500">
+                            Kelola struktur kategori usaha UMKM.
+                        </p>
+
+
+                    </a>
+
+
+                </div>
+
+
+            </x-ui.card>
+
+
+        </section>
+
+
+
+
+
+        {{-- System Overview --}}
+        <section>
+
+            <x-ui.card>
 
                 <div>
 
-                    <p class="text-sm font-medium text-gray-500">
-                        Total UMKM
+                    <x-ui.section-title title="Ringkasan Sistem" subtitle="Informasi kondisi dan fungsi utama platform." />
+
+                    <p class="mt-6 max-w-3xl leading-7 text-slate-600">
+
+                        Sistem Informasi UMKM Desa digunakan untuk mengelola,
+                        mendokumentasikan, dan mempublikasikan data UMKM,
+                        kategori usaha, serta produk unggulan desa secara
+                        terpusat.
+
                     </p>
 
-                    <h2 class="mt-3 text-3xl font-bold text-gray-900">
+                    <div class="mt-6 flex flex-wrap gap-3">
 
-                        {{ $statistics['umkms'] }}
+                        <x-ui.badge variant="success">
+                            Sistem Aktif
+                        </x-ui.badge>
 
-                    </h2>
+                        <x-ui.badge variant="secondary">
+                            Laravel 12
+                        </x-ui.badge>
 
-                    <p class="mt-2 text-sm text-gray-500">
-                        UMKM terdaftar
-                    </p>
+                        <x-ui.badge variant="secondary">
+                            Tailwind CSS
+                        </x-ui.badge>
+
+                    </div>
 
                 </div>
 
-                <div class="rounded-xl bg-amber-50 p-3">
+            </x-ui.card>
 
-                    <svg class="h-6 w-6 text-amber-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
+        </section>
 
-                        <path stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M3 21h18M5 21V9l7-6 7 6v12"/>
 
-                    </svg>
 
-                </div>
 
-            </div>
 
-        </x-ui.card>
+        {{-- Activity --}}
+        <section>
 
-        <x-ui.card>
+            <x-ui.card>
 
-            <div class="flex items-start justify-between">
 
-                <div>
+                <x-ui.section-title title="Aktivitas Terbaru" subtitle="Ringkasan perubahan data terbaru dalam sistem." />
 
-                    <p class="text-sm font-medium text-gray-500">
-                        Total Produk
-                    </p>
 
-                    <h2 class="mt-3 text-3xl font-bold text-gray-900">
 
-                        {{ $statistics['products'] }}
+                @if (isset($activities) && count($activities))
 
-                    </h2>
 
-                    <p class="mt-2 text-sm text-gray-500">
-                        Produk dipublikasikan
-                    </p>
+                    <div class="mt-6 space-y-6">
 
-                </div>
 
-                <div class="rounded-xl bg-purple-50 p-3">
+                        @foreach ($activities as $activity)
+                            <div class="border-b border-slate-100 py-5 last:border-0">
 
-                    <svg class="h-6 w-6 text-purple-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
+                                <h3 class="font-semibold text-slate-900">
+                                    {{ $activity['title'] ?? 'Aktivitas Sistem' }}
+                                </h3>
 
-                        <path stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M20 13V7a2 2 0 00-2-2h-3V3H9v2H6a2 2 0 00-2 2v6m16 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16 0H4"/>
+                                <p class="mt-2 text-sm text-slate-500">
+                                    {{ $activity['description'] ?? '' }}
+                                </p>
 
-                    </svg>
+                            </div>
+                        @endforeach
 
-                </div>
 
-            </div>
+                    </div>
+                @else
+                    <x-ui.empty-state title="Belum ada aktivitas terbaru."
+                        description="Aktivitas pengelolaan data akan muncul di sini." />
 
-        </x-ui.card>
+
+                @endif
+
+
+            </x-ui.card>
+
+
+        </section>
+
 
     </div>
 
-    {{-- Information --}}
-    <x-ui.card>
-
-        <h2 class="text-lg font-semibold text-gray-900">
-
-            Ringkasan Sistem
-
-        </h2>
-
-        <p class="mt-3 leading-7 text-gray-600">
-
-            Sistem Informasi UMKM Desa digunakan untuk mendigitalisasi data UMKM,
-            kategori usaha, dan produk secara terpusat. Melalui dashboard ini,
-            administrator dapat memantau data utama serta mengelola seluruh
-            informasi yang akan ditampilkan kepada masyarakat.
-
-        </p>
-
-    </x-ui.card>
-
-</div>
 
 @endsection

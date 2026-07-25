@@ -12,22 +12,30 @@ use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    /**
-     * Number of latest records displayed.
-     */
     private const LATEST_LIMIT = 5;
 
+
+
     /**
-     * Display the admin dashboard.
+     * Display admin dashboard.
      */
     public function index(): View
     {
-        return view('admin.dashboard', [
-            'statistics' => $this->statistics(),
-            'latestProducts' => $this->latestProducts(),
-            'latestUmkms' => $this->latestUmkms(),
-        ]);
+        return view(
+            'admin.dashboard',
+            [
+                'statistics' => $this->statistics(),
+
+                'latestProducts' => $this->latestProducts(),
+
+                'latestUmkms' => $this->latestUmkms(),
+            ]
+        );
     }
+
+
+
+
 
     /**
      * Dashboard statistics.
@@ -38,20 +46,57 @@ class DashboardController extends Controller
 
             'users' => User::count(),
 
-            'owners' => User::where('role', 'owner')->count(),
 
-            'categories' => Category::active()->count(),
+
+            'owners' => User::where(
+                'role',
+                'owner'
+            )->count(),
+
+
+
+            'categories' => Category::active()
+                ->count(),
+
+
 
             'umkms' => Umkm::count(),
 
-            'approved_umkms' => Umkm::approved()->count(),
 
-            'products' => Product::active()->count(),
 
-            'featured_products' => Product::featured()->count(),
+            'pending_umkms' => Umkm::where(
+                'status',
+                'pending'
+            )->count(),
+
+
+
+            'approved_umkms' => Umkm::approved()
+                ->count(),
+
+
+
+            'published_umkms' => Umkm::approved()
+                ->active()
+                ->count(),
+
+
+
+            'products' => Product::active()
+                ->count(),
+
+
+
+            'featured_products' => Product::featured()
+                ->active()
+                ->count(),
 
         ];
     }
+
+
+
+
 
     /**
      * Latest products.
@@ -59,6 +104,7 @@ class DashboardController extends Controller
     private function latestProducts(): Collection
     {
         return Product::query()
+
             ->select([
                 'id',
                 'umkm_id',
@@ -66,15 +112,24 @@ class DashboardController extends Controller
                 'slug',
                 'price',
                 'is_active',
+                'is_featured',
                 'created_at',
             ])
+
             ->with([
                 'umkm:id,business_name',
             ])
+
             ->latest()
+
             ->take(self::LATEST_LIMIT)
+
             ->get();
     }
+
+
+
+
 
     /**
      * Latest UMKM.
@@ -82,6 +137,7 @@ class DashboardController extends Controller
     private function latestUmkms(): Collection
     {
         return Umkm::query()
+
             ->select([
                 'id',
                 'user_id',
@@ -92,12 +148,16 @@ class DashboardController extends Controller
                 'is_active',
                 'created_at',
             ])
+
             ->with([
                 'category:id,name',
                 'user:id,name',
             ])
+
             ->latest()
+
             ->take(self::LATEST_LIMIT)
+
             ->get();
     }
 }

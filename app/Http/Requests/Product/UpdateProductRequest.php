@@ -3,99 +3,172 @@
 namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the user is authorized.
      */
     public function authorize(): bool
     {
         return true;
     }
 
+
+
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
+     * Get validation rules.
      */
     public function rules(): array
     {
         return [
 
             'umkm_id' => [
+
                 'required',
-                'exists:umkms,id',
+
+                Rule::exists('umkms', 'id')
+                    ->where(function ($query) {
+
+                        $query
+                            ->where('status', 'approved')
+                            ->where('is_active', true);
+
+                    }),
+
             ],
+
+
 
             'name' => [
+
                 'required',
+
                 'string',
-                'max:255',
+
+                'max:150',
+
             ],
+
+
 
             'description' => [
+
                 'nullable',
+
                 'string',
+
+                'max:1000',
+
             ],
+
+
 
             'price' => [
-                'nullable',
-                'numeric',
+
+                'required',
+
+                'integer',
+
                 'min:0',
+
             ],
+
+
 
             'image' => [
+
                 'nullable',
+
                 'image',
+
                 'mimes:jpg,jpeg,png,webp',
+
                 'max:2048',
+
+                'dimensions:max_width=2000,max_height=2000',
+
             ],
+
+
 
             'is_featured' => [
+
                 'nullable',
+
                 'boolean',
+
             ],
 
+
+
             'is_active' => [
+
                 'nullable',
+
                 'boolean',
+
             ],
 
         ];
     }
 
+
+
     /**
-     * Get custom validation messages.
+     * Validation messages.
      */
     public function messages(): array
     {
         return [
+
             'required' => ':attribute wajib diisi.',
+
+            'exists' => ':attribute tidak ditemukan atau belum aktif.',
+
             'string' => ':attribute harus berupa teks.',
-            'exists' => ':attribute tidak ditemukan.',
-            'numeric' => ':attribute harus berupa angka.',
+
+            'integer' => ':attribute harus berupa angka bulat.',
+
             'min' => ':attribute minimal :min.',
+
             'image' => ':attribute harus berupa gambar.',
+
             'mimes' => ':attribute harus berformat JPG, JPEG, PNG, atau WEBP.',
+
             'max' => ':attribute maksimal :max KB.',
+
+            'dimensions' => ':attribute memiliki ukuran gambar terlalu besar.',
+
             'boolean' => ':attribute tidak valid.',
+
         ];
     }
 
+
+
     /**
-     * Get custom attribute names.
+     * Attribute names.
      */
     public function attributes(): array
     {
         return [
+
             'umkm_id' => 'UMKM',
-            'name' => 'nama produk',
-            'description' => 'deskripsi',
-            'price' => 'harga',
-            'image' => 'gambar produk',
-            'is_featured' => 'produk unggulan',
-            'is_active' => 'status',
+
+            'name' => 'Nama produk',
+
+            'description' => 'Deskripsi',
+
+            'price' => 'Harga',
+
+            'image' => 'Gambar produk',
+
+            'is_featured' => 'Produk unggulan',
+
+            'is_active' => 'Status',
+
         ];
     }
 }

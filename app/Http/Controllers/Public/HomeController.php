@@ -12,27 +12,40 @@ use Illuminate\View\View;
 class HomeController extends Controller
 {
     /**
-     * Number of featured UMKM displayed.
+     * Number of latest UMKM displayed.
      */
-    private const FEATURED_UMKM = 6;
+    private const LATEST_UMKM_LIMIT = 6;
+
 
     /**
      * Number of featured products displayed.
      */
-    private const FEATURED_PRODUCT = 8;
+    private const FEATURED_PRODUCT_LIMIT = 8;
+
+
 
     /**
-     * Display the landing page.
+     * Display landing page.
      */
     public function index(): View
     {
-        return view('public.home', [
-            'statistics'      => $this->statistics(),
-            'categories'      => $this->categories(),
-            'featuredUmkms'   => $this->featuredUmkms(),
-            'featuredProducts'=> $this->featuredProducts(),
-        ]);
+        return view(
+            'public.home',
+            [
+                'statistics' => $this->statistics(),
+
+                'categories' => $this->categories(),
+
+                'latestUmkms' => $this->latestUmkms(),
+
+                'featuredProducts' => $this->featuredProducts(),
+            ]
+        );
     }
+
+
+
+
 
     /**
      * Homepage statistics.
@@ -40,41 +53,71 @@ class HomeController extends Controller
     private function statistics(): array
     {
         return [
+
             'umkms' => Umkm::approved()
                 ->active()
                 ->count(),
 
+
+
             'products' => Product::active()
-                ->whereHas('umkm', fn ($query) => $query->approved()->active())
+
+                ->whereHas(
+                    'umkm',
+                    fn ($query) => $query
+                        ->approved()
+                        ->active()
+                )
+
                 ->count(),
+
+
 
             'categories' => Category::active()
                 ->count(),
+
         ];
     }
 
+
+
+
+
     /**
-     * Get active categories.
+     * Get available categories.
      */
     private function categories(): Collection
     {
-        return Category::active()
+        return Category::query()
+
+            ->active()
+
             ->select([
                 'id',
                 'name',
                 'slug',
             ])
+
             ->orderBy('name')
+
             ->get();
     }
 
+
+
+
+
     /**
-     * Get featured UMKM.
+     * Get latest published UMKM.
      */
-    private function featuredUmkms(): Collection
+    private function latestUmkms(): Collection
     {
-        return Umkm::approved()
+        return Umkm::query()
+
+            ->approved()
+
             ->active()
+
             ->select([
                 'id',
                 'category_id',
@@ -85,21 +128,35 @@ class HomeController extends Controller
                 'district',
                 'regency',
             ])
+
             ->with([
                 'category:id,name',
             ])
+
             ->latest()
-            ->take(self::FEATURED_UMKM)
+
+            ->take(
+                self::LATEST_UMKM_LIMIT
+            )
+
             ->get();
     }
+
+
+
+
 
     /**
      * Get featured products.
      */
     private function featuredProducts(): Collection
     {
-        return Product::featured()
+        return Product::query()
+
+            ->featured()
+
             ->active()
+
             ->select([
                 'id',
                 'umkm_id',
@@ -109,12 +166,24 @@ class HomeController extends Controller
                 'image',
                 'is_featured',
             ])
+
             ->with([
                 'umkm:id,business_name,slug',
             ])
-            ->whereHas('umkm', fn ($query) => $query->approved()->active())
+
+            ->whereHas(
+                'umkm',
+                fn ($query) => $query
+                    ->approved()
+                    ->active()
+            )
+
             ->latest()
-            ->take(self::FEATURED_PRODUCT)
+
+            ->take(
+                self::FEATURED_PRODUCT_LIMIT
+            )
+
             ->get();
     }
 }

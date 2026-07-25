@@ -1,0 +1,406 @@
+@layer utilities {
+
+/* =======================================================
+   Keyframes
+======================================================= */
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
+
+}
+
+@keyframes fadeUp {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+@keyframes fadeDown {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(-20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+@keyframes slideLeft {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateX(-20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateX(0);
+
+    }
+
+}
+
+@keyframes slideRight {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateX(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateX(0);
+
+    }
+
+}
+
+@keyframes zoomIn {
+
+    from {
+
+        opacity: 0;
+
+        transform: scale(.95);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+    }
+
+}
+
+@keyframes modalEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(20px) scale(.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+
+    }
+
+}
+
+@keyframes dropdownEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(-10px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+@keyframes toastEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateX(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateX(0);
+
+    }
+
+}
+
+@keyframes shimmer {
+
+    100% {
+
+        transform: translateX(100%);
+
+    }
+
+}
+
+@keyframes pulseSoft {
+
+    0%,100% {
+
+        opacity: 1;
+
+    }
+
+    50% {
+
+        opacity: .5;
+
+    }
+
+}
+
+@keyframes spinSlow {
+
+    from {
+
+        transform: rotate(0deg);
+
+    }
+
+    to {
+
+        transform: rotate(360deg);
+
+    }
+
+}
+
+/* =======================================================
+   Animation Utility
+======================================================= */
+
+.animate-fade {
+
+    animation: fadeIn .35s ease both;
+
+}
+
+.animate-fade-up {
+
+    animation: fadeUp .45s ease both;
+
+}
+
+.animate-fade-down {
+
+    animation: fadeDown .45s ease both;
+
+}
+
+.animate-slide-left {
+
+    animation: slideLeft .45s ease both;
+
+}
+
+.animate-slide-right {
+
+    animation: slideRight .45s ease both;
+
+}
+
+.animate-zoom {
+
+    animation: zoomIn .35s ease;
+
+}
+
+.animate-modal {
+
+    animation: modalEnter .25s ease;
+
+}
+
+.animate-dropdown {
+
+    animation: dropdownEnter .2s ease;
+
+}
+
+.animate-toast {
+
+    animation: toastEnter .25s ease;
+
+}
+
+/* =======================================================
+   Hover
+======================================================= */
+
+.hover-lift {
+
+    transition: .25s;
+
+}
+
+.hover-lift:hover {
+
+    transform: translateY(-4px);
+
+}
+
+.hover-scale {
+
+    transition: .25s;
+
+}
+
+.hover-scale:hover {
+
+    transform: scale(1.03);
+
+}
+
+.hover-rotate:hover {
+
+    transform: rotate(3deg);
+
+}
+
+/* =======================================================
+   Loading
+======================================================= */
+
+.animate-pulse-soft {
+
+    animation: pulseSoft 1.8s infinite;
+
+}
+
+.animate-spin-slow {
+
+    animation: spinSlow 1.5s linear infinite;
+
+}
+
+.loading-shimmer {
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+.loading-shimmer::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            transparent,
+
+            rgba(255,255,255,.45),
+
+            transparent
+
+        );
+
+    transform: translateX(-100%);
+
+    animation: shimmer 1.5s infinite;
+
+}
+
+/* =======================================================
+   Stagger
+======================================================= */
+
+.stagger>* {
+
+    opacity: 0;
+
+    animation: fadeUp .45s ease forwards;
+
+}
+
+.stagger>*:nth-child(1){animation-delay:.05s;}
+.stagger>*:nth-child(2){animation-delay:.10s;}
+.stagger>*:nth-child(3){animation-delay:.15s;}
+.stagger>*:nth-child(4){animation-delay:.20s;}
+.stagger>*:nth-child(5){animation-delay:.25s;}
+.stagger>*:nth-child(6){animation-delay:.30s;}
+
+/* =======================================================
+   Reduced Motion
+======================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+
+        animation: none !important;
+
+        transition: none !important;
+
+        scroll-behavior: auto !important;
+
+    }
+
+}
+
+}

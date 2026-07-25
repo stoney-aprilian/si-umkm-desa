@@ -3,17 +3,20 @@
     'required' => false,
 ])
 
+
 <label
     @if ($for)
         for="{{ $for }}"
     @endif
-    {{
-        $attributes->class([
-            'mb-2 block text-sm font-medium text-slate-700',
-        ])
-    }}>
+
+    {{ $attributes->merge([
+        'class' => 'mb-2 block text-sm font-medium text-slate-700',
+    ]) }}>
+
 
     {{ $slot }}
+
+
 
     @if ($required)
 
@@ -25,6 +28,12 @@
 
         </span>
 
+
+        <span class="sr-only">
+            wajib diisi
+        </span>
+
     @endif
+
 
 </label>

@@ -1,21 +1,43 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\ProfileController;
 
-// Public
+/*
+|--------------------------------------------------------------------------
+| Public Controllers
+|--------------------------------------------------------------------------
+*/
+
 use App\Http\Controllers\Public\HomeController;
-use App\Http\Controllers\Public\UmkmController as PublicUmkmController;
 use App\Http\Controllers\Public\ProductController as PublicProductController;
+use App\Http\Controllers\Public\UmkmController as PublicUmkmController;
 
-// Admin
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+
+/*
+|--------------------------------------------------------------------------
+| Admin Controllers
+|--------------------------------------------------------------------------
+*/
+
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\UmkmController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UmkmController;
+use App\Http\Controllers\Admin\SearchController;
 
-// Owner
+
+/*
+|--------------------------------------------------------------------------
+| Owner Controllers
+|--------------------------------------------------------------------------
+*/
+
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
+use App\Http\Controllers\Owner\ProductController as OwnerProductController;
+use App\Http\Controllers\Owner\ProfileController as OwnerProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,77 +45,134 @@ use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', [HomeController::class, 'index'])
+Route::get('/', [
+    HomeController::class,
+    'index'
+])
     ->name('home');
+
 
 Route::view('/about', 'public.about')
     ->name('about');
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Public UMKM
+|--------------------------------------------------------------------------
+*/
 
 Route::prefix('umkm')
     ->name('public.umkms.')
     ->group(function () {
 
-        Route::get('/', [PublicUmkmController::class, 'index'])
+        Route::get('/', [
+            PublicUmkmController::class,
+            'index'
+        ])
             ->name('index');
 
-        Route::get('/{umkm:slug}', [PublicUmkmController::class, 'show'])
+
+        Route::get('/{umkm:slug}', [
+            PublicUmkmController::class,
+            'show'
+        ])
             ->name('show');
     });
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Public Products
+|--------------------------------------------------------------------------
+*/
 
 Route::prefix('produk')
     ->name('public.products.')
     ->group(function () {
 
-        Route::get('/', [PublicProductController::class, 'index'])
+        Route::get('/', [
+            PublicProductController::class,
+            'index'
+        ])
             ->name('index');
 
-        Route::get('/{product:slug}', [PublicProductController::class, 'show'])
+
+        Route::get('/{product:slug}', [
+            PublicProductController::class,
+            'show'
+        ])
             ->name('show');
     });
+
+
+
 
 /*
 |--------------------------------------------------------------------------
 | Dashboard Redirect
 |--------------------------------------------------------------------------
-|
-| Single entry point after login.
-| Redirect users to the correct dashboard based on their role.
-|
 */
 
-Route::middleware(['auth', 'verified'])
+Route::middleware([
+    'auth',
+    'verified'
+])
     ->get('/dashboard', function () {
 
         return match (auth()->user()->role) {
 
-            'admin' => redirect()->route('admin.dashboard'),
+            'admin' => redirect()
+                ->route('admin.dashboard'),
 
-            'owner' => redirect()->route('owner.dashboard'),
 
-            default => redirect()->route('home'),
+            'owner' => redirect()
+                ->route('owner.dashboard'),
 
+
+            default => redirect()
+                ->route('home'),
         };
-
     })
     ->name('dashboard');
 
+
+
+
 /*
 |--------------------------------------------------------------------------
-| Profile
+| User Profile
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')
+    ->group(function () {
 
-    Route::get('/profile', [ProfileController::class, 'edit'])
-        ->name('profile.edit');
+        Route::get('/profile', [
+            ProfileController::class,
+            'edit'
+        ])
+            ->name('profile.edit');
 
-    Route::patch('/profile', [ProfileController::class, 'update'])
-        ->name('profile.update');
 
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
-});
+        Route::patch('/profile', [
+            ProfileController::class,
+            'update'
+        ])
+            ->name('profile.update');
+
+
+        Route::delete('/profile', [
+            ProfileController::class,
+            'destroy'
+        ])
+            ->name('profile.destroy');
+    });
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -101,13 +180,33 @@ Route::middleware('auth')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'role:admin'])
+Route::middleware([
+    'auth',
+    'role:admin'
+])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
 
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+
+        Route::get('/dashboard', [
+            AdminDashboardController::class,
+            'index'
+        ])
             ->name('dashboard');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Global Search
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/search', [
+            SearchController::class,
+            'index'
+        ])
+            ->name('search');
+
 
         /*
         |--------------------------------------------------------------------------
@@ -115,24 +214,40 @@ Route::middleware(['auth', 'role:admin'])
         |--------------------------------------------------------------------------
         */
 
-        Route::resource('categories', CategoryController::class);
+        Route::resource(
+            'categories',
+            CategoryController::class
+        );
+
+
 
         /*
         |--------------------------------------------------------------------------
-        | UMKM
+        | UMKM Management
         |--------------------------------------------------------------------------
         */
 
-        Route::resource('umkms', UmkmController::class);
+        Route::resource(
+            'umkms',
+            UmkmController::class
+        );
+
+
 
         /*
         |--------------------------------------------------------------------------
-        | Products
+        | Product Management
         |--------------------------------------------------------------------------
         */
 
-        Route::resource('products', ProductController::class);
+        Route::resource(
+            'products',
+            ProductController::class
+        );
     });
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -140,16 +255,65 @@ Route::middleware(['auth', 'role:admin'])
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'role:owner'])
+Route::middleware([
+    'auth',
+    'role:owner'
+])
     ->prefix('owner')
     ->name('owner.')
     ->group(function () {
 
-        Route::get('/dashboard', [OwnerDashboardController::class, 'index'])
+
+        Route::get('/dashboard', [
+            OwnerDashboardController::class,
+            'index'
+        ])
             ->name('dashboard');
 
-        // Route::resource('umkms', OwnerUmkmController::class);
-        // Route::resource('products', OwnerProductController::class);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | UMKM Profile
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/profile', [
+            OwnerProfileController::class,
+            'edit'
+        ])
+            ->name('profile.edit');
+
+
+        Route::put('/profile', [
+            OwnerProfileController::class,
+            'update'
+        ])
+            ->name('profile.update');
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Product Management
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'products',
+            OwnerProductController::class
+        )
+            ->except([
+                'show'
+            ]);
     });
 
-require __DIR__.'/auth.php';
+
+
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+*/
+
+require __DIR__ . '/auth.php';

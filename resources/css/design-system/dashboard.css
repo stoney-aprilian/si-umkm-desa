@@ -1,0 +1,628 @@
+/* =======================================================
+   Dashboard Layout
+======================================================= */
+
+.dashboard-layout {
+
+  @apply min-h-screen bg-slate-50;
+
+  display: grid;
+
+  grid-template-columns: 280px minmax(0, 1fr);
+
+}
+
+/* =======================================================
+   Sidebar Brand
+======================================================= */
+
+.sidebar-brand {
+
+  @apply flex items-center gap-3;
+
+  @apply border-b border-slate-100;
+
+  @apply px-6 py-6;
+
+}
+
+.sidebar-logo {
+
+  @apply flex h-12 w-12 items-center justify-center;
+
+  @apply rounded-2xl;
+
+  @apply bg-emerald-600 text-white;
+
+  flex-shrink: 0;
+
+}
+
+.sidebar-title {
+
+  @apply text-lg font-bold text-slate-900;
+
+}
+
+.sidebar-subtitle {
+
+  @apply text-xs text-slate-500;
+
+}
+
+/* =======================================================
+   Navigation
+======================================================= */
+
+.sidebar-nav {
+
+  @apply p-4;
+
+}
+
+.sidebar-section {
+
+  @apply mb-8;
+
+}
+
+.sidebar-heading {
+
+  @apply mb-3 px-3;
+
+  @apply text-xs font-bold uppercase tracking-wider text-slate-400;
+
+}
+
+/* =======================================================
+   Navigation Item
+======================================================= */
+
+.sidebar-link {
+
+    @apply relative flex items-center gap-3;
+
+    @apply rounded-lg;
+
+    @apply px-3 py-2.5;
+
+    @apply text-sm font-medium text-slate-600;
+
+    @apply transition-all duration-200;
+
+}
+
+.sidebar-link svg {
+
+  @apply h-5 w-5 flex-shrink-0;
+
+}
+
+.sidebar-link:hover {
+
+  @apply bg-slate-100 text-slate-900;
+
+}
+
+.sidebar-link.active {
+
+    @apply bg-emerald-50 text-emerald-700 font-semibold;
+
+}
+
+.sidebar-link.active svg {
+
+  color: inherit;
+
+}
+
+/* =======================================================
+   Sidebar Footer
+======================================================= */
+
+.sidebar-footer {
+
+  @apply mt-auto border-t border-slate-100;
+
+  @apply p-4;
+
+}
+
+/* =======================================================
+   Main Area
+======================================================= */
+
+.dashboard-main {
+
+  @apply flex min-h-screen flex-col;
+
+  min-width: 0;
+
+}
+
+/* =======================================================
+   Topbar
+======================================================= */
+
+.dashboard-topbar {
+
+  @apply sticky top-0 z-30;
+
+  @apply flex items-center justify-between;
+
+  @apply border-b border-slate-200;
+
+  @apply bg-white/90;
+
+  @apply px-8 py-5;
+
+  backdrop-filter: blur(12px);
+
+}
+
+.topbar-left {
+
+  @apply flex items-center gap-4;
+
+}
+
+.topbar-right {
+
+  @apply flex items-center gap-3;
+
+}
+
+/* =======================================================
+   Content
+======================================================= */
+
+.dashboard-content {
+
+  @apply flex-1;
+
+  @apply p-8;
+
+}
+
+.dashboard-container {
+
+  @apply mx-auto w-full max-w-7xl;
+
+}
+
+/* =======================================================
+   Section
+======================================================= */
+
+.dashboard-section {
+
+  @apply mb-8;
+
+}
+
+/* =======================================================
+   Responsive
+======================================================= */
+
+@media (max-width:1024px) {
+
+  .dashboard-layout {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .dashboard-sidebar {
+
+    position: fixed;
+
+    inset: 0 auto 0 0;
+
+    width: 280px;
+
+    transform: translateX(-100%);
+
+    z-index: 60;
+
+  }
+
+  .dashboard-sidebar.open {
+
+    transform: translateX(0);
+
+  }
+
+  .dashboard-topbar {
+
+    @apply px-5;
+
+  }
+
+  .dashboard-content {
+
+    @apply p-5;
+
+  }
+
+}
+
+/* =======================================================
+   Topbar Search
+======================================================= */
+
+.topbar-search {
+
+  @apply relative;
+
+  width: min(420px, 100%);
+
+}
+
+.topbar-search input:focus {
+
+  @apply border-emerald-500 bg-white;
+
+  box-shadow: 0 0 0 4px rgb(16 185 129 / .12);
+
+  outline: none;
+
+}
+
+.topbar-search-icon {
+
+  @apply absolute left-4 top-1/2;
+
+  @apply -translate-y-1/2;
+
+  @apply text-slate-400;
+
+}
+
+/* =======================================================
+   Topbar Actions
+======================================================= */
+
+.topbar-actions {
+
+  @apply flex items-center gap-3;
+
+}
+
+.topbar-action {
+
+  @apply relative;
+
+}
+
+.topbar-action-btn {
+
+  @apply flex h-11 w-11 items-center justify-center;
+
+  @apply rounded-xl border border-slate-200;
+
+  @apply bg-white;
+
+  @apply transition-all duration-200;
+
+}
+
+.topbar-action-btn:hover {
+
+  @apply border-emerald-300;
+
+  @apply shadow-md;
+
+  transform: translateY(-1px);
+
+}
+
+.topbar-notification-dot {
+
+  @apply absolute right-2 top-2;
+
+  @apply h-2.5 w-2.5 rounded-full;
+
+  @apply bg-red-500;
+
+}
+
+/* =======================================================
+   User Menu
+======================================================= */
+
+.user-menu {
+
+  @apply flex items-center gap-3;
+
+  @apply rounded-2xl;
+
+  @apply px-2 py-2;
+
+  @apply transition-colors duration-200;
+
+}
+
+.user-menu:hover {
+
+  @apply bg-slate-100;
+
+}
+
+.user-menu-info {
+
+  @apply hidden text-right lg:block;
+
+}
+
+.user-menu-name {
+
+  @apply text-sm font-semibold text-slate-900;
+
+}
+
+.user-menu-role {
+
+  @apply text-xs text-slate-500;
+
+}
+
+/* =======================================================
+   Mobile
+======================================================= */
+
+@media (max-width:1024px) {
+
+  .topbar-search {
+
+    display: none;
+
+  }
+
+  .user-menu-info {
+
+    display: none;
+
+  }
+
+}
+
+/* =======================================================
+   Analytics Grid
+======================================================= */
+
+.analytics-grid {
+
+  display: grid;
+
+  gap: 1.5rem;
+
+  grid-template-columns:
+    repeat(12, minmax(0, 1fr));
+
+}
+
+.analytics-main {
+
+  grid-column: span 8;
+
+}
+
+.analytics-side {
+
+  grid-column: span 4;
+
+}
+
+/* =======================================================
+   KPI Row
+======================================================= */
+
+.kpi-row {
+
+    display: grid;
+
+    gap: 1.25rem;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+}
+
+
+@media (max-width:1280px) {
+
+    .kpi-row {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+}
+
+
+@media (max-width:640px) {
+
+    .kpi-row {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+/* =======================================================
+   Chart Container
+======================================================= */
+
+.chart-container {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 360px;
+
+}
+
+.chart-container-sm {
+
+  height: 240px;
+
+}
+
+.chart-container-lg {
+
+  height: 460px;
+
+}
+
+/* =======================================================
+   Sticky Panel
+======================================================= */
+
+.sticky-panel {
+
+  position: sticky;
+
+  top: 6rem;
+
+}
+
+
+@media (max-width:768px) {
+
+  .chart-container {
+
+    height: 280px;
+
+  }
+
+}
+
+/* =======================================================
+   Activity List
+======================================================= */
+
+.activity-list {
+
+  @apply space-y-5;
+
+}
+
+.activity-item {
+
+  @apply flex items-start gap-4;
+
+}
+
+.activity-avatar {
+
+  @apply flex h-10 w-10 items-center justify-center;
+
+  @apply rounded-full bg-slate-100;
+
+  @apply text-slate-600;
+
+  flex-shrink: 0;
+
+}
+
+.activity-content {
+
+  @apply flex-1;
+
+}
+
+.activity-title {
+
+  @apply text-sm font-medium text-slate-900;
+
+}
+
+.activity-description {
+
+  @apply mt-1 text-sm text-slate-500;
+
+}
+
+.activity-time {
+
+  @apply mt-2 text-xs text-slate-400;
+
+}
+
+/* =======================================================
+   Timeline
+======================================================= */
+
+.timeline {
+
+  @apply relative;
+
+}
+
+.timeline::before {
+
+  content: "";
+
+  position: absolute;
+
+  left: 12px;
+
+  top: 0;
+
+  bottom: 0;
+
+  width: 2px;
+
+  @apply bg-slate-200;
+
+}
+
+.timeline-item {
+
+  @apply relative flex gap-5;
+
+  @apply pb-8;
+
+}
+
+.timeline-dot {
+
+  @apply relative z-10;
+
+  @apply h-6 w-6 rounded-full;
+
+  @apply border-4 border-white;
+
+  @apply bg-emerald-500;
+
+  flex-shrink: 0;
+
+}
+
+.timeline-content {
+
+  @apply flex-1;
+
+}
+
+.timeline-title {
+
+  @apply font-semibold text-slate-900;
+
+}
+
+.timeline-description {
+
+  @apply mt-1 text-sm text-slate-500;
+
+}
+
+.timeline-date {
+
+  @apply mt-2 text-xs text-slate-400;
+
+}

@@ -47,12 +47,12 @@
     <div class="flex min-h-screen">
 
         {{-- Sidebar --}}
-        @include('layouts.partials.admin.sidebar')
+        @include('layouts.partials.owner.sidebar')
 
         <div class="flex min-h-screen flex-1 flex-col">
 
             {{-- Topbar --}}
-            @include('layouts.partials.admin.topbar')
+            @include('layouts.partials.owner.topbar')
 
             {{-- Main Content --}}
             <main class="flex-1 overflow-x-hidden">
@@ -61,8 +61,8 @@
 
                     {{-- Flash Message --}}
                     @includeWhen(
-                        View::exists('layouts.partials.admin.flash-message'),
-                        'layouts.partials.admin.flash-message'
+                        View::exists('layouts.partials.owner.flash-message'),
+                        'layouts.partials.owner.flash-message'
                     )
 
                     {{-- Page Content --}}
@@ -73,7 +73,7 @@
             </main>
 
             {{-- Footer --}}
-            @include('layouts.partials.admin.footer')
+            @include('layouts.partials.owner.footer')
 
         </div>
 

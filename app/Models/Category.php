@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,6 +12,7 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
+
     protected $fillable = [
         'name',
         'slug',
@@ -18,17 +20,16 @@ class Category extends Model
         'is_active',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+
+
     protected function casts(): array
     {
         return [
             'is_active' => 'boolean',
         ];
     }
+
+
 
     /**
      * Use slug for route model binding.
@@ -37,6 +38,9 @@ class Category extends Model
     {
         return 'slug';
     }
+
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -49,26 +53,45 @@ class Category extends Model
         return $this->hasMany(Umkm::class);
     }
 
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Scopes
     |--------------------------------------------------------------------------
     */
 
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
     }
 
-    public function scopeSearch($query, ?string $search)
-    {
+
+
+    public function scopeSearch(
+        Builder $query,
+        ?string $search
+    ): Builder {
+
         if (blank($search)) {
+
             return $query;
+
         }
 
+
         return $query->where(function ($query) use ($search) {
-            $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+
+            $query
+
+                ->where('name', 'like', "%{$search}%")
+
+                ->orWhere('slug', 'like', "%{$search}%")
+
+                ->orWhere('description', 'like', "%{$search}%");
+
         });
+
     }
 }

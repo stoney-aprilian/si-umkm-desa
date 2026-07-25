@@ -1,6 +1,8 @@
 @props([
     'align' => 'start',
+    'direction' => 'row',
 ])
+
 
 @php
     $justify = match ($align) {
@@ -9,14 +11,19 @@
         'between' => 'justify-between',
         default => 'justify-start',
     };
+
+    $directionClass = match ($direction) {
+        'column' => 'flex-col',
+        default => 'flex-row',
+    };
 @endphp
 
+
 <div
-    {{
-        $attributes->merge([
-            'class' => "flex flex-wrap items-center gap-3 {$justify}",
-        ])
-    }}>
+    {{ $attributes->merge([
+        'class' =>
+            "flex {$directionClass} flex-wrap items-center gap-3 {$justify}",
+    ]) }}>
 
     {{ $slot }}
 

@@ -3,18 +3,29 @@
     'method' => 'GET',
 ])
 
+
 <form
     action="{{ $action }}"
     method="{{ strtoupper($method) === 'GET' ? 'GET' : 'POST' }}"
-    {{
-        $attributes->class([
-            'space-y-0',
-        ])
-    }}>
+
+    {{ $attributes->merge([
+        'class' => '',
+    ]) }}>
+
 
     @if (strtoupper($method) !== 'GET')
+
         @csrf
+
+        @if (!in_array(strtoupper($method), ['POST']))
+
+            @method(strtoupper($method))
+
+        @endif
+
     @endif
+
+
 
     <x-ui.card>
 
@@ -25,5 +36,6 @@
         </div>
 
     </x-ui.card>
+
 
 </form>

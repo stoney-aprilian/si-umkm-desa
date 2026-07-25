@@ -3,12 +3,13 @@
     'subtitle' => null,
 ])
 
+
 <div
-    {{
-        $attributes->class([
-            'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
-        ])
-    }}>
+    {{ $attributes->merge([
+        'class' =>
+            'flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between',
+    ]) }}>
+
 
     <div>
 
@@ -17,6 +18,7 @@
             {{ $title }}
 
         </h2>
+
 
         @if ($subtitle)
 
@@ -28,7 +30,10 @@
 
         @endif
 
+
     </div>
+
+
 
     @if (trim($slot))
 
@@ -39,5 +44,6 @@
         </x-ui.action-group>
 
     @endif
+
 
 </div>

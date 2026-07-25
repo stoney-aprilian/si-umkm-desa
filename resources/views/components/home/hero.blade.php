@@ -1,23 +1,27 @@
-<section class="relative overflow-hidden bg-white py-24 lg:py-32">
+<section class="public-hero">
 
-    {{-- Background --}}
+    {{-- Background Decoration --}}
     <div class="absolute inset-0 -z-10 overflow-hidden">
 
-        <div class="absolute -left-24 top-0 h-96 w-96 rounded-full bg-emerald-100/60 blur-3xl"></div>
+        <div class="absolute -left-32 top-10 h-96 w-96 rounded-full bg-emerald-100/60 blur-3xl"></div>
 
-        <div class="absolute -right-24 bottom-0 h-[28rem] w-[28rem] rounded-full bg-teal-100/60 blur-3xl"></div>
+        <div class="absolute -right-32 bottom-0 h-[30rem] w-[30rem] rounded-full bg-teal-100/50 blur-3xl"></div>
 
     </div>
 
+
     <div class="app-container">
 
-        <div class="grid items-center gap-20 lg:grid-cols-2">
+        <div class="grid items-center gap-16 lg:grid-cols-2">
 
-            {{-- Left --}}
+
+            {{-- Content --}}
             <div>
+
 
                 {{-- Badge --}}
                 <div class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2">
+
 
                     <svg
                         class="h-5 w-5 text-emerald-600"
@@ -29,166 +33,214 @@
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             stroke-width="2"
-                            d="M12 2l3 6 6 .9-4.5 4.3 1.1 6.3L12 17l-5.6 2.5 1.1-6.3L3 8.9 9 8l3-6z"/>
+                            d="M3 21h18M5 21V8l7-4 7 4v13"/>
 
                     </svg>
 
-                    <span class="text-sm font-medium text-emerald-700">
 
-                        Platform Digital UMKM Desa
+                    <span class="text-sm font-semibold text-emerald-700">
+
+                        Portal Digital UMKM Desa
 
                     </span>
+
 
                 </div>
 
-                {{-- Heading --}}
-                <h1 class="mt-8 text-5xl font-extrabold leading-tight tracking-tight text-slate-900 lg:text-6xl">
 
-                    Temukan
+
+                {{-- Heading --}}
+                <h1 class="mt-8 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+
+
+                    Kenali UMKM Lokal,
 
                     <span class="block text-emerald-600">
 
-                        Produk Lokal Terbaik
+                        Temukan Produk Unggulan Desa
 
                     </span>
 
-                    dari UMKM Desa
 
                 </h1>
 
-                {{-- Description --}}
-                <p class="mt-8 max-w-2xl text-lg leading-8 text-slate-600">
 
-                    SI UMKM Desa merupakan platform digital yang membantu
-                    memperkenalkan pelaku usaha, produk unggulan, dan potensi
-                    ekonomi desa agar lebih mudah dikenal oleh masyarakat,
-                    wisatawan, maupun calon mitra usaha.
+
+                {{-- Description --}}
+                <p class="mt-6 max-w-xl text-lg leading-8 text-slate-600">
+
+
+                    SI UMKM Desa membantu masyarakat menemukan pelaku usaha,
+                    produk lokal, dan potensi ekonomi desa melalui informasi
+                    digital yang mudah diakses.
+
 
                 </p>
 
-                {{-- CTA --}}
-                <div class="mt-10 flex flex-wrap gap-4">
+
+
+                {{-- Action --}}
+                <div class="mt-8 flex flex-wrap gap-4">
+
 
                     <a
                         href="{{ route('public.umkms.index') }}"
-                        class="btn-primary">
+                        class="btn btn-primary">
+
 
                         Jelajahi UMKM
 
+
                     </a>
+
+
 
                     <a
                         href="{{ route('public.products.index') }}"
                         class="btn-secondary">
 
+
                         Lihat Produk
+
 
                     </a>
 
+
                 </div>
 
-                {{-- Statistics --}}
-                <div class="mt-14 grid grid-cols-3 gap-5">
 
-                    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 
-                        <h3 class="text-3xl font-bold text-slate-900">
+                {{-- Trust Metrics --}}
+                <div class="mt-10 flex flex-wrap gap-x-8 gap-y-4">
 
-                            {{ number_format($totalUmkm ?? 0) }}
 
-                        </h3>
+                    <div>
 
-                        <p class="mt-2 text-sm text-slate-500">
+                        <p class="text-2xl font-bold text-slate-900">
+
+                            {{ number_format($totalUmkm ?? 0) }}+
+
+                        </p>
+
+
+                        <p class="text-sm text-slate-500">
 
                             UMKM Terdaftar
 
                         </p>
 
+
                     </div>
 
-                    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 
-                        <h3 class="text-3xl font-bold text-slate-900">
 
-                            {{ number_format($totalProduct ?? 0) }}
+                    <div>
 
-                        </h3>
+                        <p class="text-2xl font-bold text-slate-900">
 
-                        <p class="mt-2 text-sm text-slate-500">
+                            {{ number_format($totalProduct ?? 0) }}+
+
+                        </p>
+
+
+                        <p class="text-sm text-slate-500">
 
                             Produk Lokal
 
                         </p>
 
+
                     </div>
 
-                    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 
-                        <h3 class="text-3xl font-bold text-slate-900">
+                    <div>
+
+                        <p class="text-2xl font-bold text-slate-900">
 
                             {{ isset($categories) ? $categories->count() : 0 }}
 
-                        </h3>
+                        </p>
 
-                        <p class="mt-2 text-sm text-slate-500">
+
+                        <p class="text-sm text-slate-500">
 
                             Kategori
 
                         </p>
 
+
                     </div>
+
 
                 </div>
 
+
             </div>
 
-            {{-- Right --}}
+
+
+
+
+            {{-- Visual Preview --}}
             <div class="relative hidden lg:block">
 
-                <div class="rounded-[32px] border border-slate-200 bg-white p-8 shadow-2xl">
 
-                    {{-- Window Header --}}
+                <div class="surface-lg shadow-card p-8">
+
+
                     <div class="mb-6 flex items-center justify-between border-b border-slate-100 pb-4">
+
 
                         <div>
 
+
                             <h3 class="font-bold text-slate-900">
-
-                                SI UMKM Desa
-
-                            </h3>
-
-                            <p class="text-sm text-slate-500">
 
                                 Produk Unggulan
 
+                            </h3>
+
+
+                            <p class="text-sm text-slate-500">
+
+                                Dari UMKM Desa
+
                             </p>
 
-                        </div>
-
-                        <div class="rounded-xl bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-700">
-
-                            Online
 
                         </div>
+
+
+
+                        <span class="badge-success">
+
+                            Aktif
+
+                        </span>
+
 
                     </div>
 
-                    {{-- Product Cards --}}
+
+
                     <div class="space-y-4">
 
-                        @foreach ([
+
+                        @foreach([
                             ['Kopi Arabika', 'Minuman'],
                             ['Keripik Pisang', 'Makanan'],
                             ['Kerajinan Bambu', 'Kerajinan']
                         ] as $item)
 
-                            <div class="flex items-center gap-4 rounded-2xl border border-slate-200 p-4 transition hover:border-emerald-200 hover:bg-emerald-50">
 
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100">
+                            <div class="surface-sm flex items-center gap-4 p-4 transition hover:border-emerald-200 hover:bg-emerald-50">
+
+
+                                <div class="icon-wrapper icon-wrapper-md icon-wrapper-primary">
+
 
                                     <svg
-                                        class="h-7 w-7 text-emerald-600"
+                                        class="h-6 w-6"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24">
@@ -201,9 +253,12 @@
 
                                     </svg>
 
+
                                 </div>
 
-                                <div class="flex-1">
+
+
+                                <div>
 
                                     <h4 class="font-semibold text-slate-900">
 
@@ -211,83 +266,79 @@
 
                                     </h4>
 
+
                                     <p class="text-sm text-slate-500">
 
                                         {{ $item[1] }}
 
                                     </p>
 
-                                </div>
-
-                                <div class="text-right">
-
-                                    <div class="text-xs text-emerald-600">
-
-                                        Dipublikasikan
-
-                                    </div>
 
                                 </div>
+
 
                             </div>
 
+
                         @endforeach
+
 
                     </div>
 
+
                 </div>
 
-                {{-- Floating Card --}}
-                <div class="absolute -left-10 -bottom-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-xl">
 
-                    <p class="text-xs uppercase tracking-widest text-slate-400">
+
+
+                {{-- Trust Card --}}
+                <div class="absolute -bottom-8 -left-8 surface shadow-card p-5">
+
+
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
 
                         Digitalisasi UMKM
 
                     </p>
 
-                    <div class="mt-3 flex items-center gap-8">
 
-                        <div>
+                    <div class="mt-3 space-y-2 text-sm text-slate-600">
 
-                            <h4 class="text-2xl font-bold text-slate-900">
 
-                                {{ number_format($totalUmkm ?? 0) }}
+                        <p>
 
-                            </h4>
+                            ✓ Informasi usaha lokal
 
-                            <p class="text-xs text-slate-500">
+                        </p>
 
-                                UMKM
 
-                            </p>
+                        <p>
 
-                        </div>
+                            ✓ Produk unggulan desa
 
-                        <div>
+                        </p>
 
-                            <h4 class="text-2xl font-bold text-slate-900">
 
-                                {{ number_format($totalProduct ?? 0) }}
+                        <p>
 
-                            </h4>
+                            ✓ Akses informasi mudah
 
-                            <p class="text-xs text-slate-500">
+                        </p>
 
-                                Produk
-
-                            </p>
-
-                        </div>
 
                     </div>
 
+
                 </div>
+
 
             </div>
 
+
         </div>
 
+
     </div>
+
 
 </section>
