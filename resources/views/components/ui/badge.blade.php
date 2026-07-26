@@ -1,44 +1,75 @@
 @props([
     'variant' => 'primary',
+    'size' => 'md',
+    'dot' => false,
 ])
 
-
 @php
+
     $variants = [
 
-        'primary' =>
-            'border border-emerald-200 bg-emerald-100 text-emerald-700',
+        'primary' => 'border-emerald-200 bg-emerald-50 text-emerald-700',
 
-        'success' =>
-            'border border-emerald-200 bg-emerald-100 text-emerald-700',
+        'secondary' => 'border-slate-200 bg-slate-100 text-slate-700',
 
-        'secondary' =>
-            'border border-slate-200 bg-slate-100 text-slate-700',
+        'success' => 'border-green-200 bg-green-50 text-green-700',
 
-        'warning' =>
-            'border border-amber-200 bg-amber-100 text-amber-700',
+        'warning' => 'border-amber-200 bg-amber-50 text-amber-700',
 
-        'danger' =>
-            'border border-red-200 bg-red-100 text-red-700',
+        'danger' => 'border-red-200 bg-red-50 text-red-700',
 
-        'info' =>
-            'border border-sky-200 bg-sky-100 text-sky-700',
+        'info' => 'border-sky-200 bg-sky-50 text-sky-700',
 
     ];
-@endphp
 
+    $sizes = [
+
+        'sm' => 'px-2 py-0.5 text-[11px]',
+
+        'md' => 'px-3 py-1 text-xs',
+
+        'lg' => 'px-4 py-1.5 text-sm',
+
+    ];
+
+@endphp
 
 <span
     role="status"
 
     {{ $attributes->merge([
-        'class' =>
-            'inline-flex items-center whitespace-nowrap rounded-full border px-3 py-1 text-xs font-semibold',
+        'class' => implode(' ', [
+
+            'inline-flex',
+
+            'items-center',
+
+            'gap-1.5',
+
+            'whitespace-nowrap',
+
+            'rounded-full',
+
+            'border',
+
+            'font-semibold',
+
+            $sizes[$size] ?? $sizes['md'],
+
             $variants[$variant] ?? $variants['primary'],
+
+        ]),
     ]) }}>
 
+    @if ($dot)
+
+        <span
+            class="h-1.5 w-1.5 rounded-full bg-current">
+
+        </span>
+
+    @endif
 
     {{ $slot }}
-
 
 </span>

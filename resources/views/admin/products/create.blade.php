@@ -2,88 +2,63 @@
 
 @section('title', 'Tambah Produk')
 
-
 @section('content')
 
-    <div class="mx-auto max-w-5xl">
+<div class="mx-auto max-w-6xl space-y-8">
 
-
-        {{-- Header --}}
-        <div class="mb-8">
-
-            <x-ui.section-title title="Tambah Produk"
-                subtitle="Tambahkan produk baru untuk dipublikasikan pada katalog UMKM Desa." />
-
-        </div>
-
-
+    {{-- ====================================================== --}}
+    {{-- Header --}}
+    {{-- ====================================================== --}}
+    <x-ui.page-header
+        title="Tambah Produk"
+        subtitle="Tambahkan produk baru untuk dipublikasikan pada katalog UMKM Desa.">
+    </x-ui.page-header>
 
 
 
-        {{-- Form Card --}}
-        <x-ui.card class="overflow-hidden">
+    {{-- ====================================================== --}}
+    {{-- Form --}}
+    {{-- ====================================================== --}}
+    <x-ui.card
+        padding="false"
+        class="overflow-hidden">
 
+        <form
+            action="{{ route('admin.products.store') }}"
+            method="POST"
+            enctype="multipart/form-data">
 
-            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+            @csrf
 
+            <div class="p-8">
 
-                @csrf
+                @include('admin.products._form')
 
+            </div>
 
+            <x-ui.form-actions>
 
+                <x-ui.button
+                    variant="secondary"
+                    href="{{ route('admin.products.index') }}">
 
+                    Kembali
 
-                {{-- Form Content --}}
-                <div class="p-6 md:p-8">
+                </x-ui.button>
 
-                    @include('admin.products._form')
+                <x-ui.button
+                    type="submit">
 
-                </div>
+                    Simpan Produk
 
+                </x-ui.button>
 
+            </x-ui.form-actions>
 
+        </form>
 
+    </x-ui.card>
 
-                {{-- Footer Actions --}}
-                <div
-                    class="flex flex-col-reverse gap-3 border-t border-slate-200 bg-slate-50 px-6 py-5 md:flex-row md:items-center md:justify-end md:px-8">
-
-
-                    <x-ui.button variant="secondary" href="{{ route('admin.products.index') }}">
-
-
-                        Kembali
-
-
-                    </x-ui.button>
-
-
-
-
-
-                    <x-ui.button type="submit">
-
-
-                        Simpan Produk
-
-
-                    </x-ui.button>
-
-
-
-                </div>
-
-
-
-
-            </form>
-
-
-        </x-ui.card>
-
-
-
-    </div>
-
+</div>
 
 @endsection

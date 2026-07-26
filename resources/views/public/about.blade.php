@@ -2,25 +2,35 @@
 
 @section('title', 'Tentang')
 
+@section('meta_description', 'Mengenal Sistem Informasi UMKM Desa Salamnunggal sebagai platform digital untuk mendukung
+    promosi dan pengembangan UMKM lokal.')
+
 @section('content')
 
+    {{-- ====================================================== --}}
     {{-- Hero --}}
-    <section class="bg-gradient-to-br from-emerald-600 via-emerald-500 to-emerald-700 py-20 text-white">
+    {{-- ====================================================== --}}
+    <section class="bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-600 py-24 text-white">
 
         <div class="app-container text-center">
 
-            <h1 class="text-4xl font-bold tracking-tight md:text-5xl">
+            <x-ui.badge variant="secondary">
 
-                Tentang SI UMKM Desa
+                Sistem Informasi UMKM Desa
+
+            </x-ui.badge>
+
+            <h1 class="mt-6 text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">
+
+                Mengenal SI UMKM Desa
 
             </h1>
 
             <p class="mx-auto mt-6 max-w-3xl text-lg leading-8 text-emerald-100">
 
-                SI UMKM Desa merupakan platform digital yang dirancang untuk
-                membantu masyarakat mengenal berbagai UMKM lokal,
-                memperluas jangkauan promosi, serta mendukung pertumbuhan ekonomi desa
-                melalui transformasi digital.
+                Platform digital yang dirancang untuk membantu masyarakat mengenal
+                UMKM lokal, memperluas promosi produk, dan mendukung pertumbuhan
+                ekonomi Desa Salamnunggal melalui transformasi digital.
 
             </p>
 
@@ -28,45 +38,48 @@
 
     </section>
 
+
+
+
+
+    {{-- ====================================================== --}}
     {{-- About --}}
-    <section class="bg-slate-50 py-20">
+    {{-- ====================================================== --}}
+    <section class="py-20">
 
         <div class="app-container">
 
-            <div class="grid gap-12 lg:grid-cols-2">
+            <div class="grid gap-10 lg:grid-cols-2">
 
                 <div>
 
-                    <x-ui.section-title
-                        title="Apa itu SI UMKM Desa?"
-                        subtitle="Mengenal lebih dekat platform digital UMKM desa." />
+                    <x-ui.section-title title="Apa itu SI UMKM Desa?"
+                        subtitle="Platform informasi digital yang mempertemukan masyarakat dengan UMKM lokal." />
 
                     <div class="mt-8 space-y-6 leading-8 text-slate-600">
 
                         <p>
 
-                            Website ini menjadi pusat informasi berbagai
-                            Usaha Mikro, Kecil, dan Menengah (UMKM)
-                            yang berada di desa.
+                            SI UMKM Desa merupakan media informasi digital yang
+                            menghadirkan profil UMKM, produk unggulan, lokasi usaha,
+                            serta informasi kontak pelaku usaha dalam satu platform
+                            yang mudah diakses.
 
                         </p>
 
                         <p>
 
-                            Melalui platform ini masyarakat dapat
-                            melihat profil UMKM,
-                            menjelajahi produk,
-                            mengetahui lokasi usaha,
-                            hingga menghubungi pelaku UMKM secara langsung.
+                            Platform ini dikembangkan untuk membantu pelaku UMKM
+                            memperluas jangkauan promosi sekaligus memudahkan
+                            masyarakat menemukan produk lokal yang berkualitas.
 
                         </p>
 
                         <p>
 
-                            Sistem ini dikembangkan sebagai bagian dari
-                            upaya digitalisasi desa agar UMKM memiliki
-                            media promosi yang modern, mudah diakses,
-                            dan mampu menjangkau pasar yang lebih luas.
+                            Melalui digitalisasi informasi, diharapkan UMKM desa
+                            dapat berkembang, dikenal lebih luas, dan memberikan
+                            kontribusi nyata terhadap pertumbuhan ekonomi lokal.
 
                         </p>
 
@@ -74,19 +87,27 @@
 
                 </div>
 
-                <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
 
-                    <h2 class="text-2xl font-semibold text-slate-900">
+
+
+
+                <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+
+                    <h2 class="text-2xl font-bold text-slate-900">
 
                         Tujuan Platform
 
                     </h2>
 
-                    <div class="mt-8 space-y-5">
+                    <div class="mt-8 space-y-6">
 
                         <div class="flex gap-4">
 
-                            <span class="text-2xl">🌱</span>
+                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-xl">
+
+                                🌱
+
+                            </div>
 
                             <div>
 
@@ -96,9 +117,10 @@
 
                                 </h3>
 
-                                <p class="mt-1 text-slate-600">
+                                <p class="mt-1 leading-7 text-slate-600">
 
-                                    Membantu UMKM memperoleh media promosi digital.
+                                    Memberikan media promosi digital bagi pelaku
+                                    usaha lokal.
 
                                 </p>
 
@@ -106,9 +128,17 @@
 
                         </div>
 
+
+
+
+
                         <div class="flex gap-4">
 
-                            <span class="text-2xl">📱</span>
+                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-xl">
+
+                                📱
+
+                            </div>
 
                             <div>
 
@@ -118,9 +148,10 @@
 
                                 </h3>
 
-                                <p class="mt-1 text-slate-600">
+                                <p class="mt-1 leading-7 text-slate-600">
 
-                                    Menyediakan layanan informasi yang mudah diakses masyarakat.
+                                    Menyediakan akses informasi UMKM secara cepat,
+                                    mudah, dan modern.
 
                                 </p>
 
@@ -128,21 +159,30 @@
 
                         </div>
 
+
+
+
+
                         <div class="flex gap-4">
 
-                            <span class="text-2xl">🤝</span>
+                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-xl">
+
+                                🤝
+
+                            </div>
 
                             <div>
 
                                 <h3 class="font-semibold text-slate-900">
 
-                                    Menghubungkan Penjual & Pembeli
+                                    Menghubungkan UMKM dan Masyarakat
 
                                 </h3>
 
-                                <p class="mt-1 text-slate-600">
+                                <p class="mt-1 leading-7 text-slate-600">
 
-                                    Mempermudah masyarakat menemukan produk unggulan desa.
+                                    Memudahkan masyarakat menemukan berbagai produk
+                                    unggulan Desa Salamnunggal.
 
                                 </p>
 
@@ -160,80 +200,40 @@
 
     </section>
 
+
+
+
+
+    {{-- ====================================================== --}}
     {{-- Features --}}
-    <section class="py-20">
+    {{-- ====================================================== --}}
+    <section class="bg-slate-50 py-20">
 
         <div class="app-container">
 
-            <x-ui.section-title
-                title="Apa yang Bisa Anda Temukan?"
-                subtitle="Beberapa fitur utama yang tersedia di website ini." />
+            <x-ui.section-title title="Fitur Utama"
+                subtitle="Beberapa layanan yang dapat digunakan masyarakat melalui platform ini." />
 
-            <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
-                <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                @foreach ([['Daftar UMKM', 'Informasi lengkap mengenai pelaku usaha lokal yang telah terdaftar.'], ['Produk Lokal', 'Jelajahi berbagai produk unggulan hasil karya UMKM desa.'], ['Lokasi UMKM', 'Temukan lokasi usaha melalui integrasi Google Maps.'], ['Kontak Langsung', 'Hubungi pelaku UMKM secara langsung melalui WhatsApp.']] as [$title, $desc])
+                    <div
+                        class="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lg">
 
-                    <h3 class="font-semibold text-slate-900">
+                        <h3 class="text-lg font-bold text-slate-900">
 
-                        Daftar UMKM
+                            {{ $title }}
 
-                    </h3>
+                        </h3>
 
-                    <p class="mt-3 text-sm leading-6 text-slate-600">
+                        <p class="mt-3 leading-7 text-slate-600">
 
-                        Informasi lengkap berbagai UMKM yang telah terdaftar.
+                            {{ $desc }}
 
-                    </p>
+                        </p>
 
-                </div>
-
-                <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-
-                    <h3 class="font-semibold text-slate-900">
-
-                        Produk UMKM
-
-                    </h3>
-
-                    <p class="mt-3 text-sm leading-6 text-slate-600">
-
-                        Jelajahi produk unggulan dari pelaku usaha lokal.
-
-                    </p>
-
-                </div>
-
-                <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-
-                    <h3 class="font-semibold text-slate-900">
-
-                        Lokasi UMKM
-
-                    </h3>
-
-                    <p class="mt-3 text-sm leading-6 text-slate-600">
-
-                        Temukan lokasi usaha melalui Google Maps.
-
-                    </p>
-
-                </div>
-
-                <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-
-                    <h3 class="font-semibold text-slate-900">
-
-                        Kontak Langsung
-
-                    </h3>
-
-                    <p class="mt-3 text-sm leading-6 text-slate-600">
-
-                        Hubungi pelaku UMKM melalui WhatsApp.
-
-                    </p>
-
-                </div>
+                    </div>
+                @endforeach
 
             </div>
 
@@ -241,41 +241,56 @@
 
     </section>
 
+
+
+
+
+    {{-- ====================================================== --}}
     {{-- CTA --}}
-    <section class="bg-slate-900 py-20 text-center text-white">
+    {{-- ====================================================== --}}
+    <section class="pb-24 pt-20">
 
         <div class="app-container">
 
-            <h2 class="text-3xl font-bold">
+            <div class="rounded-[2rem] bg-gradient-to-r from-emerald-600 to-teal-600 px-10 py-12 text-white">
 
-                Mari Dukung UMKM Lokal
+                <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
 
-            </h2>
+                    <div>
 
-            <p class="mx-auto mt-4 max-w-2xl leading-8 text-slate-300">
+                        <h2 class="text-3xl font-bold">
 
-                Dengan membeli produk lokal dan mengenalkan UMKM desa,
-                kita turut berkontribusi terhadap pertumbuhan ekonomi masyarakat.
+                            Mari Dukung UMKM Lokal
 
-            </p>
+                        </h2>
 
-            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                        <p class="mt-3 max-w-2xl leading-8 text-emerald-100">
 
-                <a
-                    href="{{ route('public.umkms.index') }}"
-                    class="rounded-xl bg-emerald-600 px-6 py-3 font-medium text-white transition hover:bg-emerald-700">
+                            Bersama-sama kita dapat membantu memperkenalkan produk
+                            lokal, mendukung pelaku UMKM, dan mendorong pertumbuhan
+                            ekonomi Desa Salamnunggal.
 
-                    Jelajahi UMKM
+                        </p>
 
-                </a>
+                    </div>
 
-                <a
-                    href="{{ route('public.products.index') }}"
-                    class="rounded-xl border border-white px-6 py-3 font-medium transition hover:bg-white hover:text-slate-900">
+                    <div class="flex flex-wrap gap-3">
 
-                    Lihat Produk
+                        <x-ui.button href="{{ route('public.umkms.index') }}" variant="secondary">
 
-                </a>
+                            Jelajahi UMKM
+
+                        </x-ui.button>
+
+                        <x-ui.button href="{{ route('public.products.index') }}">
+
+                            Lihat Produk
+
+                        </x-ui.button>
+
+                    </div>
+
+                </div>
 
             </div>
 

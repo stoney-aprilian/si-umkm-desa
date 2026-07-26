@@ -2,93 +2,64 @@
 
 @section('title', 'Edit Produk')
 
-
 @section('content')
 
-    <div class="mx-auto max-w-5xl">
+<div class="mx-auto max-w-6xl space-y-8">
 
-
-        {{-- Header --}}
-        <div class="mb-8">
-
-            <x-ui.section-title title="Edit Produk"
-                subtitle="Perbarui informasi produk agar katalog UMKM tetap akurat dan menarik." />
-
-        </div>
-
-
+    {{-- ====================================================== --}}
+    {{-- Header --}}
+    {{-- ====================================================== --}}
+    <x-ui.page-header
+        title="Edit Produk"
+        subtitle="Perbarui informasi produk agar katalog UMKM Desa tetap akurat, menarik, dan selalu terbaru.">
+    </x-ui.page-header>
 
 
 
-        {{-- Form Card --}}
-        <x-ui.card class="overflow-hidden">
+    {{-- ====================================================== --}}
+    {{-- Form --}}
+    {{-- ====================================================== --}}
+    <x-ui.card
+        padding="false"
+        class="overflow-hidden">
 
+        <form
+            action="{{ route('admin.products.update', $product) }}"
+            method="POST"
+            enctype="multipart/form-data">
 
-            <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data"
-                class="space-y-8">
+            @csrf
+            @method('PUT')
 
+            <div class="p-8">
 
-                @csrf
+                @include('admin.products._form')
 
-                @method('PUT')
+            </div>
 
+            <x-ui.form-actions>
 
+                <x-ui.button
+                    variant="secondary"
+                    href="{{ route('admin.products.index') }}">
 
+                    Kembali
 
+                </x-ui.button>
 
-                {{-- Form Content --}}
-                <div class="p-6 md:p-8">
+                <x-ui.button
+                    type="submit">
 
+                    Simpan Perubahan
 
-                    @include('admin.products._form')
+                </x-ui.button>
 
+            </x-ui.form-actions>
 
-                </div>
+        </form>
 
+    </x-ui.card>
 
-
-
-
-                {{-- Footer Actions --}}
-                <div
-                    class="flex flex-col-reverse gap-3 border-t border-slate-200 bg-slate-50 px-6 py-5 md:flex-row md:items-center md:justify-end md:px-8">
-
-
-
-                    <x-ui.button variant="secondary" href="{{ route('admin.products.index') }}">
-
-
-                        Kembali
-
-
-                    </x-ui.button>
-
-
-
-
-
-                    <x-ui.button type="submit">
-
-
-                        Perbarui Produk
-
-
-                    </x-ui.button>
-
-
-
-                </div>
-
-
-
-            </form>
-
-
-        </x-ui.card>
-
-
-
-    </div>
-
+</div>
 
 @endsection

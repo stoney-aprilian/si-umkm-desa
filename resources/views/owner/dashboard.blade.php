@@ -4,30 +4,53 @@
 
 @section('content')
 
-<div class="space-y-6">
+    <div class="space-y-8">
 
-    @include('owner.partials.dashboard-header')
+        {{-- ====================================================== --}}
+        {{-- Dashboard Header --}}
+        {{-- ====================================================== --}}
+        @include('owner.partials.dashboard-header')
 
-    @include('owner.partials.statistics')
 
-    <div class="grid gap-6 lg:grid-cols-3">
 
-        <div class="space-y-6 lg:col-span-2">
 
-            @include('owner.partials.profile-summary')
 
-            @include('owner.partials.recent-products')
+        {{-- ====================================================== --}}
+        {{-- Statistics --}}
+        {{-- ====================================================== --}}
+        @include('owner.partials.statistics')
 
-        </div>
 
-        <div>
 
-            @include('owner.partials.quick-actions')
+
+
+        {{-- ====================================================== --}}
+        {{-- Main Content --}}
+        {{-- ====================================================== --}}
+        <div class="grid gap-8 xl:grid-cols-3">
+
+            {{-- Left Content --}}
+            <div class="space-y-8 xl:col-span-2">
+
+                @include('owner.partials.profile-summary')
+
+                @include('owner.partials.recent-products')
+
+            </div>
+
+
+
+
+
+            {{-- Right Sidebar --}}
+            <div class="space-y-8">
+
+                @include('owner.partials.quick-actions')
+
+            </div>
 
         </div>
 
     </div>
-
-</div>
 
 @endsection

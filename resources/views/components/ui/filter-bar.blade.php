@@ -1,41 +1,43 @@
 @props([
-    'action' => '',
-    'method' => 'GET',
+    'align' => 'between',
+    'stack' => true,
 ])
 
+@php
 
-<form
-    action="{{ $action }}"
-    method="{{ strtoupper($method) === 'GET' ? 'GET' : 'POST' }}"
+    $justify = match ($align) {
 
+        'start' => 'lg:justify-start',
+
+        'center' => 'lg:justify-center',
+
+        'end' => 'lg:justify-end',
+
+        default => 'lg:justify-between',
+
+    };
+
+@endphp
+
+<div
     {{ $attributes->merge([
-        'class' => '',
+        'class' => implode(' ', array_filter([
+
+            'flex',
+
+            $stack
+                ? 'flex-col lg:flex-row'
+                : 'flex-row',
+
+            'gap-4',
+
+            'lg:items-end',
+
+            $justify,
+
+        ])),
     ]) }}>
 
+    {{ $slot }}
 
-    @if (strtoupper($method) !== 'GET')
-
-        @csrf
-
-        @if (!in_array(strtoupper($method), ['POST']))
-
-            @method(strtoupper($method))
-
-        @endif
-
-    @endif
-
-
-
-    <x-ui.card>
-
-        <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-
-            {{ $slot }}
-
-        </div>
-
-    </x-ui.card>
-
-
-</form>
+</div>

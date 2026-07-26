@@ -1,8 +1,9 @@
 @props([
     'for' => null,
     'required' => false,
+    'optional' => false,
+    'description' => null,
 ])
-
 
 <label
     @if ($for)
@@ -10,30 +11,54 @@
     @endif
 
     {{ $attributes->merge([
-        'class' => 'mb-2 block text-sm font-medium text-slate-700',
+        'class' => 'block',
     ]) }}>
 
+    <div class="flex items-center gap-2">
 
-    {{ $slot }}
+        <span class="text-sm font-medium leading-6 tracking-normal text-slate-700">
 
-
-
-    @if ($required)
-
-        <span
-            class="ml-1 text-red-500"
-            aria-hidden="true">
-
-            *
+            {{ $slot }}
 
         </span>
 
+        @if ($required)
 
-        <span class="sr-only">
-            wajib diisi
-        </span>
+            <span
+                class="text-red-600"
+                aria-hidden="true">
+
+                *
+
+            </span>
+
+            <span class="sr-only">
+
+                wajib diisi
+
+            </span>
+
+        @elseif ($optional)
+
+            <span
+                class="text-xs font-medium text-slate-400">
+
+                (Opsional)
+
+            </span>
+
+        @endif
+
+    </div>
+
+    @if ($description)
+
+        <p class="mt-1 text-sm leading-5 text-slate-500">
+
+            {{ $description }}
+
+        </p>
 
     @endif
-
 
 </label>

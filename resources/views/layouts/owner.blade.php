@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    class="h-full">
+    class="h-full scroll-smooth">
 
 <head>
 
@@ -16,11 +16,17 @@
         content="{{ csrf_token() }}">
 
     <title>
+
         @hasSection('title')
+
             @yield('title') • Owner Panel • {{ config('app.name') }}
+
         @else
+
             Owner Panel • {{ config('app.name') }}
+
         @endif
+
     </title>
 
     {{-- Fonts --}}
@@ -42,22 +48,34 @@
 
 </head>
 
-<body class="min-h-screen bg-slate-100 font-sans text-slate-800 antialiased">
+<body
+    class="min-h-screen bg-slate-50 font-sans antialiased text-slate-800 selection:bg-emerald-200 selection:text-emerald-900">
 
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen overflow-hidden">
 
         {{-- Sidebar --}}
         @include('layouts.partials.owner.sidebar')
 
-        <div class="flex min-h-screen flex-1 flex-col">
+
+
+
+
+        {{-- Main Layout --}}
+        <div
+            class="flex min-h-screen min-w-0 flex-1 flex-col">
 
             {{-- Topbar --}}
             @include('layouts.partials.owner.topbar')
 
-            {{-- Main Content --}}
-            <main class="flex-1 overflow-x-hidden">
 
-                <div class="app-container space-y-6 py-8">
+
+
+
+            {{-- Main Content --}}
+            <main
+                class="min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
+
+                <div class="app-container py-8">
 
                     {{-- Flash Message --}}
                     @includeWhen(
@@ -71,6 +89,10 @@
                 </div>
 
             </main>
+
+
+
+
 
             {{-- Footer --}}
             @include('layouts.partials.owner.footer')

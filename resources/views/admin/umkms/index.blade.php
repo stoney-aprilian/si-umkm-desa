@@ -5,617 +5,503 @@
 
 @section('content')
 
-<div class="space-y-8">
+    <div class="space-y-8">
 
+        {{-- ====================================================== --}}
+        {{-- Header --}}
+        {{-- ====================================================== --}}
+        <x-ui.page-header title="Manajemen UMKM"
+            subtitle="Kelola seluruh data UMKM yang terdaftar pada Sistem Informasi UMKM Desa, mulai dari identitas usaha hingga status publikasinya.">
 
-    {{-- Header --}}
-    <x-ui.page-header
+            <x-ui.button href="{{ route('admin.umkms.create') }}">
 
-        title="Manajemen UMKM"
-
-        subtitle="Kelola seluruh data UMKM yang terdaftar pada Portal UMKM Desa.">
-
-
-        <x-ui.button
-
-            href="{{ route('admin.umkms.create') }}">
-
-
-            + Tambah UMKM
-
-
-        </x-ui.button>
-
-
-    </x-ui.page-header>
-
-
-
-
-
-    {{-- Statistics --}}
-    <section>
-
-
-        <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-
-
-
-            <x-ui.stat-card
-
-                title="Total UMKM"
-
-                :value="$statistics['total']"
-
-                description="Seluruh UMKM terdaftar">
-
-
-                <x-slot:icon>
-
-                    <svg
-                        class="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
-
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M3 21h18M5 21V8l7-4 7 4v13"/>
-
-                    </svg>
-
-
-                </x-slot:icon>
-
-
-            </x-ui.stat-card>
-
-
-
-
-
-            <x-ui.stat-card
-
-                title="UMKM Aktif"
-
-                :value="$statistics['active']"
-
-                description="Tampil di website">
-
-
-                <x-slot:icon>
-
-                    <svg
-                        class="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
-
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 13l4 4L19 7"/>
-
-                    </svg>
-
-
-                </x-slot:icon>
-
-
-            </x-ui.stat-card>
-
-
-
-
-
-            <x-ui.stat-card
-
-                title="UMKM Nonaktif"
-
-                :value="$statistics['inactive']"
-
-                description="Tidak ditampilkan">
-
-
-                <x-slot:icon>
-
-                    <svg
-                        class="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
-
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M18.364 18.364A9 9 0 005.636 5.636"/>
-
-                    </svg>
-
-
-                </x-slot:icon>
-
-
-            </x-ui.stat-card>
-
-
-
-
-
-            <x-ui.stat-card
-
-                title="Menunggu Verifikasi"
-
-                :value="\App\Models\Umkm::pending()->count()"
-
-                description="Perlu pemeriksaan admin">
-
-
-                <x-slot:icon>
-
-                    <svg
-                        class="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
-
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-
-                    </svg>
-
-
-                </x-slot:icon>
-
-
-            </x-ui.stat-card>
-
-
-
-        </div>
-
-
-    </section>
-
-
-
-
-
-    {{-- Search --}}
-    <x-ui.card>
-
-
-        <x-ui.filter-bar
-
-            :action="route('admin.umkms.index')">
-
-
-
-            <x-ui.search-bar
-
-                name="search"
-
-                :value="$search"
-
-                placeholder="Cari nama UMKM, pemilik, atau kategori..." />
-
-
-
-            <x-ui.button type="submit">
-
-                Cari
+                Tambah UMKM
 
             </x-ui.button>
 
+        </x-ui.page-header>
 
 
 
+        {{-- ====================================================== --}}
+        {{-- Statistics --}}
+        {{-- ====================================================== --}}
+        <section>
 
-            @if(request()->filled('search'))
+            <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
 
+                <x-ui.stat-card title="Total UMKM" :value="$statistics['total']" description="Seluruh UMKM terdaftar">
 
-                <x-ui.button
+                    <x-slot:icon>
 
-                    variant="secondary"
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-                    :href="route('admin.umkms.index')">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 21h18M5 21V8l7-4 7 4v13" />
 
+                        </svg>
 
-                    Reset
+                    </x-slot:icon>
 
+                </x-ui.stat-card>
 
-                </x-ui.button>
 
 
-            @endif
+                <x-ui.stat-card title="UMKM Aktif" :value="$statistics['active']" description="Ditampilkan pada website">
 
+                    <x-slot:icon>
 
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-        </x-ui.filter-bar>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 
+                        </svg>
 
-    </x-ui.card>
+                    </x-slot:icon>
 
+                </x-ui.stat-card>
 
 
 
+                <x-ui.stat-card title="Nonaktif" :value="$statistics['inactive']" description="Tidak dipublikasikan">
 
-    {{-- Table --}}
-    <x-ui.card class="overflow-hidden">
+                    <x-slot:icon>
 
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-        <div class="border-b border-slate-200 px-6 py-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M18.364 18.364A9 9 0 005.636 5.636" />
 
+                        </svg>
 
-            <h2 class="text-lg font-semibold text-slate-900">
+                    </x-slot:icon>
 
-                Daftar UMKM
+                </x-ui.stat-card>
 
-            </h2>
 
 
-            <p class="mt-1 text-sm text-slate-500">
+                <x-ui.stat-card title="Menunggu Verifikasi" :value="\App\Models\Umkm::pending()->count()" description="Perlu ditinjau admin">
 
-                Menampilkan
+                    <x-slot:icon>
 
-                <span class="font-medium">
-                    {{ $umkms->count() }}
-                </span>
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-                dari
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
 
-                <span class="font-medium">
-                    {{ $umkms->total() }}
-                </span>
+                        </svg>
 
-                UMKM.
+                    </x-slot:icon>
 
+                </x-ui.stat-card>
 
-            </p>
+            </div>
 
+        </section>
 
-        </div>
 
 
+        {{-- ====================================================== --}}
+        {{-- Toolbar --}}
+        {{-- ====================================================== --}}
+        <x-ui.toolbar>
 
+            <form action="{{ route('admin.umkms.index') }}" method="GET"
+                class="flex w-full flex-col gap-3 lg:flex-row lg:items-center">
 
+                <div class="flex-1">
 
-        <div class="table-wrapper">
+                    <x-ui.search-bar name="search" :value="$search"
+                        placeholder="Cari nama UMKM, pemilik, kategori, atau nomor telepon..." />
 
+                </div>
 
-            <table class="table-app">
+                <div class="flex items-center gap-3">
 
+                    @if (request()->filled('search'))
+                        <x-ui.button href="{{ route('admin.umkms.index') }}" variant="ghost">
 
-                <thead>
+                            Reset
 
-                    <tr>
+                        </x-ui.button>
+                    @endif
 
-                        <th class="w-16">
-                            No
-                        </th>
+                    <x-ui.button type="submit">
 
-                        <th>
-                            UMKM
-                        </th>
+                        Cari
 
-                        <th>
-                            Kategori
-                        </th>
+                    </x-ui.button>
 
-                        <th>
-                            Pemilik
-                        </th>
+                </div>
 
-                        <th class="text-center">
-                            Approval
-                        </th>
+            </form>
 
-                        <th class="text-center">
-                            Status
-                        </th>
+        </x-ui.toolbar>
 
-                        <th class="w-44 text-center">
-                            Aksi
-                        </th>
+        {{-- ====================================================== --}}
+        {{-- Daftar UMKM --}}
+        {{-- ====================================================== --}}
+        <x-ui.card padding="false">
 
-                    </tr>
+            <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
 
-                </thead>
+                <div>
 
+                    <h2 class="text-lg font-semibold text-slate-900">
 
+                        Daftar UMKM
 
+                    </h2>
 
+                    <p class="mt-1 text-sm text-slate-500">
 
-                <tbody>
+                        Menampilkan
 
+                        <span class="font-semibold text-slate-700">
 
-                    @forelse($umkms as $umkm)
+                            {{ $umkms->count() }}
 
+                        </span>
 
-                        <tr>
+                        dari
 
+                        <span class="font-semibold text-slate-700">
 
-                            <td>
+                            {{ $umkms->total() }}
 
-                                {{
-                                    ($umkms->currentPage() - 1)
-                                    * $umkms->perPage()
-                                    + $loop->iteration
-                                }}
+                        </span>
 
-                            </td>
+                        UMKM.
 
+                    </p>
 
+                </div>
 
+                <x-ui.badge variant="secondary">
 
+                    {{ $umkms->total() }} Data
 
-                            <td>
+                </x-ui.badge>
 
+            </div>
 
-                                <div class="flex items-center gap-3">
 
 
-                                    @if($umkm->logo)
+            @if ($umkms->count())
 
+                <div class="overflow-x-auto">
 
-                                        <img
+                    <table class="min-w-full divide-y divide-slate-200">
 
-                                            src="{{ asset('storage/'.$umkm->logo) }}"
+                        <thead class="bg-slate-50">
 
-                                            class="h-12 w-12 rounded-xl object-cover"
+                            <tr>
 
-                                            alt="{{ $umkm->business_name }}">
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
 
+                                    UMKM
 
-                                    @else
+                                </th>
 
+                                <th
+                                    class="w-44 px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
 
-                                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-xs text-slate-400">
+                                    Kategori
 
-                                            N/A
+                                </th>
+
+                                <th
+                                    class="w-52 px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+
+                                    Pemilik
+
+                                </th>
+
+                                <th
+                                    class="w-40 px-6 py-4 text-center text-xs font-semibold uppercase tracking-wider text-slate-500">
+
+                                    Verifikasi
+
+                                </th>
+
+                                <th
+                                    class="w-36 px-6 py-4 text-center text-xs font-semibold uppercase tracking-wider text-slate-500">
+
+                                    Status
+
+                                </th>
+
+                                <th
+                                    class="w-48 px-6 py-4 text-center text-xs font-semibold uppercase tracking-wider text-slate-500">
+
+                                    Aksi
+
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody class="divide-y divide-slate-100 bg-white">
+
+                            @foreach ($umkms as $umkm)
+                                <tr class="transition hover:bg-slate-50">
+
+                                    {{-- UMKM --}}
+                                    <td class="px-6 py-5">
+
+                                        <div class="flex items-center gap-4">
+
+                                            @if ($umkm->logo)
+                                                <img src="{{ asset('storage/' . $umkm->logo) }}"
+                                                    alt="{{ $umkm->business_name }}"
+                                                    class="h-14 w-14 rounded-2xl border border-slate-200 object-cover">
+                                            @else
+                                                <div
+                                                    class="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+
+                                                    <svg class="h-6 w-6" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M3 21h18M5 21V8l7-4 7 4v13" />
+
+                                                    </svg>
+
+                                                </div>
+                                            @endif
+
+
+
+                                            <div>
+
+                                                <h3 class="font-semibold text-slate-900">
+
+                                                    {{ $umkm->business_name }}
+
+                                                </h3>
+
+                                                <p class="mt-1 text-xs text-slate-500">
+
+                                                    📞 {{ $umkm->phone ?: '-' }}
+
+                                                </p>
+
+                                            </div>
 
                                         </div>
 
+                                    </td>
 
-                                    @endif
 
 
+                                    {{-- Kategori --}}
+                                    <td class="px-6 py-5">
 
+                                        @if ($umkm->category)
+                                            <x-ui.badge variant="secondary">
 
+                                                {{ $umkm->category->name }}
 
-                                    <div>
+                                            </x-ui.badge>
+                                        @else
+                                            <span class="text-sm text-slate-400">
 
+                                                -
 
-                                        <p class="font-semibold text-slate-900">
+                                            </span>
+                                        @endif
 
-                                            {{ $umkm->business_name }}
+                                    </td>
 
-                                        </p>
 
 
-                                        <p class="mt-1 text-xs text-slate-500">
+                                    {{-- Pemilik --}}
+                                    <td class="px-6 py-5">
 
-                                            {{ $umkm->phone ?: '-' }}
+                                        @if ($umkm->user)
+                                            <div>
 
-                                        </p>
+                                                <p class="font-medium text-slate-900">
 
+                                                    {{ $umkm->user->name }}
 
-                                    </div>
+                                                </p>
 
+                                                <p class="mt-1 text-xs text-slate-500">
 
-                                </div>
+                                                    {{ $umkm->user->email ?? 'Pemilik UMKM' }}
 
+                                                </p>
 
-                            </td>
+                                            </div>
+                                        @else
+                                            <span class="text-sm text-slate-400">
 
+                                                -
 
+                                            </span>
+                                        @endif
 
+                                    </td>
 
 
-                            <td>
 
-                                {{ $umkm->category?->name ?? '-' }}
+                                    {{-- Approval --}}
+                                    <td class="px-6 py-5 text-center">
 
-                            </td>
+                                        <x-ui.badge :variant="match ($umkm->status) {
+                                            'approved' => 'success',
+                                            'pending' => 'warning',
+                                            default => 'danger',
+                                        }">
 
+                                            {{ ucfirst($umkm->status) }}
 
+                                        </x-ui.badge>
 
+                                    </td>
 
 
-                            <td>
 
-                                {{ $umkm->user?->name ?? '-' }}
+                                    {{-- Status --}}
+                                    <td class="px-6 py-5 text-center">
 
-                            </td>
+                                        <x-ui.badge :variant="$umkm->is_active ? 'success' : 'danger'">
 
+                                            {{ $umkm->is_active ? 'Aktif' : 'Nonaktif' }}
 
+                                        </x-ui.badge>
 
+                                    </td>
 
 
-                            <td class="text-center">
 
+                                    {{-- Action --}}
+                                    <td class="px-6 py-5">
 
-                                <x-ui.badge
+                                        <div class="flex items-center justify-center gap-2">
 
-                                    :variant="match($umkm->status) {
+                                            <x-ui.button href="{{ route('admin.umkms.edit', $umkm) }}" variant="ghost"
+                                                size="sm">
 
-                                        'approved' => 'success',
+                                                Edit
 
-                                        'pending' => 'warning',
+                                            </x-ui.button>
 
-                                        default => 'danger'
+                                            <form action="{{ route('admin.umkms.destroy', $umkm) }}" method="POST"
+                                                onsubmit="return confirm('Yakin ingin menghapus UMKM ini?')">
 
-                                    }">
+                                                @csrf
+                                                @method('DELETE')
 
+                                                <x-ui.button type="submit" variant="danger" size="sm">
 
-                                    {{ ucfirst($umkm->status) }}
+                                                    Hapus
 
+                                                </x-ui.button>
 
-                                </x-ui.badge>
+                                            </form>
 
+                                        </div>
 
-                            </td>
+                                    </td>
 
+                                </tr>
+                            @endforeach
 
+                        </tbody>
 
+                    </table>
 
+                </div>
+            @else
+                <div class="py-12">
 
-                            <td class="text-center">
+                    <x-ui.empty-state title="Belum Ada UMKM"
+                        description="Tambahkan UMKM pertama agar katalog digital desa mulai berkembang.">
 
+                        <x-ui.button href="{{ route('admin.umkms.create') }}">
 
-                                <x-ui.badge
+                            Tambah UMKM
 
-                                    :variant="$umkm->is_active ? 'success' : 'danger'">
+                        </x-ui.button>
 
+                    </x-ui.empty-state>
 
-                                    {{ $umkm->is_active ? 'Aktif' : 'Nonaktif' }}
+                </div>
 
+            @endif
 
-                                </x-ui.badge>
+        </x-ui.card>
 
+        {{-- ====================================================== --}}
+        {{-- Pagination --}}
+        {{-- ====================================================== --}}
+        <section>
 
-                            </td>
+            <div
+                class="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-sm md:flex-row md:items-center md:justify-between">
 
+                <div>
 
+                    <p class="text-sm font-medium text-slate-700">
 
+                        Menampilkan
 
+                        <span class="font-semibold text-slate-900">
 
-                            <td>
+                            {{ $umkms->firstItem() ?? 0 }}
 
+                        </span>
 
-                                <x-ui.action-group>
+                        –
 
+                        <span class="font-semibold text-slate-900">
 
+                            {{ $umkms->lastItem() ?? 0 }}
 
-                                    <x-ui.button
+                        </span>
 
-                                        variant="secondary"
+                        dari
 
-                                        :href="route('admin.umkms.edit', $umkm)">
+                        <span class="font-semibold text-slate-900">
 
+                            {{ $umkms->total() }}
 
-                                        Edit
+                        </span>
 
+                        UMKM
 
-                                    </x-ui.button>
+                    </p>
 
+                    <p class="mt-1 text-xs text-slate-500">
 
+                        Halaman
 
+                        {{ $umkms->currentPage() }}
 
+                        dari
 
-                                    <form
+                        {{ $umkms->lastPage() }}
 
-                                        action="{{ route('admin.umkms.destroy', $umkm) }}"
+                    </p>
 
-                                        method="POST"
+                </div>
 
-                                        onsubmit="return confirm('Yakin ingin menghapus UMKM ini?')">
+                <div>
 
+                    {{ $umkms->onEachSide(1)->links() }}
 
-                                        @csrf
+                </div>
 
-                                        @method('DELETE')
+            </div>
 
-
-
-                                        <x-ui.button
-
-                                            type="submit"
-
-                                            variant="danger">
-
-
-                                            Hapus
-
-
-                                        </x-ui.button>
-
-
-
-                                    </form>
-
-
-                                </x-ui.action-group>
-
-
-                            </td>
-
-
-                        </tr>
-
-
-                    @empty
-
-
-                        <tr>
-
-                            <td
-
-                                colspan="7"
-
-                                class="py-14">
-
-
-                                <x-ui.empty-state
-
-                                    title="Belum Ada Data UMKM"
-
-                                    description="Tambahkan UMKM pertama agar katalog desa mulai berkembang." />
-
-
-                            </td>
-
-
-                        </tr>
-
-
-                    @endforelse
-
-
-                </tbody>
-
-
-            </table>
-
-
-        </div>
-
-
-    </x-ui.card>
-
-
-
-
-
-    {{-- Pagination --}}
-    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-
-
-        <p class="text-sm text-slate-500">
-
-            Halaman {{ $umkms->currentPage() }}
-
-            dari {{ $umkms->lastPage() }}
-
-
-        </p>
-
-
-
-        {{ $umkms->links() }}
-
+        </section>
 
     </div>
-
-
-</div>
-
 
 @endsection

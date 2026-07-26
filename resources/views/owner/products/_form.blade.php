@@ -3,90 +3,163 @@
     $product ??= null;
 @endphp
 
-<div class="grid gap-6 lg:grid-cols-2">
+<div class="space-y-10">
 
-    <x-ui.field
-        name="name"
-        class="lg:col-span-2">
+    {{-- ====================================================== --}}
+    {{-- Informasi Produk --}}
+    {{-- ====================================================== --}}
+    <section>
 
-        <x-ui.label
-            for="name"
-            required>
+        <div class="mb-6">
 
-            Nama Produk
+            <h2 class="text-lg font-semibold tracking-tight text-slate-900">
 
-        </x-ui.label>
+                Informasi Produk
 
-        <x-ui.input
-            id="name"
-            name="name"
-            :value="old('name', $product?->name)"
-            required />
+            </h2>
 
-    </x-ui.field>
+            <p class="mt-1 text-sm leading-6 text-slate-500">
 
-    <x-ui.field
-        name="price">
+                Lengkapi informasi dasar produk yang akan ditampilkan kepada masyarakat.
 
-        <x-ui.label
-            for="price"
-            required>
+            </p>
 
-            Harga (Rp)
+        </div>
 
-        </x-ui.label>
+        <div class="grid gap-6 lg:grid-cols-2">
 
-        <x-ui.input
-            id="price"
-            name="price"
-            type="number"
-            min="0"
-            step="0.01"
-            :value="old('price', $product?->price)"
-            required />
+            {{-- Nama Produk --}}
+            <x-ui.field name="name" class="lg:col-span-2"
+                helper="Gunakan nama yang jelas dan mudah dikenali pelanggan.">
 
-    </x-ui.field>
+                <x-ui.label for="name" required>
 
-    <x-ui.field
-        name="is_active"
-        class="flex items-end">
+                    Nama Produk
 
-        <x-ui.checkbox
-            id="is_active"
-            name="is_active"
-            label="Produk Aktif"
-            :checked="old('is_active', $product?->is_active ?? true)" />
+                </x-ui.label>
 
-    </x-ui.field>
+                <x-ui.input id="name" name="name" maxlength="150" :value="old('name', $product?->name)"
+                    placeholder="Contoh: Keripik Pisang Original" required />
 
-    <x-ui.field
-        name="description"
-        class="lg:col-span-2">
+            </x-ui.field>
 
-        <x-ui.label
-            for="description">
 
-            Deskripsi
 
-        </x-ui.label>
 
-        <x-ui.textarea
-            id="description"
-            name="description"
-            rows="5">{{ old('description', $product?->description) }}</x-ui.textarea>
 
-    </x-ui.field>
+            {{-- Harga --}}
+            <x-ui.field name="price" helper="Masukkan harga jual produk.">
 
-    <x-ui.field
-        name="image"
-        class="lg:col-span-2">
+                <x-ui.label for="price" required>
 
-        <x-ui.file-upload
-            id="image"
-            name="image"
-            label="Foto Produk"
-            :preview="$product?->image" />
+                    Harga (Rp)
 
-    </x-ui.field>
+                </x-ui.label>
+
+                <x-ui.input id="price" type="number" name="price" min="0" step="1" :value="old('price', $product?->price)"
+                    placeholder="Contoh: 25000" required />
+
+            </x-ui.field>
+
+
+
+
+
+            {{-- Status --}}
+            <div class="flex items-end">
+
+                <x-ui.checkbox name="is_active" :checked="old('is_active', $product?->is_active ?? true)" label="Produk Aktif" />
+
+            </div>
+
+
+
+
+
+            {{-- Deskripsi --}}
+            <x-ui.field name="description" class="lg:col-span-2">
+
+                <x-ui.label for="description">
+
+                    Deskripsi Produk
+
+                </x-ui.label>
+
+                <x-ui.textarea id="description" name="description" rows="5" maxlength="1000"
+                    placeholder="Jelaskan produk Anda secara singkat...">{{ old('description', $product?->description) }}</x-ui.textarea>
+
+            </x-ui.field>
+
+        </div>
+
+    </section>
+
+
+
+
+
+    {{-- ====================================================== --}}
+    {{-- Gambar --}}
+    {{-- ====================================================== --}}
+    <section class="border-t border-slate-200 pt-8">
+
+        <div class="mb-6">
+
+            <h2 class="text-lg font-semibold tracking-tight text-slate-900">
+
+                Gambar Produk
+
+            </h2>
+
+            <p class="mt-1 text-sm leading-6 text-slate-500">
+
+                Gunakan gambar yang jelas agar produk lebih menarik bagi calon pembeli.
+
+            </p>
+
+        </div>
+
+        <x-ui.field name="image">
+
+            <x-ui.file-upload id="image" name="image" label="Foto Produk" :preview="$product?->image" />
+
+        </x-ui.field>
+
+    </section>
+
+
+
+
+
+    {{-- ====================================================== --}}
+    {{-- Pengaturan --}}
+    {{-- ====================================================== --}}
+    <section class="border-t border-slate-200 pt-8">
+
+        <div class="mb-6">
+
+            <h2 class="text-lg font-semibold tracking-tight text-slate-900">
+
+                Pengaturan Produk
+
+            </h2>
+
+            <p class="mt-1 text-sm leading-6 text-slate-500">
+
+                Atur status publikasi dan tampilan produk pada portal SI UMKM Desa.
+
+            </p>
+
+        </div>
+
+        <div class="space-y-4">
+
+            <x-ui.checkbox name="is_featured" :checked="old('is_featured', $product?->is_featured ?? false)" label="Jadikan sebagai Produk Unggulan" />
+
+            <x-ui.checkbox name="is_active" :checked="old('is_active', $product?->is_active ?? true)" label="Produk Aktif" />
+
+        </div>
+
+    </section>
 
 </div>

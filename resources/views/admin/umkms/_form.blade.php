@@ -1,593 +1,216 @@
-<div class="space-y-10">
+<div class="space-y-8">
 
+    {{-- ====================================================== --}}
+    {{-- Informasi UMKM --}}
+    {{-- ====================================================== --}}
+    <x-ui.card>
 
-    {{-- Basic Information --}}
-    <section>
+        <x-ui.section-title title="Informasi UMKM"
+            subtitle="Masukkan identitas utama UMKM yang akan ditampilkan pada website." />
 
+        <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-        <div class="mb-6">
+            {{-- Nama UMKM --}}
+            <x-ui.field name="business_name" helper="Gunakan nama resmi atau nama yang dikenal masyarakat.">
 
-            <h2 class="text-lg font-semibold text-slate-900">
-                Informasi UMKM
-            </h2>
-
-            <p class="mt-1 text-sm text-slate-500">
-                Informasi utama mengenai UMKM yang akan ditampilkan pada website.
-            </p>
-
-        </div>
-
-
-
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-
-
-            {{-- Business Name --}}
-            <x-ui.field
-                name="business_name"
-                helper="Gunakan nama resmi UMKM.">
-
-
-                <x-ui.label
-                    for="business_name"
-                    required>
+                <x-ui.label for="business_name" required>
 
                     Nama UMKM
 
                 </x-ui.label>
 
-
-
-                <x-ui.input
-
-                    id="business_name"
-
-                    name="business_name"
-
-                    maxlength="150"
-
-                    :value="old('business_name', $umkm->business_name ?? '')"
-
-                    placeholder="Contoh: Keripik Singkong Bu Ijah"
-
-                    required />
-
-
+                <x-ui.input id="business_name" name="business_name" maxlength="150" :value="old('business_name', $umkm->business_name ?? '')"
+                    placeholder="Contoh: Keripik Singkong Bu Ijah" required />
 
             </x-ui.field>
 
 
 
+            {{-- Kategori --}}
+            <x-ui.field name="category_id" helper="Pilih kategori usaha yang paling sesuai.">
 
-
-
-            {{-- Category --}}
-            <x-ui.field
-                name="category_id">
-
-
-                <x-ui.label
-                    for="category_id"
-                    required>
+                <x-ui.label for="category_id" required>
 
                     Kategori
 
                 </x-ui.label>
 
-
-
-
-                <select
-
-                    id="category_id"
-
-                    name="category_id"
-
-                    class="app-input"
-
-                    required>
-
-
+                <x-ui.select id="category_id" name="category_id" required>
 
                     <option value="">
+
                         Pilih Kategori
+
                     </option>
 
-
-
-
-                    @foreach($categories as $category)
-
-
-                        <option
-
-                            value="{{ $category->id }}"
-
-                            @selected(
-                                old(
-                                    'category_id',
-                                    $umkm->category_id ?? ''
-                                ) == $category->id
-                            )>
-
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @selected(old('category_id', $umkm->category_id ?? '') == $category->id)>
 
                             {{ $category->name }}
 
-
                         </option>
-
-
-
                     @endforeach
 
-
-
-                </select>
-
-
+                </x-ui.select>
 
             </x-ui.field>
 
 
 
+            {{-- Pemilik --}}
+            <x-ui.field name="user_id" helper="Pemilik yang bertanggung jawab terhadap UMKM ini.">
 
-
-
-
-
-            {{-- Owner --}}
-            <x-ui.field
-                name="user_id">
-
-
-                <x-ui.label
-                    for="user_id"
-                    required>
+                <x-ui.label for="user_id" required>
 
                     Pemilik UMKM
 
                 </x-ui.label>
 
-
-
-
-                <select
-
-                    id="user_id"
-
-                    name="user_id"
-
-                    class="app-input"
-
-                    required>
-
-
+                <x-ui.select id="user_id" name="user_id" required>
 
                     <option value="">
+
                         Pilih Pemilik
+
                     </option>
 
-
-
-
-
-                    @foreach($owners as $owner)
-
-
-                        <option
-
-                            value="{{ $owner->id }}"
-
-                            @selected(
-                                old(
-                                    'user_id',
-                                    $umkm->user_id ?? ''
-                                ) == $owner->id
-                            )>
-
+                    @foreach ($owners as $owner)
+                        <option value="{{ $owner->id }}" @selected(old('user_id', $umkm->user_id ?? '') == $owner->id)>
 
                             {{ $owner->name }}
 
-
                         </option>
-
-
-
                     @endforeach
 
-
-
-                </select>
-
-
+                </x-ui.select>
 
             </x-ui.field>
 
 
 
+            {{-- Nomor HP --}}
+            <x-ui.field name="phone" helper="Nomor yang dapat dihubungi oleh pelanggan.">
 
-
-
-
-
-            {{-- Phone --}}
-            <x-ui.field
-                name="phone">
-
-
-                <x-ui.label
-                    for="phone">
+                <x-ui.label for="phone">
 
                     Nomor HP
 
                 </x-ui.label>
 
-
-
-
-                <x-ui.input
-
-                    id="phone"
-
-                    name="phone"
-
-                    maxlength="20"
-
-                    :value="old('phone', $umkm->phone ?? '')"
-
-                    placeholder="08xxxxxxxxxx" />
-
-
+                <x-ui.input id="phone" name="phone" maxlength="20" :value="old('phone', $umkm->phone ?? '')" placeholder="08xxxxxxxxxx" />
 
             </x-ui.field>
 
-
-
         </div>
 
-
-
-    </section>
-
+    </x-ui.card>
 
 
 
+    {{-- ====================================================== --}}
+    {{-- Media UMKM --}}
+    {{-- ====================================================== --}}
+    <x-ui.card>
 
+        <x-ui.section-title title="Media UMKM"
+            subtitle="Tambahkan identitas visual agar profil UMKM terlihat lebih profesional." />
 
-
-    {{-- Media --}}
-    <section class="border-t border-slate-200 pt-8">
-
-
-        <div class="mb-6">
-
-
-            <h3 class="text-base font-semibold text-slate-900">
-
-                Media UMKM
-
-            </h3>
-
-
-            <p class="mt-1 text-sm text-slate-500">
-
-                Tambahkan logo dan banner agar profil UMKM terlihat lebih menarik.
-
-            </p>
-
-
-        </div>
-
-
-
-
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-
-
-
-
+        <div class="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
 
             {{-- Logo --}}
-            <x-ui.field
-                name="logo">
-
-
-                <x-ui.label
-                    for="logo">
-
-                    Logo UMKM
-
-                </x-ui.label>
-
-
-
-
-
-                @isset($umkm)
-
-                    @if($umkm->logo)
-
-
-                        <img
-
-                            src="{{ asset('storage/'.$umkm->logo) }}"
-
-                            alt="{{ $umkm->business_name }}"
-
-                            class="mb-4 h-24 w-24 rounded-2xl border border-slate-200 object-cover">
-
-
-
-                    @endif
-
-                @endisset
-
-
-
-
-
-                <input
-
-                    type="file"
-
-                    id="logo"
-
-                    name="logo"
-
-                    accept="image/png,image/jpeg,image/webp"
-
-                    class="app-input">
-
-
-
-
-
-                <p class="mt-2 text-xs text-slate-500">
-
-                    JPG, PNG, WEBP maksimal 2MB.
-
-                </p>
-
-
-
-            </x-ui.field>
-
-
-
-
-
-
+            <x-ui.file-upload id="logo" name="logo" label="Logo UMKM" :preview="$umkm->logo ?? null"
+                accept="image/png,image/jpeg,image/webp" />
 
 
 
             {{-- Banner --}}
-            <x-ui.field
-                name="banner">
+            <x-ui.file-upload id="banner" name="banner" label="Banner UMKM" :preview="$umkm->banner ?? null"
+                accept="image/png,image/jpeg,image/webp" />
 
+        </div>
 
-                <x-ui.label
-                    for="banner">
+        <div class="mt-6 rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-5 py-4">
 
-                    Banner UMKM
+            <p class="font-medium text-slate-700">
+
+                Rekomendasi Gambar
+
+            </p>
+
+            <ul class="mt-3 space-y-2 text-sm text-slate-500">
+
+                <li>• Format: JPG, PNG, atau WEBP.</li>
+                <li>• Ukuran maksimal 2 MB.</li>
+                <li>• Gunakan gambar dengan kualitas yang jelas.</li>
+                <li>• Banner disarankan menggunakan rasio landscape.</li>
+
+            </ul>
+
+        </div>
+
+    </x-ui.card>
+
+    {{-- ====================================================== --}}
+    {{-- Deskripsi UMKM --}}
+    {{-- ====================================================== --}}
+    <x-ui.card>
+
+        <x-ui.section-title title="Deskripsi UMKM"
+            subtitle="Ceritakan profil singkat, produk unggulan, serta kelebihan UMKM agar lebih menarik bagi pengunjung." />
+
+        <div class="mt-8">
+
+            <x-ui.field name="description" helper="Opsional. Maksimal 1000 karakter.">
+
+                <x-ui.label for="description">
+
+                    Deskripsi
 
                 </x-ui.label>
 
-
-
-
-
-                @isset($umkm)
-
-                    @if($umkm->banner)
-
-
-                        <img
-
-                            src="{{ asset('storage/'.$umkm->banner) }}"
-
-                            alt="{{ $umkm->business_name }}"
-
-                            class="mb-4 h-24 w-full rounded-2xl border border-slate-200 object-cover">
-
-
-
-                    @endif
-
-                @endisset
-
-
-
-
-
-                <input
-
-                    type="file"
-
-                    id="banner"
-
-                    name="banner"
-
-                    accept="image/png,image/jpeg,image/webp"
-
-                    class="app-input">
-
-
-
-
-
-                <p class="mt-2 text-xs text-slate-500">
-
-                    Digunakan sebagai gambar header profil UMKM.
-
-                </p>
-
-
+                <x-ui.textarea id="description" name="description" rows="6" maxlength="1000"
+                    placeholder="Contoh: UMKM ini bergerak di bidang makanan tradisional khas Desa Salamnunggal yang diproduksi secara rumahan dengan bahan baku pilihan...">{{ old('description', $umkm->description ?? '') }}</x-ui.textarea>
 
             </x-ui.field>
 
-
-
-
         </div>
 
+    </x-ui.card>
 
 
-    </section>
 
+    {{-- ====================================================== --}}
+    {{-- Informasi Lokasi --}}
+    {{-- ====================================================== --}}
+    <x-ui.card>
 
+        <x-ui.section-title title="Informasi Lokasi"
+            subtitle="Masukkan alamat usaha agar pelanggan dapat menemukan lokasi UMKM dengan mudah." />
 
+        <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
 
+            {{-- Alamat --}}
+            <div class="lg:col-span-2">
 
+                <x-ui.field name="address" helper="Masukkan alamat lengkap lokasi usaha.">
 
-
-    {{-- Description --}}
-    <section class="border-t border-slate-200 pt-8">
-
-
-        <div class="mb-5">
-
-
-            <h3 class="text-base font-semibold text-slate-900">
-
-                Deskripsi UMKM
-
-            </h3>
-
-
-            <p class="mt-1 text-sm text-slate-500">
-
-                Jelaskan profil dan keunggulan UMKM secara singkat.
-
-            </p>
-
-
-        </div>
-
-
-
-
-
-        <x-ui.field
-            name="description">
-
-
-            <x-ui.label
-                for="description">
-
-                Deskripsi
-
-            </x-ui.label>
-
-
-
-
-
-            <x-ui.textarea
-
-                id="description"
-
-                name="description"
-
-                rows="5"
-
-                maxlength="1000"
-
-                placeholder="Tuliskan deskripsi singkat mengenai UMKM...">{{ old('description', $umkm->description ?? '') }}</x-ui.textarea>
-
-
-
-
-        </x-ui.field>
-
-
-
-    </section>
-
-
-
-
-
-
-
-    {{-- Location --}}
-    <section class="border-t border-slate-200 pt-8">
-
-
-        <div class="mb-5">
-
-
-            <h3 class="text-base font-semibold text-slate-900">
-
-                Informasi Lokasi
-
-            </h3>
-
-
-            <p class="mt-1 text-sm text-slate-500">
-
-                Masukkan alamat lengkap lokasi usaha.
-
-            </p>
-
-
-        </div>
-
-
-
-
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-
-
-
-
-
-            <div class="md:col-span-2">
-
-
-                <x-ui.field
-                    name="address">
-
-
-                    <x-ui.label
-                        for="address">
+                    <x-ui.label for="address">
 
                         Alamat
 
                     </x-ui.label>
 
-
-
-
-                    <x-ui.textarea
-
-                        id="address"
-
-                        name="address"
-
-                        rows="3"
-
-                        maxlength="500"
-
-                        placeholder="Masukkan alamat lengkap UMKM...">{{ old('address', $umkm->address ?? '') }}</x-ui.textarea>
-
-
+                    <x-ui.textarea id="address" name="address" rows="4" maxlength="500"
+                        placeholder="Contoh: Jl. Raya Salamnunggal No. 10, RT 01/RW 02...">{{ old('address', $umkm->address ?? '') }}</x-ui.textarea>
 
                 </x-ui.field>
-
-
 
             </div>
 
 
 
-
-
-
-            <x-ui.field name="village">
-
+            {{-- Desa --}}
+            <x-ui.field name="village" helper="Nama desa lokasi UMKM.">
 
                 <x-ui.label for="village">
 
@@ -595,29 +218,14 @@
 
                 </x-ui.label>
 
-
-
-                <x-ui.input
-
-                    id="village"
-
-                    name="village"
-
-                    :value="old('village', $umkm->village ?? '')"
-
-                    placeholder="Nama desa" />
-
-
+                <x-ui.input id="village" name="village" :value="old('village', $umkm->village ?? '')" placeholder="Contoh: Salamnunggal" />
 
             </x-ui.field>
 
 
 
-
-
-
-            <x-ui.field name="district">
-
+            {{-- Kecamatan --}}
+            <x-ui.field name="district" helper="Nama kecamatan lokasi UMKM.">
 
                 <x-ui.label for="district">
 
@@ -625,59 +233,29 @@
 
                 </x-ui.label>
 
-
-
-                <x-ui.input
-
-                    id="district"
-
-                    name="district"
-
-                    :value="old('district', $umkm->district ?? '')"
-
-                    placeholder="Nama kecamatan" />
-
-
+                <x-ui.input id="district" name="district" :value="old('district', $umkm->district ?? '')" placeholder="Contoh: Cibeber" />
 
             </x-ui.field>
 
 
 
-
-
-
-            <x-ui.field name="regency">
-
+            {{-- Kabupaten --}}
+            <x-ui.field name="regency" helper="Nama kabupaten atau kota.">
 
                 <x-ui.label for="regency">
 
-                    Kabupaten
+                    Kabupaten / Kota
 
                 </x-ui.label>
 
-
-
-                <x-ui.input
-
-                    id="regency"
-
-                    name="regency"
-
-                    :value="old('regency', $umkm->regency ?? '')"
-
-                    placeholder="Nama kabupaten" />
-
-
+                <x-ui.input id="regency" name="regency" :value="old('regency', $umkm->regency ?? '')" placeholder="Contoh: Cianjur" />
 
             </x-ui.field>
 
 
 
-
-
-
-            <x-ui.field name="maps_url">
-
+            {{-- Google Maps --}}
+            <x-ui.field name="maps_url" helper="Tempel tautan Google Maps lokasi UMKM.">
 
                 <x-ui.label for="maps_url">
 
@@ -685,213 +263,135 @@
 
                 </x-ui.label>
 
-
-
-                <x-ui.input
-
-                    id="maps_url"
-
-                    type="url"
-
-                    name="maps_url"
-
-                    :value="old('maps_url', $umkm->maps_url ?? '')"
-
+                <x-ui.input id="maps_url" type="url" name="maps_url" :value="old('maps_url', $umkm->maps_url ?? '')"
                     placeholder="https://maps.google.com/..." />
-
-
 
             </x-ui.field>
 
+        </div>
 
+        <div class="mt-8 rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-5 py-4">
 
+            <p class="font-medium text-slate-700">
+
+                Tips Pengisian Lokasi
+
+            </p>
+
+            <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-500">
+
+                <li>• Gunakan alamat yang mudah dikenali masyarakat.</li>
+
+                <li>• Sertakan tautan Google Maps agar lokasi dapat langsung dibuka.</li>
+
+                <li>• Pastikan data desa, kecamatan, dan kabupaten sesuai lokasi sebenarnya.</li>
+
+            </ul>
 
         </div>
 
+    </x-ui.card>
 
+    {{-- ====================================================== --}}
+    {{-- Status Publikasi --}}
+    {{-- ====================================================== --}}
+    @isset($umkm)
+        <x-ui.card>
 
-    </section>
+            <x-ui.section-title title="Status UMKM"
+                subtitle="Atur status publikasi dan proses verifikasi UMKM di dalam sistem." />
 
+            <div class="mt-8 grid gap-6 lg:grid-cols-2">
 
+                {{-- Status Aktif --}}
+                <x-ui.checkbox name="is_active" :checked="old('is_active', $umkm->is_active)" label="UMKM Aktif"
+                    description="UMKM yang aktif akan ditampilkan pada website dan dapat diakses oleh pengunjung." />
 
 
 
+                {{-- Status Verifikasi --}}
+                <x-ui.checkbox name="is_verified" :checked="old('is_verified', $umkm->is_verified)" label="Sudah Terverifikasi"
+                    description="Menandakan bahwa data UMKM telah diverifikasi oleh administrator." />
 
+            </div>
 
-    {{-- Publication Status --}}
-    <section class="border-t border-slate-200 pt-8">
+            <div class="mt-8 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4">
 
+                <div class="flex items-start gap-3">
 
-        <h3 class="text-base font-semibold text-slate-900">
+                    <div class="mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
 
-            Status Publikasi
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-        </h3>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01M10.29 3.86l-7 12A2 2 0 005 19h14a2 2 0 001.71-3.14l-7-12a2 2 0 00-3.42 0z" />
 
+                        </svg>
 
-        <p class="mt-1 mb-5 text-sm text-slate-500">
+                    </div>
 
-            Pengaturan verifikasi dan visibilitas UMKM.
+                    <div>
 
-        </p>
+                        <h3 class="font-semibold text-amber-900">
 
+                            Perhatian
 
+                        </h3>
 
+                        <p class="mt-2 text-sm leading-6 text-amber-700">
 
+                            Menonaktifkan UMKM tidak akan menghapus data.
+                            Informasi UMKM hanya disembunyikan dari website
+                            sampai diaktifkan kembali.
 
-        @isset($umkm)
+                        </p>
 
-
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-
-
-
-
-
-                <x-ui.field
-                    name="status">
-
-
-                    <x-ui.label
-                        for="status">
-
-                        Status Verifikasi
-
-                    </x-ui.label>
-
-
-
-
-
-                    <select
-
-                        id="status"
-
-                        name="status"
-
-                        class="app-input">
-
-
-
-                        <option
-
-                            value="pending"
-
-                            @selected(
-                                old(
-                                    'status',
-                                    $umkm->status
-                                ) === 'pending'
-                            )>
-
-                            Pending
-
-                        </option>
-
-
-
-                        <option
-
-                            value="approved"
-
-                            @selected(
-                                old(
-                                    'status',
-                                    $umkm->status
-                                ) === 'approved'
-                            )>
-
-                            Approved
-
-                        </option>
-
-
-
-                        <option
-
-                            value="rejected"
-
-                            @selected(
-                                old(
-                                    'status',
-                                    $umkm->status
-                                ) === 'rejected'
-                            )>
-
-                            Rejected
-
-                        </option>
-
-
-
-                    </select>
-
-
-
-                </x-ui.field>
-
-
-
-
-
-
-                <div class="flex items-end">
-
-
-                    <x-ui.checkbox
-
-                        name="is_active"
-
-                        :checked="
-                            old(
-                                'is_active',
-                                $umkm->is_active
-                            )
-                        "
-
-                        label="UMKM Aktif" />
-
+                    </div>
 
                 </div>
 
+            </div>
 
+        </x-ui.card>
+    @else
+        <x-ui.card>
 
+            <x-ui.section-title title="Status Publikasi"
+                subtitle="Status verifikasi dapat diatur setelah data UMKM berhasil dibuat." />
+
+            <div class="mt-8 rounded-2xl border border-sky-200 bg-sky-50 px-5 py-4">
+
+                <div class="flex items-start gap-3">
+
+                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-600">
+
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+
+                        </svg>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm leading-6 text-sky-700">
+
+                            Setelah UMKM berhasil disimpan,
+                            Administrator dapat mengatur status
+                            aktif maupun status verifikasi
+                            melalui halaman Edit UMKM.
+
+                        </p>
+
+                    </div>
+
+                </div>
 
             </div>
 
-
-
-        @else
-
-
-            <div class="rounded-2xl border border-amber-200 bg-amber-50 p-5">
-
-
-                <p class="font-semibold text-amber-900">
-
-                    Menunggu Verifikasi Admin
-
-                </p>
-
-
-                <p class="mt-1 text-sm text-amber-700">
-
-                    UMKM baru akan dibuat sebagai pending dan belum tampil pada website sampai diverifikasi.
-
-                </p>
-
-
-            </div>
-
-
-
-        @endisset
-
-
-
-    </section>
-
-
-
+        </x-ui.card>
+    @endisset
 
 </div>

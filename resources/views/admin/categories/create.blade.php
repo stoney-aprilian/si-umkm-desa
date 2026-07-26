@@ -2,102 +2,62 @@
 
 @section('title', 'Tambah Kategori')
 
-
 @section('content')
 
 <div class="mx-auto max-w-4xl space-y-8">
 
-
+    {{-- ====================================================== --}}
     {{-- Header --}}
+    {{-- ====================================================== --}}
     <x-ui.page-header
-
         title="Tambah Kategori"
-
-        subtitle="Buat kategori baru untuk mengelompokkan UMKM dan produk agar lebih mudah dikelola.">
-
-
+        subtitle="Tambahkan kategori baru sebagai dasar pengelompokan UMKM dan produk di dalam sistem.">
     </x-ui.page-header>
 
 
 
-
-
-    {{-- Form Card --}}
+    {{-- ====================================================== --}}
+    {{-- Form --}}
+    {{-- ====================================================== --}}
     <x-ui.card
         padding="false"
         class="overflow-hidden">
 
-
         <form
-
             action="{{ route('admin.categories.store') }}"
-
             method="POST">
-
 
             @csrf
 
-
-
-
-
-            {{-- Form Content --}}
-            <div class="p-6 md:p-8">
-
+            <div class="p-8">
 
                 @include('admin.categories._form')
 
-
             </div>
 
-
-
-
-
-            {{-- Actions --}}
-            <div
-
-                class="flex flex-col-reverse gap-3 border-t border-slate-200 bg-slate-50 px-6 py-5 md:flex-row md:items-center md:justify-end md:px-8">
-
+            <x-ui.form-actions>
 
                 <x-ui.button
-
                     variant="secondary"
-
                     href="{{ route('admin.categories.index') }}">
-
 
                     Kembali
 
-
                 </x-ui.button>
-
-
-
-
 
                 <x-ui.button
-
                     type="submit">
 
-
-                    Simpan
-
+                    Simpan Kategori
 
                 </x-ui.button>
 
-
-            </div>
-
-
+            </x-ui.form-actions>
 
         </form>
 
-
     </x-ui.card>
 
-
 </div>
-
 
 @endsection

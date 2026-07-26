@@ -1,344 +1,375 @@
-<section class="public-hero">
+<section class="relative overflow-hidden bg-gradient-to-b from-white via-emerald-50/40 to-white">
 
+    {{-- ====================================================== --}}
     {{-- Background Decoration --}}
+    {{-- ====================================================== --}}
     <div class="absolute inset-0 -z-10 overflow-hidden">
 
-        <div class="absolute -left-32 top-10 h-96 w-96 rounded-full bg-emerald-100/60 blur-3xl"></div>
+        <div class="absolute left-[-10rem] top-[-8rem] h-[28rem] w-[28rem] rounded-full bg-emerald-200/40 blur-3xl">
+        </div>
 
-        <div class="absolute -right-32 bottom-0 h-[30rem] w-[30rem] rounded-full bg-teal-100/50 blur-3xl"></div>
+        <div class="absolute right-[-8rem] bottom-[-12rem] h-[34rem] w-[34rem] rounded-full bg-teal-200/40 blur-3xl">
+        </div>
+
+        <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white to-transparent">
+        </div>
 
     </div>
 
 
-    <div class="app-container">
+
+
+
+    <div class="app-container py-20 lg:py-28">
 
         <div class="grid items-center gap-16 lg:grid-cols-2">
 
-
-            {{-- Content --}}
+            {{-- ====================================================== --}}
+            {{-- Left Content --}}
+            {{-- ====================================================== --}}
             <div>
 
+                {{-- Eyebrow --}}
+                <div
+                    class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 shadow-sm">
 
-                {{-- Badge --}}
-                <div class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2">
+                    <div class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100">
 
+                        <svg class="h-4 w-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-                    <svg
-                        class="h-5 w-5 text-emerald-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 21h18M5 21V8l7-4 7 4v13" />
 
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M3 21h18M5 21V8l7-4 7 4v13"/>
+                        </svg>
 
-                    </svg>
+                    </div>
 
+                    <span class="text-sm font-semibold tracking-wide text-emerald-700">
 
-                    <span class="text-sm font-semibold text-emerald-700">
-
-                        Portal Digital UMKM Desa
+                        Portal Digital UMKM Desa Salamnunggal
 
                     </span>
-
 
                 </div>
 
 
 
+
+
                 {{-- Heading --}}
-                <h1 class="mt-8 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+                <h1 class="mt-8 text-5xl font-extrabold leading-tight tracking-tight text-slate-900 lg:text-6xl">
 
-
-                    Kenali UMKM Lokal,
+                    Temukan
 
                     <span class="block text-emerald-600">
 
-                        Temukan Produk Unggulan Desa
+                        UMKM Terbaik
 
                     </span>
 
+                    dari Desa Salamnunggal
 
                 </h1>
 
 
 
+
+
                 {{-- Description --}}
-                <p class="mt-6 max-w-xl text-lg leading-8 text-slate-600">
+                <p class="mt-8 max-w-2xl text-lg leading-8 text-slate-600">
 
-
-                    SI UMKM Desa membantu masyarakat menemukan pelaku usaha,
-                    produk lokal, dan potensi ekonomi desa melalui informasi
-                    digital yang mudah diakses.
-
+                    Jelajahi berbagai pelaku usaha lokal,
+                    produk unggulan,
+                    dan potensi ekonomi Desa Salamnunggal
+                    melalui satu platform digital yang modern,
+                    terpercaya, dan mudah diakses kapan saja.
 
                 </p>
 
+                {{-- ====================================================== --}}
+                {{-- CTA --}}
+                {{-- ====================================================== --}}
+                <div class="mt-10 flex flex-col gap-4 sm:flex-row">
 
-
-                {{-- Action --}}
-                <div class="mt-8 flex flex-wrap gap-4">
-
-
-                    <a
-                        href="{{ route('public.umkms.index') }}"
-                        class="btn btn-primary">
-
+                    <x-ui.button href="{{ route('public.umkms.index') }}" size="lg">
 
                         Jelajahi UMKM
 
+                    </x-ui.button>
 
-                    </a>
-
-
-
-                    <a
-                        href="{{ route('public.products.index') }}"
-                        class="btn-secondary">
-
+                    <x-ui.button href="{{ route('public.products.index') }}" variant="secondary" size="lg">
 
                         Lihat Produk
 
-
-                    </a>
-
+                    </x-ui.button>
 
                 </div>
 
 
 
-                {{-- Trust Metrics --}}
-                <div class="mt-10 flex flex-wrap gap-x-8 gap-y-4">
 
+
+                {{-- ====================================================== --}}
+                {{-- Statistics --}}
+                {{-- ====================================================== --}}
+                <div class="mt-14 grid grid-cols-3 gap-6 border-t border-slate-200 pt-8">
 
                     <div>
 
-                        <p class="text-2xl font-bold text-slate-900">
+                        <p class="text-3xl font-extrabold tracking-tight text-slate-900">
 
-                            {{ number_format($totalUmkm ?? 0) }}+
+                            {{ number_format($statistics['umkms'] ?? 0) }}+
 
                         </p>
 
-
-                        <p class="text-sm text-slate-500">
+                        <p class="mt-2 text-sm text-slate-500">
 
                             UMKM Terdaftar
 
                         </p>
 
-
                     </div>
+
+
 
 
 
                     <div>
 
-                        <p class="text-2xl font-bold text-slate-900">
+                        <p class="text-3xl font-extrabold tracking-tight text-slate-900">
 
-                            {{ number_format($totalProduct ?? 0) }}+
+                            {{ number_format($statistics['products'] ?? 0) }}+
 
                         </p>
 
-
-                        <p class="text-sm text-slate-500">
+                        <p class="mt-2 text-sm text-slate-500">
 
                             Produk Lokal
 
                         </p>
 
-
                     </div>
+
+
+
 
 
                     <div>
 
-                        <p class="text-2xl font-bold text-slate-900">
+                        <p class="text-3xl font-extrabold tracking-tight text-slate-900">
 
-                            {{ isset($categories) ? $categories->count() : 0 }}
+                            {{ number_format($statistics['categories'] ?? 0) }}
 
                         </p>
 
-
-                        <p class="text-sm text-slate-500">
+                        <p class="mt-2 text-sm text-slate-500">
 
                             Kategori
 
                         </p>
 
-
                     </div>
-
 
                 </div>
 
-
             </div>
 
-
-
-
-
-            {{-- Visual Preview --}}
+            {{-- ====================================================== --}}
+            {{-- Right Preview --}}
+            {{-- ====================================================== --}}
             <div class="relative hidden lg:block">
 
+                <div class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-2xl">
 
-                <div class="surface-lg shadow-card p-8">
-
-
-                    <div class="mb-6 flex items-center justify-between border-b border-slate-100 pb-4">
-
+                    {{-- Header --}}
+                    <div class="flex items-center justify-between border-b border-slate-100 px-7 py-5">
 
                         <div>
 
+                            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-600">
 
-                            <h3 class="font-bold text-slate-900">
+                                Dashboard Preview
+
+                            </p>
+
+                            <h3 class="mt-1 text-xl font-bold text-slate-900">
 
                                 Produk Unggulan
 
                             </h3>
 
-
-                            <p class="text-sm text-slate-500">
-
-                                Dari UMKM Desa
-
-                            </p>
-
-
                         </div>
 
+                        <x-ui.badge variant="success">
 
+                            Live
 
-                        <span class="badge-success">
-
-                            Aktif
-
-                        </span>
-
+                        </x-ui.badge>
 
                     </div>
 
 
 
-                    <div class="space-y-4">
 
 
-                        @foreach([
-                            ['Kopi Arabika', 'Minuman'],
-                            ['Keripik Pisang', 'Makanan'],
-                            ['Kerajinan Bambu', 'Kerajinan']
-                        ] as $item)
+                    {{-- Product List --}}
+                    <div class="space-y-4 p-7">
+
+                        @php
+
+                            $heroProducts = collect($featuredProducts ?? [])->take(3);
+
+                        @endphp
+
+                        @forelse($heroProducts as $product)
+
+                            <div
+                                class="flex items-center gap-4 rounded-2xl border border-slate-200 p-4 transition-all duration-200 hover:border-emerald-200 hover:bg-emerald-50">
+
+                                {{-- Thumbnail --}}
+                                @if (!empty($product->image))
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                        class="h-16 w-16 rounded-2xl object-cover">
+                                @else
+                                    <div
+                                        class="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+
+                                        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M20 7L12 3 4 7l8 4 8-4M4 9l8 4 8-4M4 17l8 4 8-4" />
+
+                                        </svg>
+
+                                    </div>
+                                @endif
 
 
-                            <div class="surface-sm flex items-center gap-4 p-4 transition hover:border-emerald-200 hover:bg-emerald-50">
-
-
-                                <div class="icon-wrapper icon-wrapper-md icon-wrapper-primary">
-
-
-                                    <svg
-                                        class="h-6 w-6"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24">
-
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M20 7L12 3 4 7l8 4 8-4zm-8 6L4 9v8l8 4 8-4V9l-8 4z"/>
-
-                                    </svg>
-
-
-                                </div>
 
 
 
-                                <div>
+                                {{-- Content --}}
+                                <div class="min-w-0 flex-1">
 
-                                    <h4 class="font-semibold text-slate-900">
+                                    <h4 class="truncate font-semibold text-slate-900">
 
-                                        {{ $item[0] }}
+                                        {{ $product->name }}
 
                                     </h4>
 
+                                    <p class="mt-1 truncate text-sm text-slate-500">
 
-                                    <p class="text-sm text-slate-500">
-
-                                        {{ $item[1] }}
+                                        {{ $product->umkm->business_name ?? 'UMKM Desa' }}
 
                                     </p>
 
+                                    @if (!empty($product->price))
+                                        <p class="mt-2 font-bold text-emerald-600">
+
+                                            Rp {{ number_format($product->price, 0, ',', '.') }}
+
+                                        </p>
+                                    @endif
 
                                 </div>
 
-
                             </div>
 
+                        @empty
 
-                        @endforeach
+                            @foreach (range(1, 3) as $i)
+                                <div class="flex items-center gap-4 rounded-2xl border border-slate-200 p-4">
 
+                                    <div class="h-16 w-16 rounded-2xl bg-slate-100"></div>
+
+                                    <div class="flex-1">
+
+                                        <div class="h-4 w-36 rounded bg-slate-100"></div>
+
+                                        <div class="mt-3 h-3 w-24 rounded bg-slate-100"></div>
+
+                                    </div>
+
+                                </div>
+                            @endforeach
+
+                        @endforelse
 
                     </div>
 
-
                 </div>
 
+                {{-- ====================================================== --}}
+                {{-- Floating Insight Card --}}
+                {{-- ====================================================== --}}
+                <div
+                    class="absolute -left-10 bottom-12 rounded-3xl border border-white/70 bg-white/90 p-6 shadow-2xl backdrop-blur">
 
+                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
 
-
-                {{-- Trust Card --}}
-                <div class="absolute -bottom-8 -left-8 surface shadow-card p-5">
-
-
-                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
-
-                        Digitalisasi UMKM
+                        Platform
 
                     </p>
 
+                    <div class="mt-3 flex items-end gap-2">
 
-                    <div class="mt-3 space-y-2 text-sm text-slate-600">
+                        <span class="text-4xl font-extrabold tracking-tight text-emerald-600">
 
+                            {{ number_format($statistics['umkms'] ?? 0) }}
 
-                        <p>
+                        </span>
 
-                            ✓ Informasi usaha lokal
+                        <span class="pb-1 text-sm text-slate-500">
 
-                        </p>
+                            UMKM
 
-
-                        <p>
-
-                            ✓ Produk unggulan desa
-
-                        </p>
-
-
-                        <p>
-
-                            ✓ Akses informasi mudah
-
-                        </p>
-
+                        </span>
 
                     </div>
 
+                    <p class="mt-2 text-sm leading-6 text-slate-500">
+
+                        telah bergabung dalam
+                        Sistem Informasi UMKM Desa.
+
+                    </p>
 
                 </div>
 
 
-            </div>
 
+
+
+                {{-- ====================================================== --}}
+                {{-- Floating Badge --}}
+                {{-- ====================================================== --}}
+                <div
+                    class="absolute -right-8 top-16 rounded-3xl border border-emerald-100 bg-emerald-600 px-6 py-5 text-white shadow-xl">
+
+                    <p class="text-xs uppercase tracking-[0.18em] text-emerald-100">
+
+                        Produk
+
+                    </p>
+
+                    <p class="mt-2 text-3xl font-bold">
+
+                        {{ number_format($statistics['products'] ?? 0) }}+
+
+                    </p>
+
+                    <p class="mt-1 text-sm text-emerald-100">
+
+                        Produk Dipublikasikan
+
+                    </p>
+
+                </div>
+
+            </div>
 
         </div>
 
-
     </div>
-
 
 </section>

@@ -1,49 +1,70 @@
 @props([
     'title',
     'subtitle' => null,
-])
 
+    'divider' => false,
+])
 
 <div
     {{ $attributes->merge([
-        'class' =>
-            'flex flex-col gap-4 md:flex-row md:items-center md:justify-between',
+        'class' => 'space-y-6',
     ]) }}>
 
+    @isset($breadcrumb)
 
-    <div>
+        <div>
 
-        <h1 class="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+            {{ $breadcrumb }}
 
-            {{ $title }}
+        </div>
 
-        </h1>
+    @endisset
 
+    <div
+        class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
 
-        @if ($subtitle)
+        <div class="min-w-0 flex-1">
 
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+            <h1
+                class="text-3xl font-bold tracking-tight text-slate-900">
 
-                {{ $subtitle }}
+                {{ $title }}
 
-            </p>
+            </h1>
+
+            @if ($subtitle)
+
+                <p
+                    class="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
+
+                    {{ $subtitle }}
+
+                </p>
+
+            @endif
+
+        </div>
+
+        @if (trim($slot))
+
+            <div
+                class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:justify-end">
+
+                {{ $slot }}
+
+            </div>
 
         @endif
 
-
     </div>
 
+    @if ($divider)
 
+        <div
+            class="border-b border-slate-200">
 
-    @if (trim($slot))
-
-        <x-ui.action-group align="end">
-
-            {{ $slot }}
-
-        </x-ui.action-group>
+        </div>
 
     @endif
-
 
 </div>

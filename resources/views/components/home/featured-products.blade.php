@@ -2,87 +2,141 @@
     'products',
 ])
 
-
-<section class="public-section">
-
+<section>
 
     <div class="app-container">
 
+        {{-- ====================================================== --}}
+        {{-- Header --}}
+        {{-- ====================================================== --}}
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
 
-        <x-ui.section-title
-            title="Produk Unggulan"
-            subtitle="Temukan berbagai produk lokal hasil karya pelaku UMKM Desa Salamnunggal yang memiliki nilai ekonomi dan potensi untuk dikembangkan." />
+            <x-ui.section-title
+                title="Produk Unggulan"
+                subtitle="Temukan berbagai produk lokal unggulan hasil karya pelaku UMKM Desa Salamnunggal yang siap diperkenalkan kepada masyarakat." />
+
+            @if($products->isNotEmpty())
+
+                <x-ui.button
+                    href="{{ route('public.products.index') }}"
+                    variant="secondary">
+
+                    Lihat Semua Produk
+
+                </x-ui.button>
+
+            @endif
+
+        </div>
 
 
 
-        @if ($products->isNotEmpty())
 
 
-            <div class="public-product-grid mt-12">
+        {{-- ====================================================== --}}
+        {{-- Product Grid --}}
+        {{-- ====================================================== --}}
+        @if($products->isNotEmpty())
 
+            <div
+                class="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
 
-                @foreach ($products as $product)
-
+                @foreach($products as $product)
 
                     <x-product.card
                         :product="$product" />
 
-
                 @endforeach
 
-
             </div>
 
 
 
-            <div class="mt-14 text-center">
 
 
-                <p class="mb-5 text-sm text-slate-500">
+            {{-- Bottom CTA --}}
+            <div
+                class="mt-14 rounded-3xl border border-emerald-100 bg-emerald-50 px-8 py-8">
 
+                <div
+                    class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
 
-                    Jelajahi lebih banyak produk lokal dari berbagai UMKM desa.
+                    <div>
 
+                        <h3
+                            class="text-xl font-bold text-slate-900">
 
-                </p>
+                            Masih banyak produk menarik lainnya.
 
+                        </h3>
 
+                        <p
+                            class="mt-2 leading-7 text-slate-600">
 
-                <a
-                    href="{{ route('public.products.index') }}"
-                    class="btn-secondary">
+                            Jelajahi seluruh katalog produk UMKM Desa Salamnunggal
+                            dan temukan berbagai produk lokal berkualitas.
 
+                        </p>
 
-                    Jelajahi Semua Produk
+                    </div>
 
+                    <x-ui.button
+                        href="{{ route('public.products.index') }}">
 
-                </a>
+                        Jelajahi Produk
 
+                    </x-ui.button>
+
+                </div>
 
             </div>
+
+
 
 
 
         @else
 
+            <div
+                class="mt-12 rounded-3xl border border-dashed border-slate-300 bg-slate-50 px-8 py-16 text-center">
 
-            <div class="mt-10">
+                <div
+                    class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-slate-100 text-slate-400">
 
+                    <svg
+                        class="h-10 w-10"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24">
 
-                <x-ui.empty-state>
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M20 7L12 3 4 7l8 4 8-4M4 9l8 4 8-4V9l-8 4z"/>
 
-                    Produk akan ditampilkan setelah data tersedia.
+                    </svg>
 
-                </x-ui.empty-state>
+                </div>
 
+                <h3
+                    class="mt-6 text-xl font-bold text-slate-900">
+
+                    Belum Ada Produk
+
+                </h3>
+
+                <p
+                    class="mx-auto mt-3 max-w-lg leading-7 text-slate-500">
+
+                    Produk unggulan akan ditampilkan setelah data tersedia di dalam sistem.
+
+                </p>
 
             </div>
 
-
         @endif
 
-
     </div>
-
 
 </section>

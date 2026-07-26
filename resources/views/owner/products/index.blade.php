@@ -1,75 +1,80 @@
 @extends('layouts.owner')
 
-@section('title', 'Produk')
+@section('title', 'Produk Saya')
 
 @section('content')
 
-    <div class="space-y-6">
+    <div class="space-y-8">
 
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        {{-- ====================================================== --}}
+        {{-- Page Header --}}
+        {{-- ====================================================== --}}
+        <x-ui.page-header title="Produk Saya" subtitle="Kelola seluruh produk yang dimiliki oleh UMKM Anda.">
 
-            <div>
+            <x-slot:actions>
 
-                <h1 class="text-2xl font-bold text-slate-800">
+                <x-ui.button :href="route('owner.products.create')">
 
-                    Produk
+                    Tambah Produk
 
-                </h1>
+                </x-ui.button>
 
-                <p class="mt-1 text-sm text-slate-500">
+            </x-slot:actions>
 
-                    Kelola seluruh produk UMKM Anda.
+        </x-ui.page-header>
 
-                </p>
 
-            </div>
 
-            <x-ui.button
-                :href="route('owner.products.create')">
 
-                + Tambah Produk
 
-            </x-ui.button>
+        {{-- ====================================================== --}}
+        {{-- Product List --}}
+        {{-- ====================================================== --}}
+        <x-ui.card padding="false" class="overflow-hidden">
 
-        </div>
+            {{-- Search --}}
+            <div class="border-b border-slate-200 p-6">
 
-        <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
+                <form action="{{ route('owner.products.index') }}" method="GET">
 
-            <div class="border-b border-slate-200 p-4">
-
-                <form
-                    method="GET"
-                    action="{{ route('owner.products.index') }}">
-
-                    <x-ui.input
-                        name="search"
-                        placeholder="Cari produk..."
-                        :value="$search" />
+                    <x-ui.input name="search" :value="$search" placeholder="Cari nama produk..." />
 
                 </form>
 
             </div>
 
+
+
+
+
+            {{-- Empty State --}}
             @if ($products->isEmpty())
 
-                <div class="px-6 py-16 text-center">
+                <div class="px-8 py-20">
 
-                    <p class="text-lg font-medium text-slate-700">
+                    <x-ui.empty-state title="Belum Ada Produk"
+                        description="Tambahkan produk pertama agar dapat ditampilkan pada portal SI UMKM Desa.">
 
-                        Belum ada produk.
+                        <x-slot:actions>
 
-                    </p>
+                            <x-ui.button :href="route('owner.products.create')">
 
-                    <p class="mt-2 text-sm text-slate-500">
+                                Tambah Produk
 
-                        Tambahkan produk pertama untuk UMKM Anda.
+                            </x-ui.button>
 
-                    </p>
+                        </x-slot:actions>
+
+                    </x-ui.empty-state>
 
                 </div>
 
-            @else
 
+
+
+
+                {{-- Table --}}
+            @else
                 <div class="overflow-x-auto">
 
                     <table class="min-w-full divide-y divide-slate-200">
@@ -78,69 +83,86 @@
 
                             <tr>
 
-                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+
                                     Produk
+
                                 </th>
 
-                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+
                                     Harga
+
                                 </th>
 
-                                <th class="px-6 py-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-600">
+                                <th
+                                    class="px-6 py-4 text-center text-xs font-semibold uppercase tracking-wider text-slate-500">
+
                                     Status
+
                                 </th>
 
-                                <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">
+                                <th
+                                    class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+
                                     Aksi
+
                                 </th>
 
                             </tr>
 
                         </thead>
 
-                        <tbody class="divide-y divide-slate-100 bg-white">
+
+
+
+
+                        <tbody class="divide-y divide-slate-200 bg-white">
 
                             @foreach ($products as $product)
+                                <tr class="transition hover:bg-slate-50">
 
-                                <tr class="hover:bg-slate-50">
-
+                                    {{-- Produk --}}
                                     <td class="px-6 py-4">
 
                                         <div class="flex items-center gap-4">
 
                                             @if ($product->image)
-
-                                                <img
-                                                    src="{{ asset('storage/' . $product->image) }}"
+                                                <img src="{{ asset('storage/' . $product->image) }}"
                                                     alt="{{ $product->name }}"
-                                                    class="h-16 w-16 rounded-lg border object-cover">
-
+                                                    class="h-16 w-16 rounded-xl border border-slate-200 object-cover">
                                             @else
+                                                <div
+                                                    class="flex h-16 w-16 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-400">
 
-                                                <div class="flex h-16 w-16 items-center justify-center rounded-lg border bg-slate-100 text-xs text-slate-400">
+                                                    <svg class="h-6 w-6" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
 
-                                                    No Image
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M20 7L12 3 4 7l8 4 8-4zm-8 6L4 9v8l8 4 8-4V9l-8 4z" />
+
+                                                    </svg>
 
                                                 </div>
-
                                             @endif
 
                                             <div>
 
-                                                <p class="font-semibold text-slate-800">
+                                                <p class="font-semibold text-slate-900">
 
                                                     {{ $product->name }}
 
                                                 </p>
 
                                                 @if ($product->description)
-
                                                     <p class="mt-1 text-sm text-slate-500">
 
-                                                        {{ Str::limit($product->description, 80) }}
+                                                        {{ \Illuminate\Support\Str::limit($product->description, 80) }}
 
                                                     </p>
-
                                                 @endif
 
                                             </div>
@@ -149,57 +171,69 @@
 
                                     </td>
 
-                                    <td class="px-6 py-4 whitespace-nowrap">
 
-                                        Rp {{ number_format($product->price, 0, ',', '.') }}
 
-                                    </td>
 
-                                    <td class="px-6 py-4 text-center">
 
-                                        @if ($product->is_active)
+                                    {{-- Harga --}}
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium text-slate-700">
 
-                                            <span class="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">
-
-                                                Aktif
-
-                                            </span>
-
+                                        @if ($product->price)
+                                            Rp {{ number_format($product->price, 0, ',', '.') }}
                                         @else
-
-                                            <span class="inline-flex rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
-
-                                                Nonaktif
-
-                                            </span>
-
+                                            -
                                         @endif
 
                                     </td>
 
+
+
+
+
+                                    {{-- Status --}}
+                                    <td class="px-6 py-4 text-center">
+
+                                        @if ($product->is_active)
+                                            <span
+                                                class="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+
+                                                Aktif
+
+                                            </span>
+                                        @else
+                                            <span
+                                                class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+
+                                                Nonaktif
+
+                                            </span>
+                                        @endif
+
+                                    </td>
+
+
+
+
+
+                                    {{-- Actions --}}
                                     <td class="px-6 py-4">
 
                                         <div class="flex justify-end gap-2">
 
-                                            <x-ui.button
-                                                :href="route('owner.products.edit', $product->slug)"
-                                                color="warning">
+                                            <x-ui.button size="sm" variant="secondary" :href="route('owner.products.edit', $product->slug)">
 
                                                 Edit
 
                                             </x-ui.button>
 
-                                            <form
-                                                action="{{ route('owner.products.destroy', $product->slug) }}"
+                                            <form action="{{ route('owner.products.destroy', $product->slug) }}"
                                                 method="POST"
-                                                onsubmit="return confirm('Hapus produk ini?')">
+                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">
 
                                                 @csrf
                                                 @method('DELETE')
 
-                                                <x-ui.button
-                                                    type="submit"
-                                                    color="danger">
+                                                <x-ui.button size="sm" type="submit" variant="danger">
 
                                                     Hapus
 
@@ -212,7 +246,6 @@
                                     </td>
 
                                 </tr>
-
                             @endforeach
 
                         </tbody>
@@ -221,15 +254,22 @@
 
                 </div>
 
-                <div class="border-t border-slate-200 px-6 py-4">
 
-                    {{ $products->links() }}
 
-                </div>
+
+
+                {{-- Pagination --}}
+                @if ($products->hasPages())
+                    <div class="border-t border-slate-200 px-6 py-4">
+
+                        {{ $products->links() }}
+
+                    </div>
+                @endif
 
             @endif
 
-        </div>
+        </x-ui.card>
 
     </div>
 

@@ -1,25 +1,20 @@
-<aside class="flex min-h-screen w-[280px] shrink-0 flex-col border-r border-slate-200 bg-white">
+<aside class="flex h-screen w-[300px] shrink-0 flex-col border-r border-slate-200 bg-white">
 
+    {{-- ========================= --}}
+    {{-- Brand --}}
+    {{-- ========================= --}}
+    <div class="border-b border-slate-200 p-6">
 
-    {{-- Branding --}}
-    <div class="border-b border-slate-200 px-6 py-6">
-
-        <a
-            href="{{ route('admin.dashboard') }}"
-            class="flex items-center gap-4">
-
+        <a href="{{ route('admin.dashboard') }}" class="group flex items-center gap-4">
 
             <div
-                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-600 text-lg font-bold text-white shadow-sm">
+                class="flex h-14 w-14 items-center justify-center rounded-3xl bg-gradient-to-br from-emerald-500 to-emerald-700 text-xl font-bold text-white shadow-lg shadow-emerald-200 transition-transform duration-300 group-hover:scale-105">
 
                 SI
 
             </div>
 
-
-
             <div class="min-w-0">
-
 
                 <h1 class="truncate text-lg font-bold tracking-tight text-slate-900">
 
@@ -27,414 +22,203 @@
 
                 </h1>
 
-
-
-                <p class="text-xs text-slate-500">
-
-                    Sistem Informasi UMKM
-
-                </p>
-
-
-                <p class="mt-1 text-[11px] text-slate-400">
+                <p class="mt-1 text-sm text-slate-500">
 
                     Desa Salamnunggal
 
                 </p>
 
-
             </div>
-
 
         </a>
 
-
     </div>
 
-
-
-
-
-
-
+    {{-- ========================= --}}
     {{-- Navigation --}}
+    {{-- ========================= --}}
     <nav class="flex-1 overflow-y-auto px-5 py-6">
 
-
         <div class="space-y-8">
-
-
-
-
 
             {{-- Dashboard --}}
             <div>
 
+                <x-ui.sidebar-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
 
-                <a
-                    href="{{ route('admin.dashboard') }}"
-                    class="group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200
+                    <x-slot:icon>
 
-                    {{ request()->routeIs('admin.dashboard')
-                        ? 'bg-emerald-50 font-semibold text-emerald-700'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                    }}">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 10l9-7 9 7v10a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V10z" />
 
-                    @if(request()->routeIs('admin.dashboard'))
+                        </svg>
 
-                        <span
-                            class="absolute left-0 h-6 w-1 rounded-r-full bg-emerald-600">
-                        </span>
+                    </x-slot:icon>
 
-                    @endif
+                    Dashboard
 
-
-
-                    <svg
-                        class="h-5 w-5 shrink-0"
-
-                        fill="none"
-
-                        stroke="currentColor"
-
-                        viewBox="0 0 24 24">
-
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M3 10l9-7 9 7v10a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V10z"/>
-
-                    </svg>
-
-
-
-                    <span>
-                        Dashboard
-                    </span>
-
-
-                </a>
-
+                </x-ui.sidebar-link>
 
             </div>
-
-
-
-
-
-
-
 
             {{-- Master Data --}}
             <div>
 
-
-                <p
-                    class="mb-3 px-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                <p class="mb-3 px-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
 
                     Master Data
 
                 </p>
 
+                <div class="space-y-2">
 
+                    <x-ui.sidebar-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
 
-                <div class="space-y-1">
+                        <x-slot:icon>
 
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 7h6l2 2h10v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
 
+                            </svg>
 
+                        </x-slot:icon>
 
-                    {{-- Kategori --}}
-                    <a
-                        href="{{ route('admin.categories.index') }}"
+                        Kategori
 
-                        class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200
+                    </x-ui.sidebar-link>
 
-                        {{ request()->routeIs('admin.categories.*')
-                            ? 'bg-emerald-50 font-semibold text-emerald-700'
-                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                        }}">
+                    <x-ui.sidebar-link :href="route('admin.umkms.index')" :active="request()->routeIs('admin.umkms.*')">
 
+                        <x-slot:icon>
 
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-                        <svg
-                            class="h-5 w-5 shrink-0"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 21h18M5 21V9l7-6 7 6v12" />
 
-                            fill="none"
+                            </svg>
 
-                            stroke="currentColor"
+                        </x-slot:icon>
 
-                            viewBox="0 0 24 24">
+                        UMKM
 
+                    </x-ui.sidebar-link>
 
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 7h6l2 2h10v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/>
+                    <x-ui.sidebar-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.*')">
 
+                        <x-slot:icon>
 
-                        </svg>
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20 7L12 3 4 7l8 4 8-4zM4 9v8l8 4 8-4V9" />
 
+                            </svg>
 
-                        <span>
-                            Kategori
-                        </span>
+                        </x-slot:icon>
 
+                        Produk
 
-
-                    </a>
-
-
-
-
-
-
-
-                    {{-- UMKM --}}
-                    <a
-                        href="{{ route('admin.umkms.index') }}"
-
-                        class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200
-
-                        {{ request()->routeIs('admin.umkms.*')
-                            ? 'bg-emerald-50 font-semibold text-emerald-700'
-                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                        }}">
-
-
-
-                        <svg
-                            class="h-5 w-5 shrink-0"
-
-                            fill="none"
-
-                            stroke="currentColor"
-
-                            viewBox="0 0 24 24">
-
-
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 21h18M5 21V9l7-6 7 6v12"/>
-
-
-                        </svg>
-
-
-
-                        <span>
-                            UMKM
-                        </span>
-
-
-                    </a>
-
-
-
-
-
-
-
-
-                    {{-- Produk --}}
-                    <a
-                        href="{{ route('admin.products.index') }}"
-
-                        class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200
-
-                        {{ request()->routeIs('admin.products.*')
-                            ? 'bg-emerald-50 font-semibold text-emerald-700'
-                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                        }}">
-
-
-
-                        <svg
-                            class="h-5 w-5 shrink-0"
-
-                            fill="none"
-
-                            stroke="currentColor"
-
-                            viewBox="0 0 24 24">
-
-
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M20 7L12 3 4 7l8 4 8-4zM4 9v8l8 4 8-4V9"/>
-
-
-                        </svg>
-
-
-
-                        <span>
-                            Produk
-                        </span>
-
-
-                    </a>
-
-
+                    </x-ui.sidebar-link>
 
                 </div>
 
-
             </div>
 
-
-
-
-
-
-            {{-- Future Section --}}
+            {{-- System --}}
             <div>
 
-
-                <p
-                    class="mb-3 px-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                <p class="mb-3 px-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
 
                     Sistem
 
                 </p>
 
+                <div class="space-y-2">
 
-                <div class="space-y-1">
+                    <x-ui.sidebar-link href="#" disabled>
 
+                        <x-slot:icon>
 
-                    <a
-                        href="#"
-                        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-400 cursor-not-allowed">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm8 4l-2.2-.6a7.7 7.7 0 00-.8-2l1.3-1.9-1.9-1.9-1.9 1.3a7.7 7.7 0 00-2-.8L12 2 9.4 2.1a7.7 7.7 0 00-2 .8L5.5 1.6 3.6 3.5l1.3 1.9a7.7 7.7 0 00-.8 2L2 12l2.1.6a7.7 7.7 0 00.8 2l-1.3 1.9 1.9 1.9 1.9-1.3a7.7 7.7 0 002 .8L12 22l2.6-.1a7.7 7.7 0 002-.8l1.9 1.3 1.9-1.9-1.3-1.9a7.7 7.7 0 00.8-2L22 12z" />
 
-                        <svg
-                            class="h-5 w-5"
+                            </svg>
 
-                            fill="none"
-
-                            stroke="currentColor"
-
-                            viewBox="0 0 24 24">
-
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M10.325 4.317a1 1 0 011.35-.936l1.8.72a1 1 0 011.3.58l.5 1.2a8 8 0 011.5.87l1.3-.25a1 1 0 011.1.55l.9 1.8a1 1 0 01-.25 1.15l-1 .9a8 8 0 010 1.74l1 .9a1 1 0 01.25 1.15l-.9 1.8a1 1 0 01-1.1.55l-1.3-.25a8 8 0 01-1.5.87l-.5 1.2a1 1 0 01-1.3.58l-1.8.72a1 1 0 01-1.35-.94V17a8 8 0 010-10.68V4.317z"/>
-
-                        </svg>
-
+                        </x-slot:icon>
 
                         Pengaturan
 
-                    </a>
-
+                    </x-ui.sidebar-link>
 
                 </div>
 
-
             </div>
 
-
-
         </div>
-
 
     </nav>
 
-
-
-
-
-
-
-
-
+    {{-- ========================= --}}
     {{-- User --}}
-    <div class="border-t border-slate-200 px-5 py-5">
+    {{-- ========================= --}}
+    <div class="border-t border-slate-200 p-5">
 
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
 
+            <div class="flex items-center gap-3">
 
-        <div class="flex items-center gap-3">
+                <div
+                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-lg font-bold text-white">
 
+                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
 
-            <div
-                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-100 font-bold text-emerald-700">
+                </div>
 
+                <div class="min-w-0">
 
-                {{ strtoupper(substr(auth()->user()->name,0,1)) }}
+                    <p class="truncate font-semibold text-slate-900">
 
+                        {{ auth()->user()->name }}
 
-            </div>
+                    </p>
 
+                    <x-ui.badge variant="secondary" size="sm">
 
+                        {{ ucfirst(auth()->user()->role) }}
 
-            <div class="min-w-0">
+                    </x-ui.badge>
 
-
-                <p class="truncate text-sm font-semibold text-slate-900">
-
-                    {{ auth()->user()->name }}
-
-                </p>
-
-
-                <p class="text-xs capitalize text-slate-500">
-
-                    {{ auth()->user()->role }}
-
-                </p>
-
+                </div>
 
             </div>
 
+            <form method="POST" action="{{ route('logout') }}" class="mt-5">
+
+                @csrf
+
+                <x-ui.button type="submit" variant="danger" class="w-full">
+
+                    Logout
+
+                </x-ui.button>
+
+            </form>
 
         </div>
 
+        <p class="mt-4 text-center text-xs text-slate-400">
 
-
-
-
-        <form
-            method="POST"
-            action="{{ route('logout') }}"
-            class="mt-4">
-
-
-            @csrf
-
-
-            <button
-                type="submit"
-
-                class="flex w-full items-center justify-center rounded-lg bg-red-50 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-100">
-
-                Logout
-
-            </button>
-
-
-        </form>
-
-
-
-
-        <p class="mt-4 text-center text-[11px] text-slate-400">
-
-            SI UMKM Desa v1.0
+            SI UMKM Desa • v1.0
 
         </p>
 
-
     </div>
-
 
 </aside>

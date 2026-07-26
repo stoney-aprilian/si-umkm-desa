@@ -1,213 +1,272 @@
-<div class="grid gap-6 lg:grid-cols-2">
+<div class="space-y-10">
 
-    <x-ui.field
-        name="business_name"
-        class="lg:col-span-2">
+    {{-- ====================================================== --}}
+    {{-- Informasi UMKM --}}
+    {{-- ====================================================== --}}
+    <section>
 
-        <x-ui.label
-            for="business_name"
-            required>
+        <div class="mb-6">
 
-            Nama UMKM
+            <h2 class="text-lg font-semibold tracking-tight text-slate-900">
 
-        </x-ui.label>
+                Informasi UMKM
 
-        <x-ui.input
-            id="business_name"
-            name="business_name"
-            :value="old('business_name', $umkm?->business_name)"
-            required />
+            </h2>
 
-    </x-ui.field>
+            <p class="mt-1 text-sm leading-6 text-slate-500">
 
-    <x-ui.field
-        name="category_id">
+                Informasi dasar mengenai usaha Anda yang akan ditampilkan kepada masyarakat.
 
-        <x-ui.label
-            for="category_id"
-            required>
+            </p>
 
-            Kategori
+        </div>
 
-        </x-ui.label>
+        <div class="grid gap-6 lg:grid-cols-2">
 
-        <x-ui.select
-            id="category_id"
-            name="category_id"
-            required>
+            {{-- Nama UMKM --}}
+            <x-ui.field name="business_name" class="lg:col-span-2"
+                helper="Gunakan nama usaha yang mudah dikenali masyarakat.">
 
-            <option value="">
-                -- Pilih Kategori --
-            </option>
+                <x-ui.label for="business_name" required>
 
-            @foreach ($categories as $category)
+                    Nama UMKM
 
-                <option
-                    value="{{ $category->id }}"
-                    @selected(old('category_id', $umkm?->category_id) == $category->id)>
+                </x-ui.label>
 
-                    {{ $category->name }}
+                <x-ui.input id="business_name" name="business_name" maxlength="150" :value="old('business_name', $umkm?->business_name)"
+                    placeholder="Contoh: Kopi Salamnunggal" required />
 
-                </option>
+            </x-ui.field>
 
-            @endforeach
 
-        </x-ui.select>
 
-    </x-ui.field>
 
-    <x-ui.field
-        name="phone">
 
-        <x-ui.label
-            for="phone"
-            required>
+            {{-- Kategori --}}
+            <x-ui.field name="category_id">
 
-            Nomor Telepon
+                <x-ui.label for="category_id" required>
 
-        </x-ui.label>
+                    Kategori
 
-        <x-ui.input
-            id="phone"
-            name="phone"
-            :value="old('phone', $umkm?->phone)"
-            required />
+                </x-ui.label>
 
-    </x-ui.field>
+                <x-ui.select id="category_id" name="category_id" required>
 
-    <x-ui.field
-        name="description"
-        class="lg:col-span-2">
+                    <option value="">
 
-        <x-ui.label
-            for="description">
+                        Pilih kategori
 
-            Deskripsi
+                    </option>
 
-        </x-ui.label>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @selected(old('category_id', $umkm?->category_id) == $category->id)>
 
-        <x-ui.textarea
-            id="description"
-            name="description"
-            rows="5">{{ old('description', $umkm?->description) }}</x-ui.textarea>
+                            {{ $category->name }}
 
-    </x-ui.field>
+                        </option>
+                    @endforeach
 
-    <x-ui.field
-        name="address"
-        class="lg:col-span-2">
+                </x-ui.select>
 
-        <x-ui.label
-            for="address"
-            required>
+            </x-ui.field>
 
-            Alamat
 
-        </x-ui.label>
 
-        <x-ui.textarea
-            id="address"
-            name="address"
-            rows="3"
-            required>{{ old('address', $umkm?->address) }}</x-ui.textarea>
 
-    </x-ui.field>
 
-    <x-ui.field
-        name="village">
+            {{-- Nomor Telepon --}}
+            <x-ui.field name="phone" helper="Nomor ini akan digunakan sebagai kontak UMKM.">
 
-        <x-ui.label
-            for="village"
-            required>
+                <x-ui.label for="phone" required>
 
-            Desa
+                    Nomor Telepon
 
-        </x-ui.label>
+                </x-ui.label>
 
-        <x-ui.input
-            id="village"
-            name="village"
-            :value="old('village', $umkm?->village)"
-            required />
+                <x-ui.input id="phone" name="phone" type="tel" :value="old('phone', $umkm?->phone)" placeholder="08xxxxxxxxxx"
+                    required />
 
-    </x-ui.field>
+            </x-ui.field>
 
-    <x-ui.field
-        name="district">
 
-        <x-ui.label
-            for="district"
-            required>
 
-            Kecamatan
 
-        </x-ui.label>
 
-        <x-ui.input
-            id="district"
-            name="district"
-            :value="old('district', $umkm?->district)"
-            required />
+            {{-- Deskripsi --}}
+            <x-ui.field name="description" class="lg:col-span-2">
 
-    </x-ui.field>
+                <x-ui.label for="description">
 
-    <x-ui.field
-        name="regency">
+                    Deskripsi UMKM
 
-        <x-ui.label
-            for="regency"
-            required>
+                </x-ui.label>
 
-            Kabupaten
+                <x-ui.textarea id="description" name="description" rows="5" maxlength="1000"
+                    placeholder="Ceritakan secara singkat mengenai usaha Anda...">{{ old('description', $umkm?->description) }}</x-ui.textarea>
 
-        </x-ui.label>
+            </x-ui.field>
 
-        <x-ui.input
-            id="regency"
-            name="regency"
-            :value="old('regency', $umkm?->regency)"
-            required />
+        </div>
 
-    </x-ui.field>
+    </section>
 
-    <x-ui.field
-        name="maps_url">
 
-        <x-ui.label
-            for="maps_url">
 
-            Google Maps URL
 
-        </x-ui.label>
 
-        <x-ui.input
-            id="maps_url"
-            name="maps_url"
-            type="url"
-            :value="old('maps_url', $umkm?->maps_url)" />
+    {{-- ====================================================== --}}
+    {{-- Lokasi --}}
+    {{-- ====================================================== --}}
+    <section class="border-t border-slate-200 pt-8">
 
-    </x-ui.field>
+        <div class="mb-6">
 
-    <x-ui.field
-        name="logo">
+            <h2 class="text-lg font-semibold tracking-tight text-slate-900">
 
-        <x-ui.file-upload
-            id="logo"
-            name="logo"
-            label="Logo UMKM"
-            :preview="$umkm?->logo" />
+                Informasi Lokasi
 
-    </x-ui.field>
+            </h2>
 
-    <x-ui.field
-        name="banner">
+            <p class="mt-1 text-sm leading-6 text-slate-500">
 
-        <x-ui.file-upload
-            id="banner"
-            name="banner"
-            label="Banner UMKM"
-            :preview="$umkm?->banner" />
+                Membantu pelanggan mengetahui lokasi usaha Anda.
 
-    </x-ui.field>
+            </p>
+
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+
+            {{-- Alamat --}}
+            <x-ui.field name="address" class="lg:col-span-2">
+
+                <x-ui.label for="address" required>
+
+                    Alamat Lengkap
+
+                </x-ui.label>
+
+                <x-ui.textarea id="address" name="address" rows="3"
+                    placeholder="Masukkan alamat lengkap UMKM..."
+                    required>{{ old('address', $umkm?->address) }}</x-ui.textarea>
+
+            </x-ui.field>
+
+
+
+
+
+            <x-ui.field name="village">
+
+                <x-ui.label for="village" required>
+
+                    Desa
+
+                </x-ui.label>
+
+                <x-ui.input id="village" name="village" :value="old('village', $umkm?->village)" required />
+
+            </x-ui.field>
+
+
+
+
+
+            <x-ui.field name="district">
+
+                <x-ui.label for="district" required>
+
+                    Kecamatan
+
+                </x-ui.label>
+
+                <x-ui.input id="district" name="district" :value="old('district', $umkm?->district)" required />
+
+            </x-ui.field>
+
+
+
+
+
+            <x-ui.field name="regency">
+
+                <x-ui.label for="regency" required>
+
+                    Kabupaten
+
+                </x-ui.label>
+
+                <x-ui.input id="regency" name="regency" :value="old('regency', $umkm?->regency)" required />
+
+            </x-ui.field>
+
+
+
+
+
+            <x-ui.field name="maps_url" helper="Tempel tautan Google Maps apabila tersedia.">
+
+                <x-ui.label for="maps_url">
+
+                    Google Maps
+
+                </x-ui.label>
+
+                <x-ui.input id="maps_url" name="maps_url" type="url" :value="old('maps_url', $umkm?->maps_url)"
+                    placeholder="https://maps.google.com/..." />
+
+            </x-ui.field>
+
+        </div>
+
+    </section>
+
+
+
+
+
+    {{-- ====================================================== --}}
+    {{-- Media --}}
+    {{-- ====================================================== --}}
+    <section class="border-t border-slate-200 pt-8">
+
+        <div class="mb-6">
+
+            <h2 class="text-lg font-semibold tracking-tight text-slate-900">
+
+                Media UMKM
+
+            </h2>
+
+            <p class="mt-1 text-sm leading-6 text-slate-500">
+
+                Unggah identitas visual agar UMKM terlihat lebih profesional.
+
+            </p>
+
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+
+            <x-ui.field name="logo">
+
+                <x-ui.file-upload id="logo" name="logo" label="Logo UMKM" :preview="$umkm?->logo" />
+
+            </x-ui.field>
+
+
+
+
+
+            <x-ui.field name="banner">
+
+                <x-ui.file-upload id="banner" name="banner" label="Banner UMKM" :preview="$umkm?->banner" />
+
+            </x-ui.field>
+
+        </div>
+
+    </section>
 
 </div>

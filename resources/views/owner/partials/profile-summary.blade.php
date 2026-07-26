@@ -1,27 +1,27 @@
 <x-ui.card>
 
-    <div class="flex items-start justify-between">
+    {{-- ====================================================== --}}
+    {{-- Header --}}
+    {{-- ====================================================== --}}
+    <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
 
         <div>
 
-            <h2 class="text-lg font-semibold text-slate-900">
+            <h2 class="text-xl font-semibold tracking-tight text-slate-900">
 
                 Ringkasan UMKM
 
             </h2>
 
-            <p class="mt-2 text-sm text-slate-500">
+            <p class="mt-2 text-sm leading-6 text-slate-500">
 
-                Informasi singkat mengenai UMKM yang Anda kelola.
+                Informasi utama mengenai UMKM yang Anda kelola.
 
             </p>
 
         </div>
 
-        <x-ui.button
-            size="sm"
-            variant="secondary"
-            :href="route('owner.profile.edit')">
+        <x-ui.button size="sm" variant="secondary" :href="route('owner.profile.edit')">
 
             Edit Profil
 
@@ -29,33 +29,46 @@
 
     </div>
 
-    <div class="mt-6 grid gap-6 md:grid-cols-2">
 
-        <div>
 
-            <p class="text-sm font-medium text-slate-500">
+
+
+    {{-- ====================================================== --}}
+    {{-- Information Grid --}}
+    {{-- ====================================================== --}}
+    <div class="mt-8 grid gap-5 md:grid-cols-2">
+
+        {{-- Nama UMKM --}}
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
 
                 Nama UMKM
 
             </p>
 
-            <p class="mt-1 text-base font-semibold text-slate-900">
+            <p class="mt-2 text-lg font-semibold text-slate-900">
 
-                {{ $umkm?->name ?? '-' }}
+                {{ $umkm?->business_name ?? '-' }}
 
             </p>
 
         </div>
 
-        <div>
 
-            <p class="text-sm font-medium text-slate-500">
+
+
+
+        {{-- Kategori --}}
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
 
                 Kategori
 
             </p>
 
-            <p class="mt-1 text-base font-semibold text-slate-900">
+            <p class="mt-2 text-lg font-semibold text-slate-900">
 
                 {{ $stats['category'] ?? '-' }}
 
@@ -63,47 +76,73 @@
 
         </div>
 
-        <div>
 
-            <p class="text-sm font-medium text-slate-500">
 
-                Status
+
+
+        {{-- Status --}}
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+
+                Status Verifikasi
 
             </p>
 
-            <p class="mt-1">
+            <div class="mt-3">
 
-                @if ($stats['status'])
+                @php
+                    $status = strtolower($stats['status'] ?? '');
+                @endphp
 
-                    <span class="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-700">
+                @if ($status === 'verified')
+                    <span
+                        class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-sm font-semibold text-emerald-700">
 
-                        {{ ucfirst($stats['status']) }}
+                        ✓ Terverifikasi
 
                     </span>
+                @elseif($status === 'pending')
+                    <span
+                        class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-sm font-semibold text-amber-700">
 
+                        ⏳ Menunggu Verifikasi
+
+                    </span>
+                @elseif($status === 'rejected')
+                    <span
+                        class="inline-flex items-center rounded-full bg-rose-100 px-3 py-1 text-sm font-semibold text-rose-700">
+
+                        ✕ Ditolak
+
+                    </span>
                 @else
+                    <span
+                        class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-600">
 
-                    <span class="text-slate-500">
-
-                        -
+                        Belum Tersedia
 
                     </span>
-
                 @endif
 
-            </p>
+            </div>
 
         </div>
 
-        <div>
 
-            <p class="text-sm font-medium text-slate-500">
+
+
+
+        {{-- Bergabung --}}
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
 
                 Bergabung Sejak
 
             </p>
 
-            <p class="mt-1 text-base font-semibold text-slate-900">
+            <p class="mt-2 text-lg font-semibold text-slate-900">
 
                 {{ $stats['joined_at'] ?? '-' }}
 

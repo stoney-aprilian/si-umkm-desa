@@ -1,36 +1,20 @@
-<div class="space-y-10">
+<div class="space-y-8">
 
-
+    {{-- ====================================================== --}}
     {{-- Basic Information --}}
-    <section>
+    {{-- ====================================================== --}}
+    <x-ui.card>
 
-        <div class="mb-6">
+        <x-ui.section-title
+            title="Informasi Kategori"
+            subtitle="Data dasar kategori yang akan digunakan untuk mengelompokkan UMKM dan produk." />
 
-            <h2 class="text-lg font-semibold tracking-tight text-slate-900">
+        <div class="mt-8 space-y-6">
 
-                Informasi Kategori
-
-            </h2>
-
-
-            <p class="mt-1 text-sm leading-6 text-slate-500">
-
-                Digunakan untuk mengelompokkan UMKM dan produk berdasarkan jenis usaha.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="space-y-6">
-
-
-            {{-- Name --}}
+            {{-- Nama --}}
             <x-ui.field
                 name="name"
-                helper="Gunakan nama kategori yang singkat dan mudah dikenali.">
-
+                helper="Gunakan nama yang singkat, jelas, dan mudah dipahami oleh pengguna.">
 
                 <x-ui.label
                     for="name"
@@ -40,36 +24,53 @@
 
                 </x-ui.label>
 
-
-
                 <x-ui.input
-
                     id="name"
-
                     name="name"
-
                     :value="old('name', $category->name ?? '')"
-
                     placeholder="Contoh: Kuliner Tradisional"
-
                     autocomplete="off"
-
                     maxlength="100"
-
                     required />
-
-
 
             </x-ui.field>
 
 
 
+            {{-- Slug Information --}}
+            <div
+                class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-5 py-4">
+
+                <p
+                    class="text-sm font-medium text-slate-700">
+
+                    Slug URL
+
+                </p>
+
+                <p
+                    class="mt-2 text-sm leading-6 text-slate-500">
+
+                    Slug akan dibuat secara otomatis berdasarkan nama kategori.
+
+                </p>
+
+                <code
+                    class="mt-3 inline-flex rounded-lg bg-white px-3 py-2 text-xs font-medium text-emerald-700 shadow-sm">
+
+                    contoh:
+                    kuliner-tradisional
+
+                </code>
+
+            </div>
 
 
-            {{-- Description --}}
+
+            {{-- Deskripsi --}}
             <x-ui.field
-                name="description">
-
+                name="description"
+                helper="Opsional. Maksimal 500 karakter.">
 
                 <x-ui.label
                     for="description">
@@ -78,87 +79,44 @@
 
                 </x-ui.label>
 
-
-
                 <x-ui.textarea
-
                     id="description"
-
                     name="description"
-
-                    rows="4"
-
+                    rows="5"
                     maxlength="500"
-
-                    placeholder="Tuliskan deskripsi singkat mengenai kategori ini (opsional)...">{{ old('description', $category->description ?? '') }}</x-ui.textarea>
-
-
+                    placeholder="Tuliskan deskripsi singkat mengenai kategori ini...">{{ old('description', $category->description ?? '') }}</x-ui.textarea>
 
             </x-ui.field>
-
-
 
         </div>
 
-
-    </section>
-
+    </x-ui.card>
 
 
 
-
+    {{-- ====================================================== --}}
     {{-- Status --}}
+    {{-- ====================================================== --}}
     @isset($category)
 
+        <x-ui.card>
 
-        <section class="border-t border-slate-200 pt-8">
+            <x-ui.section-title
+                title="Status Kategori"
+                subtitle="Atur apakah kategori dapat digunakan oleh UMKM dan produk." />
 
+            <div class="mt-8">
 
-            <div class="mb-5">
-
-
-                <h3 class="text-base font-semibold text-slate-900">
-
-                    Status Kategori
-
-                </h3>
-
-
-
-                <p class="mt-1 text-sm leading-6 text-slate-500">
-
-                    Nonaktifkan kategori apabila sudah tidak digunakan.
-                    Data yang tersimpan tidak akan terhapus.
-
-                </p>
-
+                <x-ui.checkbox
+                    name="is_active"
+                    :checked="old('is_active', $category->is_active)"
+                    label="Kategori aktif"
+                    description="Kategori yang dinonaktifkan tidak akan muncul sebagai pilihan ketika membuat atau mengubah data UMKM maupun Produk." />
 
             </div>
 
-
-
-
-            <x-ui.field>
-
-
-                <x-ui.checkbox
-
-                    name="is_active"
-
-                    :checked="old('is_active', $category->is_active)"
-
-                    label="Status kategori aktif" />
-
-
-            </x-ui.field>
-
-
-
-        </section>
-
+        </x-ui.card>
 
     @endisset
-
-
 
 </div>

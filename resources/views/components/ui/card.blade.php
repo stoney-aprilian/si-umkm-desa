@@ -1,18 +1,61 @@
 @props([
-    'padding' => true,
-    'header' => null,
-    'footer' => null,
+    'padding' => 'md',
+    'variant' => 'default',
+    'hover' => false,
 ])
 
+@php
+
+    $paddingClasses = [
+
+        'none' => '',
+
+        'sm' => 'p-4',
+
+        'md' => 'p-6',
+
+        'lg' => 'p-8',
+
+    ];
+
+    $variants = [
+
+        'default' => 'bg-white border border-slate-200',
+
+        'subtle' => 'bg-slate-50 border border-slate-200',
+
+        'transparent' => 'bg-transparent border border-slate-200',
+
+    ];
+
+    $classes = collect([
+
+        'overflow-hidden',
+
+        'rounded-2xl',
+
+        'shadow-sm',
+
+        'transition-all',
+
+        'duration-200',
+
+        $hover
+            ? 'hover:-translate-y-1 hover:shadow-lg'
+            : '',
+
+        $variants[$variant] ?? $variants['default'],
+
+    ])->filter()->implode(' ');
+
+@endphp
 
 <div
     {{ $attributes->merge([
-        'class' => 'overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm',
+        'class' => $classes,
     ]) }}>
 
-
-    {{-- Header --}}
-    @if ($header)
+    @isset($header)
 
         <div class="border-b border-slate-200 px-6 py-5">
 
@@ -20,14 +63,11 @@
 
         </div>
 
-    @endif
+    @endisset
 
+    @if ($padding !== 'none')
 
-
-    {{-- Body --}}
-    @if ($padding)
-
-        <div class="px-6 py-6">
+        <div class="{{ $paddingClasses[$padding] ?? $paddingClasses['md'] }}">
 
             {{ $slot }}
 
@@ -39,10 +79,7 @@
 
     @endif
 
-
-
-    {{-- Footer --}}
-    @if ($footer)
+    @isset($footer)
 
         <div class="border-t border-slate-200 bg-slate-50 px-6 py-5">
 
@@ -50,7 +87,6 @@
 
         </div>
 
-    @endif
-
+    @endisset
 
 </div>

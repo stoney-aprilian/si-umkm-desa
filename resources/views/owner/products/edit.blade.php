@@ -4,63 +4,68 @@
 
 @section('content')
 
-    <div class="space-y-6">
+    <div class="mx-auto max-w-5xl">
 
-        <div class="flex items-center justify-between">
+        {{-- ====================================================== --}}
+        {{-- Page Header --}}
+        {{-- ====================================================== --}}
+        <div class="mb-8">
 
-            <div>
-
-                <h1 class="text-2xl font-bold text-slate-800">
-
-                    Edit Produk
-
-                </h1>
-
-                <p class="mt-1 text-sm text-slate-500">
-
-                    Perbarui informasi produk UMKM Anda.
-
-                </p>
-
-            </div>
-
-            <x-ui.button
-                :href="route('owner.products.index')"
-                color="secondary">
-
-                Kembali
-
-            </x-ui.button>
+            <x-ui.section-title title="Edit Produk"
+                subtitle="Perbarui informasi produk agar katalog UMKM tetap akurat dan menarik bagi pengunjung." />
 
         </div>
 
-        <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
-            <form
-                action="{{ route('owner.products.update', $product->slug) }}"
-                method="POST"
-                enctype="multipart/form-data"
-                class="space-y-6">
+
+
+
+        {{-- ====================================================== --}}
+        {{-- Form Card --}}
+        {{-- ====================================================== --}}
+        <x-ui.card padding="false" class="overflow-hidden">
+
+            <form action="{{ route('owner.products.update', $product->slug) }}" method="POST" enctype="multipart/form-data">
 
                 @csrf
                 @method('PUT')
 
-                @include('owner.products._form')
 
-                <x-ui.form-actions>
 
-                    <x-ui.button
-                        type="submit">
+
+
+                {{-- Form Content --}}
+                <div class="p-6 md:p-8">
+
+                    @include('owner.products._form')
+
+                </div>
+
+
+
+
+
+                {{-- Footer Actions --}}
+                <div
+                    class="flex flex-col-reverse gap-3 border-t border-slate-200 bg-slate-50 px-6 py-5 md:flex-row md:items-center md:justify-end md:px-8">
+
+                    <x-ui.button variant="secondary" :href="route('owner.products.index')">
+
+                        Kembali
+
+                    </x-ui.button>
+
+                    <x-ui.button type="submit">
 
                         Perbarui Produk
 
                     </x-ui.button>
 
-                </x-ui.form-actions>
+                </div>
 
             </form>
 
-        </div>
+        </x-ui.card>
 
     </div>
 

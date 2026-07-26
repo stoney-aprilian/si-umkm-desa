@@ -1,38 +1,39 @@
-<footer class="border-t border-slate-200 bg-white">
+<footer
+    class="border-t border-slate-200 bg-white/70 backdrop-blur-sm">
 
-    <div class="app-container py-6">
+    <div
+        class="app-container">
 
         <div
-            class="flex flex-col gap-3 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            class="flex flex-col gap-3 py-5 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
 
+            {{-- Left --}}
+            <div
+                class="flex flex-wrap items-center gap-2">
 
-            {{-- Copyright --}}
-            <p>
+                <span class="font-medium text-slate-700">
 
-                © {{ now()->year }}
-
-                <span class="font-semibold text-slate-700">
-
-                    SI UMKM Desa
+                    © {{ now()->year }}
 
                 </span>
-
-            </p>
-
-
-
-
-            {{-- System Information --}}
-            <div class="flex items-center gap-3">
-
 
                 <span>
 
-                    Portal Digital UMKM Desa
+                    SI UMKM Desa Salamnunggal
 
                 </span>
 
+            </div>
 
+            {{-- Right --}}
+            <div
+                class="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+
+                <span>
+
+                    Powered by Laravel {{ app()->version() }}
+
+                </span>
 
                 <span class="text-slate-300">
 
@@ -40,20 +41,15 @@
 
                 </span>
 
-
-
                 <span>
 
-                    v{{ config('app.version', '1.0') }}
+                    Build v{{ config('app.version', '1.0.0') }}
 
                 </span>
 
-
             </div>
 
-
         </div>
-
 
     </div>
 
